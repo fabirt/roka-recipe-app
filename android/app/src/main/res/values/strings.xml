@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Roka</string>
+    <string name="home_title">Home</string>
+    <string name="recipes_title">Recipes</string>
+    <string name="search_title">Search</string>
+    <string name="favorites_title">Favorites</string>
 </resources>
