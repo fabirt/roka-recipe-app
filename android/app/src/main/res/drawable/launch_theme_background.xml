@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@color/colorAccent" />
+    <item
+        android:height="160dp"
+        android:width="160dp"
+        android:drawable="@drawable/ic_chef_white"
+        android:gravity="center" />
+</layer-list>
