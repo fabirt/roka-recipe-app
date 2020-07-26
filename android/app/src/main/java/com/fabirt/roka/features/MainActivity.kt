@@ -1,4 +1,4 @@
-package com.fabirt.roka.presentation
+package com.fabirt.roka.features
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

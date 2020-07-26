@@ -1,4 +1,4 @@
-package com.fabirt.roka.presentation.favorites
+package com.fabirt.roka.features.favorites
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

@@ -23,6 +23,8 @@
         <item name="android:gravity">center</item>
         <item name="android:fontFamily">@font/sf_pro_text_medium</item>
         <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginBottom">16dp</item>
+        <item name="android:textColor">@color/colorHighEmphasisText</item>
         <item name="android:textSize">18sp</item>
     </style>
 </resources>
