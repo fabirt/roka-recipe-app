@@ -23,6 +23,7 @@
         android:layout_height="wrap_content"
         android:clipToPadding="false"
         android:orientation="horizontal"
+        android:overScrollMode="never"
         android:paddingHorizontal="12dp"
         tools:itemCount="5"
         tools:listitem="@layout/view_home_category" />
