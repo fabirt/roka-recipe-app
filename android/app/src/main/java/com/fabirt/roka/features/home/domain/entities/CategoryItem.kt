@@ -1,6 +1,6 @@
 package com.fabirt.roka.features.home.domain.entities
 
-data class Category(
+data class CategoryItem (
     val name: String,
-    val items: List<CategoryItem>
+    val imageUrl: String
 )

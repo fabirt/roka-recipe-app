@@ -27,7 +27,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         rvCategories.layoutManager = LinearLayoutManager(requireContext())
         rvCategories.adapter = CategoriesAdapter(categories) { item ->
-            Toast.makeText(requireContext(), item, Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), item.name, Toast.LENGTH_SHORT).show()
         }
     }
 }

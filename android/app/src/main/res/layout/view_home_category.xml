@@ -15,10 +15,11 @@
         app:cardElevation="0dp">
 
         <ImageView
+            android:id="@+id/ivCategoryItem"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:src="@drawable/test" />
+            tools:src="@drawable/not_available" />
 
         <TextView
             android:id="@+id/tvCategoryName"

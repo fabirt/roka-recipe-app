@@ -8,10 +8,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fabirt.roka.R
 import com.fabirt.roka.features.home.domain.entities.Category
+import com.fabirt.roka.features.home.domain.entities.CategoryItem
 
 class CategoriesAdapter(
     private val categories: List<Category>,
-    private val onItemPressed: (String) -> Unit
+    private val onItemPressed: (CategoryItem) -> Unit
 ) : RecyclerView.Adapter<CategoriesAdapter.CategoriesViewHolder>() {
     override fun getItemCount(): Int = categories.size
 

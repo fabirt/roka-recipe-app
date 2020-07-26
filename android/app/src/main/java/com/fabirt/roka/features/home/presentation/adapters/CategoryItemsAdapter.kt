@@ -3,13 +3,16 @@ package com.fabirt.roka.features.home.presentation.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.fabirt.roka.R
+import com.fabirt.roka.core.utils.bindNetworkImage
+import com.fabirt.roka.features.home.domain.entities.CategoryItem
 
 class CategoryItemsAdapter(
-    private val items: List<String>,
-    private val onItemPressed: (String) -> Unit
+    private val items: List<CategoryItem>,
+    private val onItemPressed: (CategoryItem) -> Unit
 ) : RecyclerView.Adapter<CategoryItemsAdapter.CategoryItemsViewHolder>() {
     override fun getItemCount(): Int = items.size
 
@@ -24,9 +27,11 @@ class CategoryItemsAdapter(
 
     inner class CategoryItemsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val tvCategoryName: TextView = itemView.findViewById(R.id.tvCategoryName)
+        private val imageView: ImageView = itemView.findViewById(R.id.ivCategoryItem)
 
-        fun bind(item: String) {
-            tvCategoryName.text = item
+        fun bind(item: CategoryItem) {
+            tvCategoryName.text = item.name
+            bindNetworkImage(imageView, item.imageUrl)
             tvCategoryName.setOnClickListener {
                 onItemPressed(item)
             }
