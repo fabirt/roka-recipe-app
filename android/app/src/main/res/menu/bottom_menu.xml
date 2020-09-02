@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/homeFragment"
+        android:id="@+id/categories_graph"
         android:icon="@drawable/ic_chef_outline"
         android:title="" />
     <item
-        android:id="@+id/searchFragment"
+        android:id="@+id/search_graph"
         android:icon="@drawable/ic_search_outline"
         android:title="" />
     <item
-        android:id="@+id/favoritesFragment"
+        android:id="@+id/favorites_graph"
         android:icon="@drawable/ic_favorites_outline"
         android:title="" />
 </menu>
