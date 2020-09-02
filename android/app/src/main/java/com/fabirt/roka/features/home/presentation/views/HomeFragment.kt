@@ -25,9 +25,10 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        rvCategories.layoutManager = LinearLayoutManager(requireContext())
-        rvCategories.adapter = CategoriesAdapter(categories) { item ->
+        val adapter = CategoriesAdapter(categories) { item ->
             Toast.makeText(requireContext(), item.name, Toast.LENGTH_SHORT).show()
         }
+        rvCategories.layoutManager = LinearLayoutManager(requireContext())
+        rvCategories.adapter = adapter
     }
 }
