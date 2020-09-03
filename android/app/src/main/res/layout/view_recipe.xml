@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="8dp"
+    app:cardBackgroundColor="@color/colorSurface"
+    app:cardCornerRadius="24dp"
+    app:cardElevation="16dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/ivRecipe"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription"
+            tools:src="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/textName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/sf_pro_text_medium"
+            android:textColor="@color/colorOnSurface"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/ivTime"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivRecipe"
+            tools:text="Healthy Croissant Sandwich" />
+
+        <TextView
+            android:id="@+id/textAuthor"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/sf_pro_text_medium"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/textName"
+            app:layout_constraintStart_toStartOf="@+id/textName"
+            app:layout_constraintTop_toBottomOf="@+id/textName"
+            tools:text="by Lance Bogrol" />
+
+        <TextView
+            android:id="@+id/textTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/sf_pro_text_medium"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivRecipe"
+            tools:text="25 min" />
+
+        <ImageView
+            android:id="@+id/ivTime"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginEnd="6dp"
+            app:layout_constraintBottom_toBottomOf="@+id/textTime"
+            app:layout_constraintEnd_toStartOf="@+id/textTime"
+            app:layout_constraintTop_toTopOf="@+id/textTime"
+            app:srcCompat="@drawable/ic_favorites_outline"
+            app:tint="@color/colorAccent"
+            tools:ignore="ContentDescription" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
