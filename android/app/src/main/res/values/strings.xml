@@ -9,4 +9,7 @@
     <string name="search_bar_hint">Search</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="onboarding_title_1">Quick &amp;\neasy recipes</string>
+    <string name="onboarding_body_1">Get the latest, quickest and easiest\nhome recipes.</string>
+    <string name="get_started">Get Started</string>
 </resources>
