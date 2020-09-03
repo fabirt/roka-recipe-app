@@ -28,15 +28,15 @@ class CategoriesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = CategoriesAdapter(listOf()) { item ->
+        adapter = CategoriesAdapter() { item ->
             Toast.makeText(requireContext(), item.name, Toast.LENGTH_SHORT).show()
         }
         rvCategories.layoutManager = LinearLayoutManager(requireContext())
         rvCategories.adapter = adapter
 
         viewModel.categories.observe(viewLifecycleOwner, Observer { categories ->
-            adapter.categories = categories
-            adapter.notifyDataSetChanged()
+            rvCategories.scheduleLayoutAnimation()
+            adapter.submitList(categories)
         })
     }
 }

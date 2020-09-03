@@ -5,24 +5,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.fabirt.roka.R
 import com.fabirt.roka.features.categories.domain.model.Category
 import com.fabirt.roka.features.categories.domain.model.CategoryItem
 
 class CategoriesAdapter(
-    var categories: List<Category>,
     private val onItemPressed: (CategoryItem) -> Unit
-) : RecyclerView.Adapter<CategoriesAdapter.CategoriesViewHolder>() {
+) : ListAdapter<Category, CategoriesAdapter.CategoriesViewHolder>(CategoryDiffCallback()) {
 
     private val scrollStates = hashMapOf<String, Parcelable?>()
 
-    override fun getItemCount(): Int = categories.size
-
     override fun onViewRecycled(holder: CategoriesViewHolder) {
         super.onViewRecycled(holder)
-        val key = categories[holder.bindingAdapterPosition].name
+        val item = getItem(holder.bindingAdapterPosition)
+        val key = item.name
         scrollStates[key] = holder.mlayoutManager.onSaveInstanceState()
     }
 
@@ -38,9 +38,10 @@ class CategoriesAdapter(
     }
 
     override fun onBindViewHolder(holder: CategoriesViewHolder, position: Int) {
-        val key = categories[holder.bindingAdapterPosition].name
+        val item = getItem(position)
+        val key = item.name
         val state = scrollStates[key]
-        holder.bind(categories[position])
+        holder.bind(item)
         if (state != null) {
             holder.mlayoutManager.onRestoreInstanceState(state)
         } else {
@@ -62,6 +63,16 @@ class CategoriesAdapter(
                 this.adapter = adapter
                 this.layoutManager = mlayoutManager
             }
+        }
+    }
+
+    private class CategoryDiffCallback : DiffUtil.ItemCallback<Category>() {
+        override fun areItemsTheSame(oldItem: Category, newItem: Category): Boolean {
+            return oldItem.name == newItem.name
+        }
+
+        override fun areContentsTheSame(oldItem: Category, newItem: Category): Boolean {
+            return oldItem == newItem
         }
     }
 

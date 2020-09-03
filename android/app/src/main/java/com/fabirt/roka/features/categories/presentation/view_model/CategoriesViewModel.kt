@@ -1,11 +1,13 @@
 package com.fabirt.roka.features.categories.presentation.view_model
 
-import android.os.Handler
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.fabirt.roka.features.categories.constants.categoriesList
 import com.fabirt.roka.features.categories.domain.model.Category
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class CategoriesViewModel : ViewModel() {
     private val _categories: MutableLiveData<List<Category>> = MutableLiveData()
@@ -14,8 +16,9 @@ class CategoriesViewModel : ViewModel() {
         get() = _categories
 
     init {
-        Handler().postDelayed({
-            _categories.value = categoriesList
-        }, 350)
+        viewModelScope.launch {
+            delay(350)
+            _categories.postValue(categoriesList.toList())
+        }
     }
 }

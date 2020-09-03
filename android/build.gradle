@@ -4,6 +4,7 @@ buildscript {
         version_kotlin = "1.3.72"
         version_nav = "2.3.0"
         version_glide = "4.11.0"
+        version_kotlin_coroutines = "1.3.9"
     }
 
     repositories {
