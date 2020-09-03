@@ -4,4 +4,7 @@
     <string name="recipes_title">Recipes</string>
     <string name="search_title">Search</string>
     <string name="favorites_title">Favorites</string>
+    <string name="cd_search_bar_icon">Search input text</string>
+    <string name="cd_clear_search_bar">Clear search text</string>
+    <string name="search_bar_hint">Search</string>
 </resources>
