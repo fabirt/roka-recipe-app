@@ -3,7 +3,7 @@ package com.fabirt.roka.features.categories.constants
 import com.fabirt.roka.features.categories.domain.model.Category
 import com.fabirt.roka.features.categories.domain.model.CategoryItem
 
-val categories: List<Category> = listOf(
+val categoriesList: List<Category> = listOf(
     Category(
         "Cuisines",
         listOf(

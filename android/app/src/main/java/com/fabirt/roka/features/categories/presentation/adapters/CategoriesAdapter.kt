@@ -12,7 +12,7 @@ import com.fabirt.roka.features.categories.domain.model.Category
 import com.fabirt.roka.features.categories.domain.model.CategoryItem
 
 class CategoriesAdapter(
-    private val categories: List<Category>,
+    var categories: List<Category>,
     private val onItemPressed: (CategoryItem) -> Unit
 ) : RecyclerView.Adapter<CategoriesAdapter.CategoriesViewHolder>() {
 
