@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/favoritesFragment"
-        android:name="com.fabirt.roka.features.favorites.presentation.views.FavoritesFragment"
+        android:name="com.fabirt.roka.features.favorites.presentation.view.FavoritesFragment"
         android:label="fragment_favorites"
         tools:layout="@layout/fragment_favorites" />
 </navigation>

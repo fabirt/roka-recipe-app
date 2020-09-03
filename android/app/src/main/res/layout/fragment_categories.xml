@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".features.categories.presentation.views.CategoriesFragment">
+    tools:context=".features.categories.presentation.view.CategoriesFragment">
 
     <TextView
         android:id="@+id/tvTitle"

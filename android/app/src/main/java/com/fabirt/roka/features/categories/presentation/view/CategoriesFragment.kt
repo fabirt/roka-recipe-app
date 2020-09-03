@@ -1,4 +1,4 @@
-package com.fabirt.roka.features.categories.presentation.views
+package com.fabirt.roka.features.categories.presentation.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

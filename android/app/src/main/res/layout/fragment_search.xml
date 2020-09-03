@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".features.search.presentation.views.SearchFragment">
+    tools:context=".features.search.presentation.view.SearchFragment">
 
     <TextView
         style="@style/HeadlineTextStyle"
