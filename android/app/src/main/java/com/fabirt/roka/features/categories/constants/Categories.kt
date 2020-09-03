@@ -1,7 +1,7 @@
-package com.fabirt.roka.features.home.constants
+package com.fabirt.roka.features.categories.constants
 
-import com.fabirt.roka.features.home.domain.entities.Category
-import com.fabirt.roka.features.home.domain.entities.CategoryItem
+import com.fabirt.roka.features.categories.domain.model.Category
+import com.fabirt.roka.features.categories.domain.model.CategoryItem
 
 val categories: List<Category> = listOf(
     Category(

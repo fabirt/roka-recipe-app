@@ -2,13 +2,13 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/favorites_graph"
+    android:id="@+id/favoritesGraph"
     app:startDestination="@id/favoritesFragment"
     tools:ignore="UnusedNavigation">
 
     <fragment
         android:id="@+id/favoritesFragment"
-        android:name="com.fabirt.roka.features.favorites.FavoritesFragment"
+        android:name="com.fabirt.roka.features.favorites.presentation.views.FavoritesFragment"
         android:label="fragment_favorites"
         tools:layout="@layout/fragment_favorites" />
 </navigation>

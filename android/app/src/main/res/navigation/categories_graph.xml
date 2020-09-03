@@ -2,13 +2,12 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/categories_graph"
-    app:startDestination="@id/homeFragment"
+    android:id="@+id/categoriesGraph"
+    app:startDestination="@id/categoriesFragment"
     tools:ignore="UnusedNavigation">
-
     <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.fabirt.roka.features.home.presentation.views.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/categoriesFragment"
+        android:name="com.fabirt.roka.features.categories.presentation.views.CategoriesFragment"
+        android:label="fragment_categories"
+        tools:layout="@layout/fragment_categories" />
 </navigation>

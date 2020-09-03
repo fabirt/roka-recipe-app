@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".features.home.presentation.views.HomeFragment">
+    tools:context=".features.categories.presentation.views.CategoriesFragment">
 
     <TextView
         android:id="@+id/tvTitle"
         style="@style/HeadlineTextStyle"
-        android:text="@string/home_title"
+        android:text="@string/categories_title"
         app:layout_constraintBottom_toTopOf="@+id/rvCategories"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

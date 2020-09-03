@@ -1,4 +1,4 @@
-package com.fabirt.roka.features.home.presentation.adapters
+package com.fabirt.roka.features.categories.presentation.adapters
 
 import android.os.Parcelable
 import android.view.LayoutInflater
@@ -8,8 +8,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fabirt.roka.R
-import com.fabirt.roka.features.home.domain.entities.Category
-import com.fabirt.roka.features.home.domain.entities.CategoryItem
+import com.fabirt.roka.features.categories.domain.model.Category
+import com.fabirt.roka.features.categories.domain.model.CategoryItem
 
 class CategoriesAdapter(
     private val categories: List<Category>,

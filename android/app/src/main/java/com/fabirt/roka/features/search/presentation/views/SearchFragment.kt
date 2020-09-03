@@ -1,4 +1,4 @@
-package com.fabirt.roka.features.search
+package com.fabirt.roka.features.search.presentation.views
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

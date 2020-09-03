@@ -1,4 +1,4 @@
-package com.fabirt.roka.features.home.domain.entities
+package com.fabirt.roka.features.categories.domain.model
 
 data class CategoryItem (
     val name: String,

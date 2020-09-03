@@ -1,4 +1,4 @@
-package com.fabirt.roka.features.home.presentation.adapters
+package com.fabirt.roka.features.categories.presentation.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.fabirt.roka.R
 import com.fabirt.roka.core.utils.bindNetworkImage
-import com.fabirt.roka.features.home.domain.entities.CategoryItem
+import com.fabirt.roka.features.categories.domain.model.CategoryItem
 
 class CategoryItemsAdapter(
     private val items: List<CategoryItem>,
