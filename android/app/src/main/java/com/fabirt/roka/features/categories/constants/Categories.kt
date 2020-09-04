@@ -7,98 +7,35 @@ val categoriesList: List<Category> = listOf(
     Category(
         "Cuisines",
         listOf(
-            CategoryItem(
-                "African",
-                "https://images-cdn.newscred.com/Zz1iNmVhMTZhNDdiZTkyYWVmMjA4NDI5MzgyOTRiYjk3MQ==/Zz04MzhmMTcwMmMyMmUxZGQ3Y2M0YWNlZmM4OTcxNTdkOQ%3D%3D.jpeg?width=1200"
-            ),
-            CategoryItem(
-                "American",
-                "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Motherhood_and_apple_pie.jpg/1200px-Motherhood_and_apple_pie.jpg"
-            ),
-            CategoryItem(
-                "British",
-                "https://learnenglishteens.britishcouncil.org/sites/teens/files/styles/article/public/istock_000012858084small_0_0.jpg?itok=UaPalhkl"
-            ),
-            CategoryItem(
-                "Caribbean",
-                "https://img.theculturetrip.com/768x432/wp-content/uploads/2016/09/16558946119_70c3b69884_k.jpg"
-            ),
-            CategoryItem(
-                "Chinese",
-                "https://www.misstamchiak.com/wp-content/uploads/2019/12/IMG_0175-37-1300x867.jpg"
-            ),
-            CategoryItem(
-                "European",
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcR2p1oQ1KqzC64TD9MYSbD_CgKAvFWyj2XPSA&usqp=CAU"
-            ),
-            CategoryItem(
-                "French",
-                "https://www.recetasdesbieta.com/wp-content/uploads/2018/10/lasagna-original.-300x169.jpg"
-            ),
-            CategoryItem(
-                "German",
-                "https://img.theculturetrip.com/768x432/wp-content/uploads/2017/12/shutterstock_749694442.jpg"
-            ),
-            CategoryItem(
-                "Greek",
-                "https://bloximages.newyork1.vip.townnews.com/laduenews.com/content/tncms/assets/v3/editorial/1/1c/11caed69-7537-5f09-a194-cacfb0c0d56c/5ddd424d236ce.image.jpg?resize=1200%2C800"
-            ),
-            CategoryItem(
-                "Indian",
-                "https://miro.medium.com/max/1000/1*8lQ9FLOtT0lN6_D4I93Mcw.jpeg"
-            ),
-            CategoryItem(
-                "Irish",
-                "https://chowhound1.cbsistatic.com/thumbnail/800/0/chowhound1.cbsistatic.com/blog-media/2019/03/Chowhound-Ground-Beef-Shepherds-Pie-670x447.jpg"
-            ),
-            CategoryItem(
-                "Italian",
-                "https://www.samuirestaurantguide.com/wp-content/uploads/2016/01/italian-food.jpg"
-            ),
-            CategoryItem(
-                "Japanese",
-                "https://jpninfo.com/wp-content/uploads/2018/03/sushi-platter.jpg"
-            ),
-            CategoryItem(
-                "Jewish",
-                "https://www.myjewishlearning.com/wp-content/uploads/2017/02/iStock-629077122-e1487798855179.jpg"
-            ),
-            CategoryItem(
-                "Korean",
-                "https://www.matchingfoodandwine.com/files/blogattachments/top/korean-pork-dish@2x.jpg"
-            ),
-            CategoryItem(
-                "Latin American",
-                "https://wearecocina.files.wordpress.com/2017/10/salvadorean-empanadas.jpg?w=1152"
-            ),
-            CategoryItem(
-                "Mexican",
-                "https://www.englishclub.com/images/vocabulary/food/mexican/mexican-food.jpg"
-            ),
-            CategoryItem(
-                "Nordic",
-                "https://honestcooking.com/wp-content/uploads/2015/09/shutterstock_279810137.jpg"
-            ),
-            CategoryItem(
-                "Spanish",
-                "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Paella-mixta.jpg/440px-Paella-mixta.jpg"
-            ),
-            CategoryItem(
-                "Thai",
-                "https://media-cdn.tripadvisor.com/media/photo-s/17/22/fb/04/jaisungma-thai-cuisine.jpg"
-            ),
-            CategoryItem(
-                "Vietnamese",
-                "https://media-cdn.tripadvisor.com/media/photo-s/1a/32/e7/70/updated-menu.jpg"
-            )
+            CategoryItem("African", "https://images-cdn.newscred.com/Zz1iNmVhMTZhNDdiZTkyYWVmMjA4NDI5MzgyOTRiYjk3MQ==/Zz04MzhmMTcwMmMyMmUxZGQ3Y2M0YWNlZmM4OTcxNTdkOQ%3D%3D.jpeg?width=1200"),
+            CategoryItem("American", "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Motherhood_and_apple_pie.jpg/1200px-Motherhood_and_apple_pie.jpg"),
+            CategoryItem("British", "https://learnenglishteens.britishcouncil.org/sites/teens/files/styles/article/public/istock_000012858084small_0_0.jpg?itok=UaPalhkl"),
+            CategoryItem("Caribbean", "https://img.theculturetrip.com/768x432/wp-content/uploads/2016/09/16558946119_70c3b69884_k.jpg"),
+            CategoryItem("Chinese", "https://www.misstamchiak.com/wp-content/uploads/2019/12/IMG_0175-37-1300x867.jpg"),
+            CategoryItem("European", "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcR2p1oQ1KqzC64TD9MYSbD_CgKAvFWyj2XPSA&usqp=CAU"),
+            CategoryItem("French", "https://www.recetasdesbieta.com/wp-content/uploads/2018/10/lasagna-original.-300x169.jpg"),
+            CategoryItem("German", "https://img.theculturetrip.com/768x432/wp-content/uploads/2017/12/shutterstock_749694442.jpg"),
+            CategoryItem("Greek", "https://bloximages.newyork1.vip.townnews.com/laduenews.com/content/tncms/assets/v3/editorial/1/1c/11caed69-7537-5f09-a194-cacfb0c0d56c/5ddd424d236ce.image.jpg?resize=1200%2C800"),
+            CategoryItem("Indian", "https://miro.medium.com/max/1000/1*8lQ9FLOtT0lN6_D4I93Mcw.jpeg"),
+            CategoryItem("Irish", "https://chowhound1.cbsistatic.com/thumbnail/800/0/chowhound1.cbsistatic.com/blog-media/2019/03/Chowhound-Ground-Beef-Shepherds-Pie-670x447.jpg"),
+            CategoryItem("Italian", "https://www.samuirestaurantguide.com/wp-content/uploads/2016/01/italian-food.jpg"),
+            CategoryItem("Japanese", "https://jpninfo.com/wp-content/uploads/2018/03/sushi-platter.jpg"),
+            CategoryItem("Jewish", "https://www.myjewishlearning.com/wp-content/uploads/2017/02/iStock-629077122-e1487798855179.jpg"),
+            CategoryItem("Korean", "https://www.matchingfoodandwine.com/files/blogattachments/top/korean-pork-dish@2x.jpg"),
+            CategoryItem("Latin American", "https://wearecocina.files.wordpress.com/2017/10/salvadorean-empanadas.jpg?w=1152"),
+            CategoryItem("Mexican", "https://www.englishclub.com/images/vocabulary/food/mexican/mexican-food.jpg"),
+            CategoryItem("Nordic", "https://honestcooking.com/wp-content/uploads/2015/09/shutterstock_279810137.jpg"),
+            CategoryItem("Spanish", "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Paella-mixta.jpg/440px-Paella-mixta.jpg"),
+            CategoryItem("Thai", "https://media-cdn.tripadvisor.com/media/photo-s/17/22/fb/04/jaisungma-thai-cuisine.jpg"),
+            CategoryItem("Vietnamese", "https://media-cdn.tripadvisor.com/media/photo-s/1a/32/e7/70/updated-menu.jpg")
         )
     ),
     Category(
         "Diets",
         listOf(
-            CategoryItem("Gluten Free", "https://lh3.googleusercontent.com/proxy/pKTEcrhPqGZ4BzpWqhKE_fq3HL0NVN3HBn4ARizJ_4IipcxvFAjsY9q9DCDi0raqChQeY8aNkDWE2whstlz3MsMvl_SjOWLd4vKUxtwF5t-g9WqysOt9_hhpt3v3h8mrcveM"),
+            CategoryItem("Gluten Free", "https://i0.wp.com/www.diegocoquillat.com/wp-content/uploads/2018/11/sin_gluten2.png?fit=702%2C336&ssl=1"),
             CategoryItem("Ketogenic", "https://i.blogs.es/aa8690/aguacate_huevos/450_1000.jpg"),
-            CategoryItem("Vegetarian", "https://www.bbcgoodfood.com/sites/default/files/recipe-collections/collection-image/2018/07/carrot_biryani.jpg"),
+            CategoryItem("Vegetarian", "https://i0.wp.com/images-prod.healthline.com/hlcmsresource/images/AN_images/vegetarian-diet-plan-1296x728-feature.jpg?w=1155&h=1528"),
             CategoryItem("Lacto-Vegatarian", "https://s3-us-west-1.amazonaws.com/contentlab.studiod/getty/d817388bbe294ace959d7b55f42fca0e.jpg"),
             CategoryItem("Ovo-Vegetarian", "https://caitlinbenham.weebly.com/uploads/4/5/2/7/45271833/9122438.jpg?305"),
             CategoryItem("Vegan", "https://cdn.loveandlemons.com/wp-content/uploads/2019/12/vegan-recipes-500x375.jpg"),
@@ -130,7 +67,7 @@ val categoriesList: List<Category> = listOf(
         "Intolerances",
         listOf(
             CategoryItem("Dairy", "https://static01.nyt.com/images/2019/02/19/well/ask-food/ask-food-superJumbo.jpg"),
-            CategoryItem("Egg", "https://d35a0majfjch7v.cloudfront.net/wp-content/uploads/2018/09/Egg-Allergy-Symptoms-1200x675.jpeg"),
+            CategoryItem("Egg", "https://cdn.britannica.com/94/151894-050-F72A5317/Brown-eggs.jpg"),
             CategoryItem("Gluten", "https://www.healthline.com/hlcmsresource/images/AN_images/gluten-free-diet-thumb.jpg"),
             CategoryItem("Grain", "https://www.healthline.com/hlcmsresource/images/imce/allergies-wheat_thumb.jpg"),
             CategoryItem("Peanut", "https://cdn-prod.medicalnewstoday.com/content/images/articles/317/317540/caution-sign-representing-a-peanut-allergy.jpg"),
