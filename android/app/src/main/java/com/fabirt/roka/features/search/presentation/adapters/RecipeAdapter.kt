@@ -11,7 +11,8 @@ import com.fabirt.roka.core.data.network.model.RecipeInformationModel
 import com.fabirt.roka.core.utils.bindNetworkImage
 
 class RecipeAdapter(
-    private var recipes: List<RecipeInformationModel>
+    private var recipes: List<RecipeInformationModel>,
+    private val onRecipePressed: (RecipeInformationModel, ImageView) -> Unit
 ) : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
@@ -46,6 +47,9 @@ class RecipeAdapter(
             time.text =
                 itemView.context.getString(R.string.minutes_label, recipe.readyInMinutes ?: 0)
             bindNetworkImage(image, recipe.imageUrl)
+            itemView.setOnClickListener {
+                onRecipePressed(recipe, image)
+            }
         }
     }
 }

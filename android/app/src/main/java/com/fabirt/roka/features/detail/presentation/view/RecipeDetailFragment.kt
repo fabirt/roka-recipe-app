@@ -1,0 +1,40 @@
+package com.fabirt.roka.features.detail.presentation.view
+
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import androidx.transition.TransitionInflater
+import com.fabirt.roka.R
+import com.fabirt.roka.core.utils.bindNetworkImage
+import com.fabirt.roka.features.detail.presentation.view_model.DetailViewModel
+import kotlinx.android.synthetic.main.fragment_recipe_detail.*
+
+class RecipeDetailFragment : Fragment() {
+
+    private val viewModel: DetailViewModel by activityViewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        sharedElementEnterTransition =
+            TransitionInflater.from(context).inflateTransition(android.R.transition.move)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_recipe_detail, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.recipeInfo.observe(viewLifecycleOwner, Observer { recipe ->
+            bindNetworkImage(ivRecipe, recipe.imageUrl)
+        })
+    }
+
+}
