@@ -73,7 +73,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/textTime"
             app:layout_constraintEnd_toStartOf="@+id/textTime"
             app:layout_constraintTop_toTopOf="@+id/textTime"
-            app:srcCompat="@drawable/ic_favorites_outline"
+            app:srcCompat="@drawable/ic_time"
             app:tint="@color/colorAccent"
             tools:ignore="ContentDescription" />
 
