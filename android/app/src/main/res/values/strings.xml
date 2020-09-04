@@ -14,4 +14,7 @@
     <string name="onboarding_body_2">Search for your favorite traditional\nand continental recipes.</string>
     <string name="onboarding_title_3">Save your\nfavorite recipes</string>
     <string name="onboarding_body_3">Save your favorite recipes, create your\nown reccipe book and share it with friends.</string>
+    <string name="minutes_label">%1$d min</string>
+    <string name="by_source">by %1$s</string>
+    <string name="unknown">Unknown</string>
 </resources>

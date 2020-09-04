@@ -6,15 +6,15 @@ data class RecipeInformationModel(
     @SerializedName("id")
     val id: Int,
     @SerializedName("sourceName")
-    val sourceName: String,
+    val sourceName: String?,
     @SerializedName("title")
     val title: String,
     @SerializedName("readyInMinutes")
-    val readyInMinutes: Int,
+    val readyInMinutes: Int?,
     @SerializedName("servings")
-    val servings: Int,
+    val servings: Int?,
     @SerializedName("sourceUrl")
-    val sourceUrl: String,
+    val sourceUrl: String?,
     @SerializedName("image")
     val imageUrl: String
 )

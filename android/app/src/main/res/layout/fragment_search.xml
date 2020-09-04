@@ -12,4 +12,17 @@
 
     <include layout="@layout/search_bar" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvRecipes"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:layoutAnimation="@anim/categories_layout_anim"
+        android:overScrollMode="never"
+        android:paddingTop="8dp"
+        android:paddingBottom="24dp"
+        tools:itemCount="3"
+        tools:layoutAnimation="@null"
+        tools:listitem="@layout/view_recipe" />
+
 </LinearLayout>
