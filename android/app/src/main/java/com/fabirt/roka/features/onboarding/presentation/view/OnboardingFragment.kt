@@ -9,10 +9,9 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.fabirt.roka.R
-import com.fabirt.roka.features.onboarding.domain.model.OnboardingItem
+import com.fabirt.roka.features.onboarding.constants.onboardingItems
 import com.fabirt.roka.features.onboarding.presentation.adapters.ViewPagerAdapter
 import kotlinx.android.synthetic.main.fragment_onboarding.*
-
 
 class OnboardingFragment : Fragment() {
 
@@ -28,22 +27,7 @@ class OnboardingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val items = listOf(
-            OnboardingItem(
-                R.drawable.onboarding_img_1,
-                R.string.onboarding_title_1,
-                R.string.onboarding_body_1
-            ), OnboardingItem(
-                R.drawable.onboarding_img_1,
-                R.string.onboarding_title_1,
-                R.string.onboarding_body_1
-            ), OnboardingItem(
-                R.drawable.onboarding_img_1,
-                R.string.onboarding_title_1,
-                R.string.onboarding_body_1
-            )
-        )
-        adapter = ViewPagerAdapter(items)
+        adapter = ViewPagerAdapter(onboardingItems)
         viewPager.adapter = adapter
         dotsIndicator.setViewPager2(viewPager)
 
