@@ -2,49 +2,35 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout"
+    android:id="@+id/onboardingLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginHorizontal="24dp"
     android:gravity="center"
     android:orientation="vertical"
     android:weightSum="100"
     tools:context=".features.onboarding.presentation.view.OnboardingFragment">
 
-    <ImageView
-        android:id="@+id/imageView"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="4dp"
-        android:layout_weight="50"
-        android:src="@drawable/onboarding_img_1"
-        tools:ignore="ContentDescription" />
+        android:layout_weight="70"
+        android:layoutAnimation="@anim/categories_layout_anim"
+        android:overScrollMode="never"
+        tools:itemCount="5" />
 
-    <TextView
-        android:id="@+id/obTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:fontFamily="@font/sf_pro_text_medium"
-        android:gravity="center"
-        android:text="@string/onboarding_title_1"
-        android:textAllCaps="true"
-        android:textColor="@color/colorOnSurface"
-        android:textSize="24sp" />
-
-    <TextView
-        android:id="@+id/obBody"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/sf_pro_text_medium"
-        android:gravity="center"
-        android:text="@string/onboarding_body_1"
-        android:textSize="16sp" />
+    <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+        android:id="@+id/dotsIndicator"
+        android:layout_width="wrap_content"
+        app:dotsSize="12dp"
+        app:dotsColor="@color/colorOnSurface"
+        app:selectedDotColor="@color/colorOnSurface"
+        android:layout_height="wrap_content" />
 
     <Space
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="10" />
+        android:layout_weight="8" />
 
     <Button
         android:id="@+id/buttonStart"
