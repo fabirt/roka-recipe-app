@@ -8,6 +8,6 @@ interface RecipeService {
     @GET("/recipes/complexSearch")
     suspend fun searchRecipes(
         @Query("query") query: String,
-        @Query("addRecipeInformation") addRecipeInformation: Boolean = false
+        @Query("addRecipeInformation") addRecipeInformation: Boolean
     ) : RecipeSearchResponse
 }
