@@ -1,5 +1,7 @@
 package com.fabirt.roka.core.data.network.client
 
+import com.fabirt.roka.BuildConfig
+import com.fabirt.roka.core.constants.K
 import com.fabirt.roka.core.data.network.services.RecipeService
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -12,7 +14,7 @@ object RecipesApiClient {
             val url = chain.request()
                 .url()
                 .newBuilder()
-                .addQueryParameter("apiKey", "25adf0e2519a4c33bf8b486aab92b2b6")
+                .addQueryParameter("apiKey", BuildConfig.API_KEY)
                 .build()
 
             val request = chain.request()
@@ -32,7 +34,7 @@ object RecipesApiClient {
     fun getRecipeService(): RecipeService {
         return Retrofit.Builder()
             .client(getHttpClient())
-            .baseUrl("https://api.spoonacular.com")
+            .baseUrl(K.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(RecipeService::class.java)
