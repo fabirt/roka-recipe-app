@@ -7,20 +7,23 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.transition.TransitionInflater
 import com.fabirt.roka.R
 import com.fabirt.roka.core.utils.bindNetworkImage
+import com.fabirt.roka.features.detail.presentation.adapters.RecipeDetailAdapter
 import com.fabirt.roka.features.detail.presentation.view_model.DetailViewModel
 import kotlinx.android.synthetic.main.fragment_recipe_detail.*
 
 class RecipeDetailFragment : Fragment() {
 
     private val viewModel: DetailViewModel by activityViewModels()
+    private lateinit var adapter: RecipeDetailAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sharedElementEnterTransition =
-            TransitionInflater.from(context).inflateTransition(android.R.transition.move)
+//        sharedElementEnterTransition =
+//            TransitionInflater.from(context).inflateTransition(android.R.transition.move)
     }
 
     override fun onCreateView(
@@ -32,7 +35,13 @@ class RecipeDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        adapter = RecipeDetailAdapter()
+        val layoutManager = LinearLayoutManager(requireContext())
+        rvDetails.adapter = adapter
+        rvDetails.layoutManager = layoutManager
         viewModel.recipeInfo.observe(viewLifecycleOwner, Observer { recipe ->
+            rvDetails.scheduleLayoutAnimation()
+            adapter.submitRecipeInfo(recipe)
             bindNetworkImage(ivRecipe, recipe.imageUrl)
         })
     }

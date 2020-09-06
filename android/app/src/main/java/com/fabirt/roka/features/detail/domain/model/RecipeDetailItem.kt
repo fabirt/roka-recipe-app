@@ -14,8 +14,8 @@ sealed class RecipeDetailItem {
             get() = element.id
     }
 
-    data class RecipeDirection(val element: RecipeElement) : RecipeDetailItem() {
+    data class RecipeDirection(val number: Int, val text: String) : RecipeDetailItem() {
         override val id: Int
-            get() = element.id
+            get() = number + text.hashCode()
     }
 }
