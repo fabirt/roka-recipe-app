@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="70"
-        android:layoutAnimation="@anim/categories_layout_anim"
+        android:layoutAnimation="@anim/entrance_layout_anim"
         android:overScrollMode="never"
         tools:itemCount="3" />
 

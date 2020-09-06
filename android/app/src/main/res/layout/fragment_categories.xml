@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:clipToPadding="false"
-        android:layoutAnimation="@anim/categories_layout_anim"
+        android:layoutAnimation="@anim/entrance_layout_anim"
         android:overScrollMode="never"
         android:paddingBottom="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
