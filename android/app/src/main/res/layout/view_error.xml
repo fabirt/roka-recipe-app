@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvErrorTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"
+        android:fontFamily="@font/sf_pro_text_medium"
+        android:gravity="center"
+        android:text="@string/error_title"
+        android:textColor="@color/colorOnSurface"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/tvErrorSubtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/sf_pro_text_medium"
+        android:gravity="center"
+        android:text="@string/error_title"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/btnRetry"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="8sp"
+        android:text="@string/retry"
+        android:textSize="16sp" />
+
+
+</LinearLayout>
