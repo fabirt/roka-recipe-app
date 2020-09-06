@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
@@ -17,6 +18,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fabirt.roka.R
+import com.fabirt.roka.core.data.network.model.RecipeInformationModel
 import com.fabirt.roka.features.detail.presentation.view_model.DetailViewModel
 import com.fabirt.roka.features.search.presentation.adapters.RecipeAdapter
 import com.fabirt.roka.features.search.presentation.view_model.SearchViewModel
@@ -42,14 +44,7 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = RecipeAdapter(listOf()) { recipe, image ->
-            detailViewModel.setRecipeInfo(recipe)
-            val action = SearchFragmentDirections.actionSearchFragmentToRecipeDetailFragment()
-            val extras = FragmentNavigatorExtras(
-                image to "recipeImage"
-            )
-            view.findNavController().navigate(action, extras)
-        }
+        adapter = RecipeAdapter(listOf(), ::onRecipePressed)
         rvRecipes.layoutManager = LinearLayoutManager(requireContext())
         rvRecipes.adapter = adapter
         setupListeners()
@@ -77,6 +72,10 @@ class SearchFragment : Fragment() {
             editTextSearch.text.clear()
         }
 
+        rvRecipes.setOnScrollChangeListener { v, _, _, _, _ ->
+            dismissKeyboard(v)
+        }
+
         viewModel.recipes.observe(viewLifecycleOwner, Observer { recipes ->
             Log.i(TAG, recipes.toString())
             rvRecipes.scheduleLayoutAnimation()
@@ -86,6 +85,7 @@ class SearchFragment : Fragment() {
         viewModel.isSearching.observe(viewLifecycleOwner, Observer { isSearching ->
             rvRecipes.visibility = if (isSearching) View.GONE else View.VISIBLE
             spinView.visibility = if (isSearching) View.VISIBLE else View.GONE
+            if (isSearching) rvRecipes.layoutManager?.scrollToPosition(0)
         })
     }
 
@@ -94,6 +94,16 @@ class SearchFragment : Fragment() {
         if (text.isNotEmpty()) {
             viewModel.requestRecipes(text)
         }
+    }
+
+    private fun onRecipePressed(recipe: RecipeInformationModel, image: ImageView) {
+        detailViewModel.setRecipeInfo(recipe)
+        dismissKeyboard(editTextSearch)
+        val action = SearchFragmentDirections.actionSearchFragmentToRecipeDetailFragment()
+        val extras = FragmentNavigatorExtras(
+            image to "recipeImage"
+        )
+        view?.findNavController()?.navigate(action, extras)
     }
 
     private fun dismissKeyboard(view: View) {

@@ -32,10 +32,10 @@ class SearchViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 _isSearching.value = true
-                val result = service.searchRecipes(query, true)
+                // val result = service.searchRecipes(query, true)
                 _isSearching.value = false
                 delay(250)
-                _recipes.value = result.results
+                _recipes.value = getFakeData()
             } catch (e: Exception) {
                 Log.e("SearchViewModel", e.toString())
                 _isSearching.value = false
@@ -189,6 +189,6 @@ class SearchViewModel : ViewModel() {
                 )
             )
         )
-        return listOf(data)
+        return listOf(data, data.copy(id = 2), data.copy(id = 3), data.copy(id = 4))
     }
 }
