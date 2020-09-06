@@ -69,4 +69,7 @@ dependencies {
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$version_retrofit"
     implementation "com.squareup.retrofit2:converter-gson:$version_retrofit"
+
+    // Loading Indicators
+    implementation "com.github.ybq:Android-SpinKit:1.4.0"
 }

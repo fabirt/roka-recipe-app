@@ -35,6 +35,7 @@ class CategoriesFragment : Fragment() {
         rvCategories.adapter = adapter
 
         viewModel.categories.observe(viewLifecycleOwner, Observer { categories ->
+            spinView.visibility = View.GONE
             rvCategories.scheduleLayoutAnimation()
             adapter.submitList(categories)
         })
