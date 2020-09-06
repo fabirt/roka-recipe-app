@@ -1,7 +1,6 @@
 package com.fabirt.roka.features.search.presentation.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -24,6 +23,8 @@ import com.fabirt.roka.features.search.presentation.adapters.RecipeAdapter
 import com.fabirt.roka.features.search.presentation.view_model.SearchViewModel
 import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.android.synthetic.main.search_bar.*
+import kotlinx.android.synthetic.main.view_empty.*
+import kotlinx.android.synthetic.main.view_error.*
 import kotlinx.android.synthetic.main.view_spin_indicator.*
 
 class SearchFragment : Fragment() {
@@ -76,22 +77,50 @@ class SearchFragment : Fragment() {
             dismissKeyboard(v)
         }
 
+        btnRetry.setOnClickListener {
+            requestSearch(shouldRetry = true)
+        }
+
         viewModel.recipes.observe(viewLifecycleOwner, Observer { recipes ->
-            Log.i(TAG, recipes.toString())
-            rvRecipes.scheduleLayoutAnimation()
-            adapter.submitList(recipes)
+            if (recipes.isEmpty()) {
+                rvRecipes.visibility = View.GONE
+                emptyView.visibility = View.VISIBLE
+            } else {
+                rvRecipes.visibility = View.VISIBLE
+                emptyView.visibility = View.GONE
+                rvRecipes.scheduleLayoutAnimation()
+                adapter.submitList(recipes)
+            }
         })
 
         viewModel.isSearching.observe(viewLifecycleOwner, Observer { isSearching ->
-            rvRecipes.visibility = if (isSearching) View.GONE else View.VISIBLE
-            spinView.visibility = if (isSearching) View.VISIBLE else View.GONE
-            if (isSearching) rvRecipes.layoutManager?.scrollToPosition(0)
+            if (isSearching) {
+                rvRecipes.visibility = View.GONE
+                spinView.visibility = View.VISIBLE
+                emptyView.visibility = View.GONE
+                rvRecipes.layoutManager?.scrollToPosition(0)
+            } else {
+                rvRecipes.visibility = View.VISIBLE
+                spinView.visibility = View.GONE
+            }
+        })
+
+        viewModel.failure.observe(viewLifecycleOwner, Observer { failure ->
+            if (failure != null) {
+                rvRecipes.visibility = View.GONE
+                errorView.visibility = View.VISIBLE
+                emptyView.visibility = View.GONE
+                tvErrorSubtitle.text = failure.toString()
+            } else {
+                rvRecipes.visibility = View.VISIBLE
+                errorView.visibility = View.GONE
+            }
         })
     }
 
-    private fun requestSearch() {
+    private fun requestSearch(shouldRetry: Boolean = false) {
         val text = editTextSearch.text.toString()
-        if (text.isNotEmpty()) {
+        if (text.isNotEmpty() || shouldRetry) {
             viewModel.requestRecipes(text)
         }
     }

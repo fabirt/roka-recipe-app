@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/errorView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
+    android:gravity="center"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/tvErrorTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="6dp"
+        android:layout_marginBottom="4dp"
         android:fontFamily="@font/sf_pro_text_medium"
         android:gravity="center"
         android:text="@string/error_title"
         android:textColor="@color/colorOnSurface"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/tvErrorSubtitle"
@@ -32,6 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="8sp"
+        android:fontFamily="@font/sf_pro_text_medium"
         android:text="@string/retry"
         android:textSize="16sp" />
 

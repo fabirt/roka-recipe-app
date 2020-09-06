@@ -19,15 +19,15 @@ class RecipeRepositoryImpl(
         addRecipeInformation: Boolean
     ): Either<Failure, List<RecipeInformationModel>> {
         return try {
-            //val result = service.searchRecipes(query, addRecipeInformation)
-            right(getFakeData())
+            val result = service.searchRecipes(query, addRecipeInformation)
+            right(result.results)
         } catch (e: Exception) {
             left(Failure.UnexpectedFailure)
         }
     }
 
     private suspend fun getFakeData(): List<RecipeInformationModel> {
-        delay(500)
+        delay(600)
         val data = RecipeInformationModel(
             1,
             "Foodista",

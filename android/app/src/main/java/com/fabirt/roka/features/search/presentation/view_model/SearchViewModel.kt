@@ -9,6 +9,7 @@ import com.fabirt.roka.core.data.network.client.RecipesApiClient
 import com.fabirt.roka.core.data.network.model.RecipeInformationModel
 import com.fabirt.roka.core.domain.repository.RecipeRepository
 import com.fabirt.roka.core.domain.repository.RecipeRepositoryImpl
+import com.fabirt.roka.core.error.Failure
 import kotlinx.coroutines.launch
 
 class SearchViewModel : ViewModel() {
@@ -22,6 +23,10 @@ class SearchViewModel : ViewModel() {
     val isSearching: LiveData<Boolean>
         get() = _isSearching
 
+    private val _failure = MutableLiveData<Failure?>()
+    val failure: LiveData<Failure?>
+        get() = _failure
+
     init {
         val service = RecipesApiClient.getRecipeService()
         repository = RecipeRepositoryImpl(service)
@@ -33,13 +38,14 @@ class SearchViewModel : ViewModel() {
 
     fun requestRecipes(query: String = "") {
         viewModelScope.launch {
+            _failure.value = null
             _isSearching.value = true
             val result = repository.searchRecipes(query, true)
             _isSearching.value = false
             result.fold(
                 { failure ->
                     Log.e("requestRecipes", failure.toString())
-                    _recipes.value = listOf()
+                    _failure.value = failure
                 },
                 { recipes ->
                     _recipes.value = recipes
