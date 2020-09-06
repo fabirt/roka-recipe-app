@@ -10,6 +10,7 @@ import com.fabirt.roka.core.data.network.model.InstructionStep
 import com.fabirt.roka.core.data.network.model.RecipeElement
 import com.fabirt.roka.core.data.network.model.RecipeInformationModel
 import com.fabirt.roka.core.data.network.model.RecipeInstructions
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class SearchViewModel : ViewModel() {
@@ -19,14 +20,25 @@ class SearchViewModel : ViewModel() {
     val recipes: LiveData<List<RecipeInformationModel>>
         get() = _recipes
 
-    fun requestRecipes() {
-        if (_recipes.value?.isNotEmpty() == true) return
+    private val _isSearching = MutableLiveData(true)
+    val isSearching: LiveData<Boolean>
+        get() = _isSearching
+
+    init {
+        requestRecipes()
+    }
+
+    fun requestRecipes(query: String = "") {
         viewModelScope.launch {
             try {
-                //val result = service.searchRecipes("pasta", true)
-                _recipes.value = getFakeData()
+                _isSearching.value = true
+                val result = service.searchRecipes(query, true)
+                _isSearching.value = false
+                delay(250)
+                _recipes.value = result.results
             } catch (e: Exception) {
                 Log.e("SearchViewModel", e.toString())
+                _isSearching.value = false
             }
         }
     }

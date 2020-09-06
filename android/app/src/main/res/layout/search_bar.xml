@@ -30,7 +30,7 @@
         android:background="@color/transparent"
         android:fontFamily="@font/sf_pro_text_medium"
         android:hint="@string/search_bar_hint"
-        android:imeOptions="actionDone"
+        android:imeOptions="actionSearch"
         android:importantForAutofill="no"
         android:inputType="text|textNoSuggestions"
         android:paddingVertical="12dp"
