@@ -19,8 +19,8 @@ class RecipeRepositoryImpl(
         addRecipeInformation: Boolean
     ): Either<Failure, List<RecipeInformationModel>> {
         return try {
-            val result = service.searchRecipes(query, addRecipeInformation)
-            right(result.results)
+            //val result = service.searchRecipes(query, addRecipeInformation)
+            right(getFakeData())
         } catch (e: Exception) {
             left(Failure.UnexpectedFailure)
         }

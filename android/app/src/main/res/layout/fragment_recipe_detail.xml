@@ -25,6 +25,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:clipToPadding="false"
+        android:layoutAnimation="@anim/detail_layout_anim"
         android:overScrollMode="never"
         android:paddingTop="8dp"
         android:paddingBottom="24dp"
@@ -32,6 +33,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ivRecipe"
+        tools:layoutAnimation="@null"
         tools:listitem="@layout/view_direction" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
