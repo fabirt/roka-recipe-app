@@ -10,8 +10,9 @@ import com.fabirt.roka.core.utils.Either
 import com.fabirt.roka.core.utils.left
 import com.fabirt.roka.core.utils.right
 import kotlinx.coroutines.delay
+import javax.inject.Inject
 
-class RecipeRepositoryImpl(
+class RecipeRepositoryImpl @Inject constructor(
     private val service: RecipeService
 ) : RecipeRepository {
     override suspend fun searchRecipes(

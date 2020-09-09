@@ -1,6 +1,7 @@
 package com.fabirt.roka.features.search.presentation.view_model
 
 import android.util.Log
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,8 +13,9 @@ import com.fabirt.roka.core.domain.repository.RecipeRepositoryImpl
 import com.fabirt.roka.core.error.Failure
 import kotlinx.coroutines.launch
 
-class SearchViewModel : ViewModel() {
+class SearchViewModel @ViewModelInject constructor(
     private val repository: RecipeRepository
+) : ViewModel() {
 
     private val _recipes = MutableLiveData<List<RecipeInformationModel>>()
     val recipes: LiveData<List<RecipeInformationModel>>
@@ -26,11 +28,6 @@ class SearchViewModel : ViewModel() {
     private val _failure = MutableLiveData<Failure?>()
     val failure: LiveData<Failure?>
         get() = _failure
-
-    init {
-        val service = RecipesApiClient.getRecipeService()
-        repository = RecipeRepositoryImpl(service)
-    }
 
     init {
         requestRecipes()
