@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
+apply plugin: 'dagger.hilt.android.plugin'
 
 def localProperties = new Properties()
 localProperties.load(new FileInputStream(rootProject.file("local.properties")))
@@ -77,4 +78,10 @@ dependencies {
 
     // Loading Indicators
     implementation "com.github.ybq:Android-SpinKit:1.4.0"
+
+    // Hilt
+    implementation "com.google.dagger:hilt-android:$version_hilt"
+    kapt "com.google.dagger:hilt-android-compiler:$version_hilt"
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$version_hilt_jetpack"
+    kapt "androidx.hilt:hilt-compiler:$version_hilt_jetpack"
 }
