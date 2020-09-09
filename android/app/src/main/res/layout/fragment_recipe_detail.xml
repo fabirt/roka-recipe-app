@@ -121,6 +121,25 @@
         app:layout_constraintTop_toTopOf="@+id/ivTime"
         tools:text="25 min" />
 
+    <FrameLayout
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@drawable/back_btn_bg"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_arrow_left"
+            app:tint="@color/colorSurface"
+            tools:ignore="ContentDescription" />
+    </FrameLayout>
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvDetails"
         android:layout_width="0dp"

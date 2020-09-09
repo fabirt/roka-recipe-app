@@ -5,8 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.transition.TransitionInflater
 import com.fabirt.roka.R
@@ -48,6 +50,16 @@ class RecipeDetailFragment : Fragment() {
             tvTime.text = getString(R.string.minutes_label, recipe.readyInMinutes)
             tvScore.text = recipe.score?.toString()
         })
+
+        btnBack.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
+        ivRecipe.setOnClickListener {
+            viewModel.recipeInfo.value?.let {
+                Toast.makeText(requireContext(), it.imageUrl, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
 }
