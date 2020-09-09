@@ -43,6 +43,10 @@ class RecipeDetailFragment : Fragment() {
             rvDetails.scheduleLayoutAnimation()
             adapter.submitRecipeInfo(recipe)
             bindNetworkImage(ivRecipe, recipe.imageUrl)
+            tvName.text = recipe.title
+            tvPeople.text = recipe.servings?.toString()
+            tvTime.text = getString(R.string.minutes_label, recipe.readyInMinutes)
+            tvScore.text = recipe.score?.toString()
         })
     }
 

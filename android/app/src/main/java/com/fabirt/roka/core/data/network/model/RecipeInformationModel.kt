@@ -12,6 +12,8 @@ data class RecipeInformationModel(
     @SerializedName("image")
     val imageUrl: String,
     val summary: String?,
+    @SerializedName("spoonacularScore")
+    val score: Float?,
     @SerializedName("analyzedInstructions")
     val instructions: List<RecipeInstructions>?
 )

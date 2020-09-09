@@ -38,6 +38,7 @@ class RecipeRepositoryImpl @Inject constructor(
             "",
             "https://spoonacular.com/recipeImages/654959-312x231.jpg",
             "Summary",
+            91f,
             listOf(
                 RecipeInstructions(
                     listOf(

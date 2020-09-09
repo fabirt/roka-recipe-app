@@ -5,6 +5,7 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".features.detail.presentation.view.RecipeDetailFragment">
 
     <ImageView
@@ -13,12 +14,112 @@
         android:layout_height="0dp"
         android:scaleType="centerCrop"
         android:transitionName="recipeImage"
-        app:layout_constraintDimensionRatio="4:2"
+        app:layout_constraintDimensionRatio="5:3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription"
         tools:src="@tools:sample/avatars" />
+
+    <View
+        android:id="@+id/overlay"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/recipe_image_overlay"
+        app:layout_constraintDimensionRatio="5:3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/sf_pro_text_medium"
+        android:textColor="@color/colorSurface"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/ivPeople"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="Strawberry Smoothie" />
+
+    <ImageView
+        android:id="@+id/ivPeople"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/ic_people"
+        app:layout_constraintBottom_toBottomOf="@+id/ivRecipe"
+        app:layout_constraintStart_toStartOf="parent"
+        app:tint="@color/colorAccent"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/tvPeople"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:fontFamily="@font/sf_pro_text_regular"
+        android:textColor="@color/colorSurface"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/ivPeople"
+        app:layout_constraintStart_toEndOf="@+id/ivPeople"
+        app:layout_constraintTop_toTopOf="@+id/ivPeople"
+        tools:text="12" />
+
+    <ImageView
+        android:id="@+id/ivScore"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="16dp"
+        android:src="@drawable/ic_star"
+        app:layout_constraintBottom_toBottomOf="@+id/tvPeople"
+        app:layout_constraintStart_toEndOf="@+id/tvPeople"
+        app:layout_constraintTop_toTopOf="@+id/tvPeople"
+        app:tint="@color/colorAccent"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/tvScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:fontFamily="@font/sf_pro_text_regular"
+        android:textColor="@color/colorSurface"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/ivScore"
+        app:layout_constraintStart_toEndOf="@+id/ivScore"
+        app:layout_constraintTop_toTopOf="@+id/ivScore"
+        tools:text="93" />
+
+    <ImageView
+        android:id="@+id/ivTime"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="16dp"
+        android:src="@drawable/ic_time"
+        app:layout_constraintBottom_toBottomOf="@+id/tvScore"
+        app:layout_constraintStart_toEndOf="@+id/tvScore"
+        app:layout_constraintTop_toTopOf="@+id/tvScore"
+        app:tint="@color/colorAccent"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/tvTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:fontFamily="@font/sf_pro_text_regular"
+        android:textColor="@color/colorSurface"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/ivTime"
+        app:layout_constraintStart_toEndOf="@+id/ivTime"
+        app:layout_constraintTop_toTopOf="@+id/ivTime"
+        tools:text="25 min" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvDetails"
