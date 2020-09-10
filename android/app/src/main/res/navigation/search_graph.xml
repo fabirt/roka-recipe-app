@@ -10,7 +10,7 @@
         android:id="@+id/searchFragment"
         android:name="com.fabirt.roka.features.search.presentation.view.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" >
+        tools:layout="@layout/fragment_search">
         <action
             android:id="@+id/action_searchFragment_to_recipeDetailFragment"
             app:destination="@id/recipeDetailFragment"
@@ -23,5 +23,22 @@
         android:id="@+id/recipeDetailFragment"
         android:name="com.fabirt.roka.features.detail.presentation.view.RecipeDetailFragment"
         android:label="fragment_recipe_detail"
-        tools:layout="@layout/fragment_recipe_detail" />
+        tools:layout="@layout/fragment_recipe_detail">
+        <action
+            android:id="@+id/action_recipeDetailFragment_to_photoRecipeFragment"
+            app:destination="@id/photoRecipeFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/photoRecipeFragment"
+        android:name="com.fabirt.roka.features.detail.presentation.view.PhotoRecipeFragment"
+        android:label="fragment_photo_recipe"
+        tools:layout="@layout/fragment_photo_recipe">
+        <argument
+            android:name="imageUrl"
+            app:argType="string" />
+    </fragment>
 </navigation>

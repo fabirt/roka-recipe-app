@@ -13,8 +13,8 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fabirt.roka.R
 import com.fabirt.roka.core.data.network.model.RecipeInformationModel
@@ -134,7 +134,7 @@ class SearchFragment : Fragment() {
         val extras = FragmentNavigatorExtras(
             image to "recipeImage"
         )
-        view?.findNavController()?.navigate(action, extras)
+        findNavController().navigate(action, extras)
     }
 
     private fun dismissKeyboard(view: View) {
