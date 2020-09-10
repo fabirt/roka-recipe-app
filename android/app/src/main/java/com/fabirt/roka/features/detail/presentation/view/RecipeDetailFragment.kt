@@ -1,11 +1,12 @@
 package com.fabirt.roka.features.detail.presentation.view
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsets
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigatorExtras
@@ -22,7 +23,6 @@ class RecipeDetailFragment : Fragment() {
 
     private val viewModel: DetailViewModel by activityViewModels()
     private lateinit var adapter: RecipeDetailAdapter
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,7 +56,8 @@ class RecipeDetailFragment : Fragment() {
         }
 
         ivShare.setOnClickListener {
-            // Share link
+            // Share recipe
+            shareRecipe()
         }
 
         ivWeb.setOnClickListener {
@@ -107,5 +108,20 @@ class RecipeDetailFragment : Fragment() {
         params.setMargins(0, insets.systemWindowInsetTop, 0, 0)
         view.layoutParams = params
         return insets
+    }
+
+    private fun shareRecipe() {
+        viewModel.recipeInfo.value?.let { recipe ->
+            val title = getString(R.string.share_title)
+            val content = getString(R.string.share_content, recipe.title, recipe.sourceUrl)
+            val sendIntent = Intent().apply {
+                action = Intent.ACTION_SEND
+                type = "text/plain"
+                putExtra(Intent.EXTRA_TITLE, title)
+                putExtra(Intent.EXTRA_TEXT, content)
+            }
+            val shareIntent = Intent.createChooser(sendIntent, null)
+            startActivity(shareIntent)
+        }
     }
 }

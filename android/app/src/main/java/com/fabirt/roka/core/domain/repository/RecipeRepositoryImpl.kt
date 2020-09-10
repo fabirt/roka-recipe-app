@@ -35,7 +35,7 @@ class RecipeRepositoryImpl @Inject constructor(
             "Pasta With Tuna",
             45,
             4,
-            "",
+            "http://www.foodista.com/recipe/K6QWSKQM/pasta-with-tuna",
             "https://spoonacular.com/recipeImages/654959-312x231.jpg",
             "Summary",
             91f,

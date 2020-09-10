@@ -20,6 +20,6 @@
     <string name="error_title">Something went wrong</string>
     <string name="retry">Try again</string>
     <string name="no_results_found">No results found</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="share_title">Share recipe</string>
+    <string name="share_content">Hi! look at this delicious %1$s here %2$s</string>
 </resources>
