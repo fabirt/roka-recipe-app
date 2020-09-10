@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import androidx.core.view.updatePadding
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -24,14 +23,12 @@ class RecipeDetailFragment : Fragment() {
     private val viewModel: DetailViewModel by activityViewModels()
     private lateinit var adapter: RecipeDetailAdapter
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val window = requireActivity().window
-        window.decorView.systemUiVisibility = (window.decorView.systemUiVisibility
-                and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv())
-        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        configureStatusBar(false)
         return inflater.inflate(R.layout.fragment_recipe_detail, container, false)
     }
 
@@ -59,10 +56,7 @@ class RecipeDetailFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        val window = requireActivity().window
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-        window.decorView.systemUiVisibility = (window.decorView.systemUiVisibility
-                or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR)
+        configureStatusBar(true)
     }
 
     private fun buildView(recipe: RecipeInformationModel) {
@@ -83,6 +77,16 @@ class RecipeDetailFragment : Fragment() {
                 ivRecipe to PhotoRecipeFragment.SHARED_IMAGE
             )
             findNavController().navigate(action, extras)
+        }
+    }
+
+    private fun configureStatusBar(isLight: Boolean) {
+        val window = requireActivity().window
+        val currentFlags = window.decorView.systemUiVisibility
+        if (isLight) {
+            window.decorView.systemUiVisibility = currentFlags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        } else {
+            window.decorView.systemUiVisibility = currentFlags and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
         }
     }
 }

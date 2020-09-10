@@ -5,15 +5,13 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:colorBackground">@color/colorBackground</item>
-        <item name="android:windowTranslucentStatus">false</item>
         <item name="android:navigationBarColor">@color/colorSurface</item>
-        <item name="android:statusBarColor">@color/colorBackground</item>
+        <item name="android:statusBarColor">@color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <style name="LaunchTheme" parent="AppTheme">
         <item name="android:windowBackground">@drawable/launch_theme_background</item>
-        <item name="android:windowTranslucentStatus">false</item>
         <item name="android:navigationBarColor">@color/colorAccent</item>
         <item name="android:statusBarColor">@color/colorAccent</item>
         <item name="android:windowLightStatusBar">false</item>
