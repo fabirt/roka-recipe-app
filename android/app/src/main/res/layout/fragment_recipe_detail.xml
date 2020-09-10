@@ -120,23 +120,18 @@
         app:layout_constraintTop_toTopOf="@+id/ivTime"
         tools:text="25 min" />
 
-    <FrameLayout
+    <ImageView
         android:id="@+id/btnBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@drawable/icon_button_ripple"
+        android:padding="12dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_back"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:background="@drawable/back_btn_bg"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_arrow_left"
-            app:tint="@color/colorSurface"
-            tools:ignore="ContentDescription" />
-    </FrameLayout>
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/colorSurface"
+        tools:ignore="ContentDescription" />
 
 
     <androidx.recyclerview.widget.RecyclerView
