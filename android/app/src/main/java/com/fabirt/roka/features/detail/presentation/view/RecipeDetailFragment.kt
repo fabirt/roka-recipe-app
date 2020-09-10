@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.updatePadding
+import android.view.WindowInsets
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigatorExtras
@@ -40,6 +40,9 @@ class RecipeDetailFragment : Fragment() {
         rvDetails.layoutManager = layoutManager
         viewModel.recipeInfo.observe(viewLifecycleOwner, Observer(::buildView))
 
+        btnBack.setOnApplyWindowInsetsListener(::applyTopWindowInsets)
+        ivSave.setOnApplyWindowInsetsListener(::applyTopWindowInsets)
+
         btnBack.setOnClickListener {
             findNavController().navigateUp()
         }
@@ -48,9 +51,16 @@ class RecipeDetailFragment : Fragment() {
             openPhotoFragment()
         }
 
-        btnBack.setOnApplyWindowInsetsListener { v, insets ->
-            v.updatePadding(top = insets.systemWindowInsetTop + 18)
-            insets
+        ivSave.setOnClickListener {
+            // Save inn ht e database
+        }
+
+        ivShare.setOnClickListener {
+            // Share link
+        }
+
+        ivWeb.setOnClickListener {
+            // Open web view
         }
     }
 
@@ -84,9 +94,18 @@ class RecipeDetailFragment : Fragment() {
         val window = requireActivity().window
         val currentFlags = window.decorView.systemUiVisibility
         if (isLight) {
-            window.decorView.systemUiVisibility = currentFlags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            window.decorView.systemUiVisibility =
+                currentFlags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         } else {
-            window.decorView.systemUiVisibility = currentFlags and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
+            window.decorView.systemUiVisibility =
+                currentFlags and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
         }
+    }
+
+    private fun applyTopWindowInsets(view: View, insets: WindowInsets): WindowInsets {
+        val params = view.layoutParams as ViewGroup.MarginLayoutParams
+        params.setMargins(0, insets.systemWindowInsetTop, 0, 0)
+        view.layoutParams = params
+        return insets
     }
 }

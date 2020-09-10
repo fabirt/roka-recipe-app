@@ -155,4 +155,42 @@
         tools:layoutAnimation="@null"
         tools:listitem="@layout/view_direction" />
 
+    <ImageView
+        android:id="@+id/ivWeb"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@drawable/icon_button_ripple"
+        android:padding="12dp"
+        android:src="@drawable/ic_web"
+        app:layout_constraintBottom_toBottomOf="@+id/ivSave"
+        app:layout_constraintEnd_toStartOf="@id/ivShare"
+        app:layout_constraintTop_toTopOf="@+id/ivSave"
+        app:tint="@color/colorSurface"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/ivShare"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@drawable/icon_button_ripple"
+        android:padding="12dp"
+        android:src="@drawable/ic_share"
+        app:layout_constraintBottom_toBottomOf="@+id/ivSave"
+        app:layout_constraintEnd_toStartOf="@id/ivSave"
+        app:layout_constraintTop_toTopOf="@+id/ivSave"
+        app:tint="@color/colorSurface"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/ivSave"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@drawable/icon_button_ripple"
+        android:padding="12dp"
+        android:src="@drawable/ic_heart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/colorSurface"
+        tools:ignore="ContentDescription" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
