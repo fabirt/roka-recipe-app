@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.core.view.updatePadding
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -27,6 +28,10 @@ class RecipeDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val window = requireActivity().window
+        window.decorView.systemUiVisibility = (window.decorView.systemUiVisibility
+                and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv())
+        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         return inflater.inflate(R.layout.fragment_recipe_detail, container, false)
     }
 
@@ -50,6 +55,14 @@ class RecipeDetailFragment : Fragment() {
             v.updatePadding(top = insets.systemWindowInsetTop + 18)
             insets
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        val window = requireActivity().window
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window.decorView.systemUiVisibility = (window.decorView.systemUiVisibility
+                or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR)
     }
 
     private fun buildView(recipe: RecipeInformationModel) {
