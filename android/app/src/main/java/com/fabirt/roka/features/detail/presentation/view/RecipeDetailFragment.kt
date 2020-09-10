@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.updatePadding
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigatorExtras
@@ -43,6 +44,11 @@ class RecipeDetailFragment : Fragment() {
 
         ivRecipe.setOnClickListener {
             openPhotoFragment()
+        }
+
+        btnBack.setOnApplyWindowInsetsListener { v, insets ->
+            v.updatePadding(top = insets.systemWindowInsetTop + 18)
+            insets
         }
     }
 
