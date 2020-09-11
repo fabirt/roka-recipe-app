@@ -1,6 +1,7 @@
 package com.fabirt.roka.features.detail.presentation.view
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -52,7 +53,7 @@ class RecipeDetailFragment : Fragment() {
         }
 
         ivSave.setOnClickListener {
-            // Save inn ht e database
+            // Save in the database
         }
 
         ivShare.setOnClickListener {
@@ -62,6 +63,7 @@ class RecipeDetailFragment : Fragment() {
 
         ivWeb.setOnClickListener {
             // Open web view
+            openWebView()
         }
     }
 
@@ -112,16 +114,34 @@ class RecipeDetailFragment : Fragment() {
 
     private fun shareRecipe() {
         viewModel.recipeInfo.value?.let { recipe ->
-            val title = getString(R.string.share_title)
-            val content = getString(R.string.share_content, recipe.title, recipe.sourceUrl)
-            val sendIntent = Intent().apply {
-                action = Intent.ACTION_SEND
-                type = "text/plain"
-                putExtra(Intent.EXTRA_TITLE, title)
-                putExtra(Intent.EXTRA_TEXT, content)
+            val url = recipe.sourceUrl
+            if (url != null && url.isNotEmpty()) {
+                val title = recipe.title
+                val content = getString(R.string.share_content, recipe.title, url)
+                val sendIntent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    type = "text/plain"
+                    putExtra(Intent.EXTRA_TITLE, title)
+                    putExtra(Intent.EXTRA_TEXT, content)
+                }
+                val shareIntent = Intent.createChooser(sendIntent, null)
+                startActivity(shareIntent)
             }
-            val shareIntent = Intent.createChooser(sendIntent, null)
-            startActivity(shareIntent)
+        }
+    }
+
+    private fun openWebView(useBrowser: Boolean = true) {
+        viewModel.recipeInfo.value?.let {recipe->
+            val url = recipe.sourceUrl
+            if (url != null && url.isNotEmpty()) {
+                if (useBrowser) {
+                    val browserIntent = Intent().apply {
+                        action = Intent.ACTION_VIEW
+                        data = Uri.parse(url)
+                    }
+                    startActivity(browserIntent)
+                }
+            }
         }
     }
 }
