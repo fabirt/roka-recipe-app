@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsets
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -26,6 +28,12 @@ class RecipeDetailFragment : Fragment() {
 
     private val viewModel: DetailViewModel by activityViewModels()
     private lateinit var adapter: RecipeDetailAdapter
+    private lateinit var pulseAnim: Animation
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        pulseAnim = AnimationUtils.loadAnimation(requireContext(), R.anim.pulse_anim)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,6 +64,7 @@ class RecipeDetailFragment : Fragment() {
 
         ivSave.setOnClickListener {
             // Save in the database
+            it.startAnimation(pulseAnim)
         }
 
         ivShare.setOnClickListener {

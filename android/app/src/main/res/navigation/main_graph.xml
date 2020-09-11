@@ -39,5 +39,7 @@
         android:id="@+id/action_global_webDetailFragment"
         app:destination="@id/webDetailFragment"
         app:enterAnim="@anim/slide_in_up"
+        app:exitAnim="@anim/scale_move_out"
+        app:popEnterAnim="@anim/scale_move_in"
         app:popExitAnim="@anim/slide_out_down" />
 </navigation>
