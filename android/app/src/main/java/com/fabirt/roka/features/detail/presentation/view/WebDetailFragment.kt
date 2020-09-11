@@ -1,5 +1,6 @@
 package com.fabirt.roka.features.detail.presentation.view
 
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.KeyEvent
 import androidx.fragment.app.Fragment
@@ -51,15 +52,25 @@ class WebDetailFragment : Fragment(), WebViewDelegate {
         }
     }
 
+    override fun pageStarted(url: String?) {
+        progressBar?.visibility = View.VISIBLE
+    }
+
     override fun pageFinished(title: String, url: String) {
         tvUrl?.text = url
         tvTitle?.text = title
+        progressBar?.visibility = View.GONE
     }
 
 }
 
 class RecipeWebViewClient : WebViewClient() {
     var delegate: WebViewDelegate? = null
+
+    override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+        super.onPageStarted(view, url, favicon)
+        delegate?.pageStarted(url)
+    }
 
     override fun onPageFinished(view: WebView?, url: String?) {
         super.onPageFinished(view, url)
@@ -70,5 +81,7 @@ class RecipeWebViewClient : WebViewClient() {
 }
 
 interface WebViewDelegate {
+    fun pageStarted(url: String?)
+
     fun pageFinished(title: String, url: String)
 }
