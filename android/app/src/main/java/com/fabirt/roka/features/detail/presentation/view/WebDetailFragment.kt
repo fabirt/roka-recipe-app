@@ -8,13 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.TextView
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.fabirt.roka.R
 import kotlinx.android.synthetic.main.fragment_web_detail.*
 
-class WebDetailFragment : Fragment() {
+class WebDetailFragment : Fragment(), WebViewDelegate {
     private val args: WebDetailFragmentArgs by navArgs()
 
     override fun onCreateView(
@@ -35,9 +34,12 @@ class WebDetailFragment : Fragment() {
     private fun setupWebView() {
         tvUrl.text = args.url
         tvTitle.text = args.title
-        webView.webViewClient = RecipeWebViewClient(appBar)
+        val client = RecipeWebViewClient().apply {
+            delegate = this@WebDetailFragment
+        }
+        webView.webViewClient = client
         webView.loadUrl(args.url)
-        webView.setOnKeyListener { v, keyCode, event ->
+        webView.setOnKeyListener { _, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_BACK
                 && event.action == KeyEvent.ACTION_UP
                 && webView.canGoBack()
@@ -49,20 +51,24 @@ class WebDetailFragment : Fragment() {
         }
     }
 
+    override fun pageFinished(title: String, url: String) {
+        tvUrl?.text = url
+        tvTitle?.text = title
+    }
+
 }
 
-class RecipeWebViewClient(private val view: View) : WebViewClient() {
-    private val textViewTitle: TextView = view.findViewById(R.id.tvTitle)
-    private val textViewUrl: TextView = view.findViewById(R.id.tvUrl)
+class RecipeWebViewClient : WebViewClient() {
+    var delegate: WebViewDelegate? = null
 
     override fun onPageFinished(view: WebView?, url: String?) {
         super.onPageFinished(view, url)
-        view?.title?.let {
-            textViewTitle.text = it
-        }
-        url?.let {
-            textViewUrl.text = it
+        if (view?.title != null && url != null) {
+            delegate?.pageFinished(view.title, url)
         }
     }
+}
 
+interface WebViewDelegate {
+    fun pageFinished(title: String, url: String)
 }
