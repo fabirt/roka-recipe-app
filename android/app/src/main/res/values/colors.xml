@@ -7,4 +7,5 @@
     <color name="colorOnSurface">#E6000000</color>
     <color name="transparent">#00FFFFFF</color>
     <color name="rippleOnAccent">#3DFFFFFF</color>
+    <color name="rippleOnSurface">#2D000000</color>
 </resources>

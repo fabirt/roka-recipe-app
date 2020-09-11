@@ -10,9 +10,11 @@ import android.view.WindowInsets
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.fabirt.roka.MainGraphDirections
 import com.fabirt.roka.R
 import com.fabirt.roka.core.data.network.model.RecipeInformationModel
 import com.fabirt.roka.core.utils.bindNetworkImage
@@ -130,7 +132,7 @@ class RecipeDetailFragment : Fragment() {
         }
     }
 
-    private fun openWebView(useBrowser: Boolean = true) {
+    private fun openWebView(useBrowser: Boolean = false) {
         viewModel.recipeInfo.value?.let {recipe->
             val url = recipe.sourceUrl
             if (url != null && url.isNotEmpty()) {
@@ -140,8 +142,19 @@ class RecipeDetailFragment : Fragment() {
                         data = Uri.parse(url)
                     }
                     startActivity(browserIntent)
+                } else {
+                    val navController = Navigation.findNavController(
+                        requireActivity(),
+                        R.id.mainNavHostFragment
+                    )
+                    val action = MainGraphDirections.actionGlobalWebDetailFragment(
+                        url = url,
+                        title = recipe.title
+                    )
+                    navController.navigate(action)
                 }
             }
         }
     }
+
 }

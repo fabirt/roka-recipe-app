@@ -27,4 +27,5 @@ class MainActivity : AppCompatActivity() {
 
         window.decorView.systemUiVisibility = flags
     }
+
 }
