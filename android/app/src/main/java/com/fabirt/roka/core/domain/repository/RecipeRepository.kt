@@ -12,4 +12,9 @@ interface RecipeRepository {
         query: String,
         addRecipeInformation: Boolean
     ): Either<Failure, List<RecipeInformationModel>>
+
+    /**
+     * Request the recipe information for the given [id].
+     */
+    suspend fun requestRecipeInformation(id: Int): Either<Failure, RecipeInformationModel>
 }

@@ -24,6 +24,17 @@ class RecipeRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun requestRecipeInformation(
+        id: Int
+    ): Either<Failure, RecipeInformationModel> {
+        return try {
+            delay(1000)
+            right(getFakeData().first())
+        } catch (e: Exception) {
+            left(Failure.UnexpectedFailure)
+        }
+    }
+
     private suspend fun getFakeData(): List<RecipeInformationModel> {
         delay(600)
         val data = RecipeInformationModel(
