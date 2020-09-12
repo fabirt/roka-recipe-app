@@ -1,5 +1,7 @@
 package com.fabirt.roka.core.domain.repository
 
+import com.fabirt.roka.core.data.database.dao.RecipeDao
+import com.fabirt.roka.core.data.database.entities.DatabaseRecipeInformation
 import com.fabirt.roka.core.data.network.model.*
 import com.fabirt.roka.core.data.network.services.RecipeService
 import com.fabirt.roka.core.error.Failure
@@ -10,7 +12,8 @@ import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 class RecipeRepositoryImpl @Inject constructor(
-    private val service: RecipeService
+    private val service: RecipeService,
+    private val recipeDao: RecipeDao
 ) : RecipeRepository {
     override suspend fun searchRecipes(
         query: String,
@@ -33,6 +36,10 @@ class RecipeRepositoryImpl @Inject constructor(
         } catch (e: Exception) {
             left(Failure.UnexpectedFailure)
         }
+    }
+
+    override suspend fun requestFavoriteRecipes(): List<DatabaseRecipeInformation> {
+        return recipeDao.getRecipesWithInformation()
     }
 
     private suspend fun getFakeData(): List<RecipeInformationModel> {
