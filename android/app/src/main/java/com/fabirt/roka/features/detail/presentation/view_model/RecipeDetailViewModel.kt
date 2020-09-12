@@ -38,4 +38,14 @@ class RecipeDetailViewModel @ViewModelInject constructor(
             requestRecipeInfo(it)
         }
     }
+
+    fun saveFavoriteRecipe() {
+        viewModelScope.launch {
+            _state.value?.let { state ->
+                if (state is RecipeDetailState.Success) {
+                    repository.saveFavoriteRecipe(state.recipe)
+                }
+            }
+        }
+    }
 }

@@ -1,12 +1,13 @@
 package com.fabirt.roka.core.domain.repository
 
 import com.fabirt.roka.core.data.database.dao.RecipeDao
-import com.fabirt.roka.core.data.database.entities.DatabaseRecipeInformation
+import com.fabirt.roka.core.data.database.entities.asDomainModel
 import com.fabirt.roka.core.data.network.model.*
 import com.fabirt.roka.core.data.network.services.RecipeService
 import com.fabirt.roka.core.domain.model.Ingredient
 import com.fabirt.roka.core.domain.model.Instruction
 import com.fabirt.roka.core.domain.model.Recipe
+import com.fabirt.roka.core.domain.model.toDatabaseModel
 import com.fabirt.roka.core.error.Failure
 import com.fabirt.roka.core.utils.Either
 import com.fabirt.roka.core.utils.left
@@ -23,6 +24,7 @@ class RecipeRepositoryImpl @Inject constructor(
         addRecipeInformation: Boolean
     ): Either<Failure, List<Recipe>> {
         return try {
+            return right(getFakeData())
             val result = service.searchRecipes(query, addRecipeInformation)
             val recipes = result.results.map { it.asDomainModel() }
             right(recipes)
@@ -35,6 +37,7 @@ class RecipeRepositoryImpl @Inject constructor(
         id: Int
     ): Either<Failure, Recipe> {
         return try {
+            return right(getFakeData().first())
             val response = service.requestRecipeInformation(id)
             right(response.asDomainModel())
         } catch (e: Exception) {
@@ -42,8 +45,19 @@ class RecipeRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun requestFavoriteRecipes(): List<DatabaseRecipeInformation> {
-        return recipeDao.getRecipesWithInformation()
+    override suspend fun requestFavoriteRecipes(): List<Recipe> {
+        return recipeDao.getRecipesWithInformation().map {
+            it.asDomainModel()
+        }
+    }
+
+    override suspend fun saveFavoriteRecipe(recipe: Recipe) {
+        val model = recipe.toDatabaseModel()
+        recipeDao.insertRecipe(
+            recipe = model.recipe,
+            ingredients = model.ingredients,
+            instructions = model.instructions
+        )
     }
 
     private suspend fun getFakeData(): List<Recipe> {

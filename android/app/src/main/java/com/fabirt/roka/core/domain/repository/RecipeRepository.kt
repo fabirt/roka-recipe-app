@@ -1,6 +1,5 @@
 package com.fabirt.roka.core.domain.repository
 
-import com.fabirt.roka.core.data.database.entities.DatabaseRecipeInformation
 import com.fabirt.roka.core.domain.model.Recipe
 import com.fabirt.roka.core.error.Failure
 import com.fabirt.roka.core.utils.Either
@@ -22,5 +21,10 @@ interface RecipeRepository {
     /**
      * Request favorite recipes from the local database.
      */
-    suspend fun requestFavoriteRecipes(): List<DatabaseRecipeInformation>
+    suspend fun requestFavoriteRecipes(): List<Recipe>
+
+    /**
+     * Save [recipe] in the database.
+     */
+    suspend fun saveFavoriteRecipe(recipe: Recipe)
 }

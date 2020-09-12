@@ -81,6 +81,7 @@ class RecipeDetailFragment : Fragment() {
         ivSave.setOnClickListener {
             // Save in the database
             it.startAnimation(pulseAnim)
+            viewModel.saveFavoriteRecipe()
         }
 
         ivShare.setOnClickListener {

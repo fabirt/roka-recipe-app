@@ -6,10 +6,11 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "instructions")
 data class DatabaseInstruction(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int,
     @ColumnInfo(name = "recipe_id")
     val recipeId: Int,
     val number: Int,
     val step: String
-)
+) {
+    @PrimaryKey
+    var id: String = "$recipeId-$number"
+}
