@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp">
+    android:layout_margin="4dp">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
@@ -28,18 +28,19 @@
             tools:src="@drawable/category_placeholder" />
 
         <View
+            android:id="@+id/overlayView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/category_background_gradient" />
     </androidx.cardview.widget.CardView>
 
     <ImageView
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginTop="10dp"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="6dp"
         android:background="@drawable/heart_background"
-        android:padding="8dp"
+        android:padding="5dp"
         android:src="@drawable/ic_heart_fill"
         app:layout_constraintEnd_toEndOf="@id/cardView"
         app:layout_constraintTop_toTopOf="@id/cardView"

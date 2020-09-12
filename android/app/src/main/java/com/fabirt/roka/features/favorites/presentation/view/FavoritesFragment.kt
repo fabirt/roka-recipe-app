@@ -5,11 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.fabirt.roka.R
+import com.fabirt.roka.core.domain.model.Recipe
 import com.fabirt.roka.features.favorites.presentation.adapters.FavoritesAdapter
 import com.fabirt.roka.features.favorites.presentation.viewmodel.FavoritesViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,7 +28,7 @@ class FavoritesFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        adapter = FavoritesAdapter()
+        adapter = FavoritesAdapter(::openRecipeDetail)
     }
 
     override fun onCreateView(
@@ -45,5 +46,9 @@ class FavoritesFragment : Fragment() {
         viewModel.recipes.observe(viewLifecycleOwner, Observer { recipes ->
             adapter.submitList(recipes)
         })
+    }
+
+    private fun openRecipeDetail(recipe: Recipe) {
+        Toast.makeText(requireContext(), recipe.title, Toast.LENGTH_SHORT).show()
     }
 }
