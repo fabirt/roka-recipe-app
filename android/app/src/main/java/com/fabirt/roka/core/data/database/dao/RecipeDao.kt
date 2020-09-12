@@ -5,13 +5,14 @@ import com.fabirt.roka.core.data.database.entities.DatabaseIngredient
 import com.fabirt.roka.core.data.database.entities.DatabaseInstruction
 import com.fabirt.roka.core.data.database.entities.DatabaseRecipe
 import com.fabirt.roka.core.data.database.entities.DatabaseRecipeInformation
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface RecipeDao {
 
     @Transaction
     @Query("SELECT * FROM recipes")
-    suspend fun getRecipesWithInformation(): List<DatabaseRecipeInformation>
+    fun getRecipesWithInformation(): Flow<List<DatabaseRecipeInformation>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertRecipe(

@@ -13,6 +13,8 @@ import com.fabirt.roka.core.utils.Either
 import com.fabirt.roka.core.utils.left
 import com.fabirt.roka.core.utils.right
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class RecipeRepositoryImpl @Inject constructor(
@@ -45,9 +47,9 @@ class RecipeRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun requestFavoriteRecipes(): List<Recipe> {
-        return recipeDao.getRecipesWithInformation().map {
-            it.asDomainModel()
+    override fun requestFavoriteRecipes(): Flow<List<Recipe>> {
+        return recipeDao.getRecipesWithInformation().map { dbRecipe ->
+            dbRecipe.map { it.asDomainModel() }
         }
     }
 

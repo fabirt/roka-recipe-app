@@ -3,6 +3,7 @@ package com.fabirt.roka.core.domain.repository
 import com.fabirt.roka.core.domain.model.Recipe
 import com.fabirt.roka.core.error.Failure
 import com.fabirt.roka.core.utils.Either
+import kotlinx.coroutines.flow.Flow
 
 interface RecipeRepository {
     /**
@@ -21,7 +22,7 @@ interface RecipeRepository {
     /**
      * Request favorite recipes from the local database.
      */
-    suspend fun requestFavoriteRecipes(): List<Recipe>
+    fun requestFavoriteRecipes(): Flow<List<Recipe>>
 
     /**
      * Save [recipe] in the database.

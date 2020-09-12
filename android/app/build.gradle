@@ -67,6 +67,9 @@ dependencies {
     // Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version_kotlin_coroutines"
 
+    // LiveData
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$version_lifecycle"
+
     // ViewPager2 page indicator
     implementation 'com.tbuonomo.andrui:viewpagerdotsindicator:4.1.2'
 
