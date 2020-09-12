@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.fabirt.roka.R
-import com.fabirt.roka.core.data.network.model.RecipeInformationModel
+import com.fabirt.roka.core.data.network.model.NetworkRecipe
 import com.fabirt.roka.features.detail.domain.model.RecipeDetailItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -67,7 +67,7 @@ class RecipeDetailAdapter :
         }
     }
 
-    fun submitRecipeInfo(context: Context, recipe: RecipeInformationModel) {
+    fun submitRecipeInfo(context: Context, recipe: NetworkRecipe) {
         adapterScope.launch {
             val items = mutableListOf<RecipeDetailItem>()
 

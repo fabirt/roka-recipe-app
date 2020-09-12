@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class RecipeSearchResponse(
     @SerializedName("results")
-    val results: List<RecipeInformationModel>,
+    val results: List<NetworkRecipe>,
     @SerializedName("offset")
     val offset: Int,
     @SerializedName("number")

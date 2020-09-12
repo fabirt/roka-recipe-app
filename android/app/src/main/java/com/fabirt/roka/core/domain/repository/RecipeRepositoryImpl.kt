@@ -18,7 +18,7 @@ class RecipeRepositoryImpl @Inject constructor(
     override suspend fun searchRecipes(
         query: String,
         addRecipeInformation: Boolean
-    ): Either<Failure, List<RecipeInformationModel>> {
+    ): Either<Failure, List<NetworkRecipe>> {
         return try {
             val result = service.searchRecipes(query, addRecipeInformation)
             right(result.results)
@@ -29,7 +29,7 @@ class RecipeRepositoryImpl @Inject constructor(
 
     override suspend fun requestRecipeInformation(
         id: Int
-    ): Either<Failure, RecipeInformationModel> {
+    ): Either<Failure, NetworkRecipe> {
         return try {
             val response = service.requestRecipeInformation(id)
             right(response)
@@ -42,9 +42,9 @@ class RecipeRepositoryImpl @Inject constructor(
         return recipeDao.getRecipesWithInformation()
     }
 
-    private suspend fun getFakeData(): List<RecipeInformationModel> {
+    private suspend fun getFakeData(): List<NetworkRecipe> {
         delay(600)
-        val data = RecipeInformationModel(
+        val data = NetworkRecipe(
             1,
             "Foodista",
             "Pasta With Tuna",
@@ -55,112 +55,112 @@ class RecipeRepositoryImpl @Inject constructor(
             "Summary",
             91f,
             listOf(
-                RecipeInstructions(
+                NetworkInstructions(
                     listOf(
-                        InstructionStep(
+                        NetworkStep(
                             1,
                             "Cook pasta in a large pot of boiling water until al dente.",
                             listOf(
-                                RecipeElement(
+                                NetworkRecipeElement(
                                     20420,
                                     "pasta",
                                     ""
                                 ),
-                                RecipeElement(
+                                NetworkRecipeElement(
                                     14412,
                                     "water",
                                     ""
                                 )
                             ),
                             listOf(
-                                RecipeElement(
+                                NetworkRecipeElement(
                                     404752,
                                     "pot",
                                     ""
                                 )
                             )
                         ),
-                        InstructionStep(
+                        NetworkStep(
                             2,
                             "Drain and return to warm pot. Put olive oil in saucepan and add onion.",
                             listOf(
-                                RecipeElement(
+                                NetworkRecipeElement(
                                     4053,
                                     "olive oil",
                                     ""
                                 ),
-                                RecipeElement(
+                                NetworkRecipeElement(
                                     11282,
                                     "onion",
                                     ""
                                 )
                             ),
                             listOf(
-                                RecipeElement(
+                                NetworkRecipeElement(
                                     404669,
                                     "sauce pan",
                                     ""
                                 ),
-                                RecipeElement(
+                                NetworkRecipeElement(
                                     404752,
                                     "pot",
                                     ""
                                 )
                             )
                         ),
-                        InstructionStep(
+                        NetworkStep(
                             3,
                             "Saute until transparent. Stir in flour and cook for a few seconds and then whisk in milk. Stir constantly until this thickens.",
                             listOf(
-                                RecipeElement(
+                                NetworkRecipeElement(
                                     20081,
                                     "all purpose flour",
                                     ""
                                 ),
-                                RecipeElement(
+                                NetworkRecipeElement(
                                     1077,
                                     "milk",
                                     ""
                                 )
                             ),
                             listOf(
-                                RecipeElement(
+                                NetworkRecipeElement(
                                     404661,
                                     "whisk",
                                     ""
                                 )
                             )
                         ),
-                        InstructionStep(
+                        NetworkStep(
                             4,
                             "Add peas, tuna (shredded into chunks,) parsley, green onions, cheese and hot pepper sauce.",
                             listOf(
-                                RecipeElement(
+                                NetworkRecipeElement(
                                     6168,
                                     "hot sauce",
                                     ""
                                 ),
-                                RecipeElement(
+                                NetworkRecipeElement(
                                     11291,
                                     "green onions",
                                     ""
                                 ),
-                                RecipeElement(
+                                NetworkRecipeElement(
                                     11297,
                                     "parsley",
                                     ""
                                 ),
-                                RecipeElement(
+                                NetworkRecipeElement(
                                     1041009,
                                     "cheese",
                                     ""
                                 ),
-                                RecipeElement(
+                                NetworkRecipeElement(
                                     11304,
                                     "peas",
                                     ""
                                 ),
-                                RecipeElement(
+                                NetworkRecipeElement(
                                     10015121,
                                     "tuna",
                                     ""
@@ -168,11 +168,11 @@ class RecipeRepositoryImpl @Inject constructor(
                             ),
                             listOf()
                         ),
-                        InstructionStep(
+                        NetworkStep(
                             5,
                             "Pour over pasta and stir gently to mix.",
                             listOf(
-                                RecipeElement(
+                                NetworkRecipeElement(
                                     20420,
                                     "pasta",
                                     ""
@@ -180,7 +180,7 @@ class RecipeRepositoryImpl @Inject constructor(
                             ),
                             listOf()
                         ),
-                        InstructionStep(
+                        NetworkStep(
                             6,
                             "Serve at once.",
                             listOf(),
@@ -190,7 +190,7 @@ class RecipeRepositoryImpl @Inject constructor(
                 )
             ),
             listOf(
-                Ingredient(
+                NetworkIngredient(
                     20081,
                     "flour",
                     "2 tablespoons Flour",

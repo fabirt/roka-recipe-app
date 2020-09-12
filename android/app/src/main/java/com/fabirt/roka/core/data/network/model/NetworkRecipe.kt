@@ -2,7 +2,7 @@ package com.fabirt.roka.core.data.network.model
 
 import com.google.gson.annotations.SerializedName
 
-data class RecipeInformationModel(
+data class NetworkRecipe(
     val id: Int,
     val sourceName: String?,
     val title: String,
@@ -15,29 +15,29 @@ data class RecipeInformationModel(
     @SerializedName("spoonacularScore")
     val score: Float?,
     @SerializedName("analyzedInstructions")
-    val instructions: List<RecipeInstructions>?,
+    val instructions: List<NetworkInstructions>?,
     @SerializedName("extendedIngredients")
-    val ingredients: List<Ingredient>?
+    val ingredients: List<NetworkIngredient>?
 )
 
-data class RecipeInstructions(
-    val steps: List<InstructionStep>
+data class NetworkInstructions(
+    val steps: List<NetworkStep>
 )
 
-data class InstructionStep(
+data class NetworkStep(
     val number: Int,
     val step: String,
-    val ingredients: List<RecipeElement>,
-    val equipment: List<RecipeElement>
+    val ingredients: List<NetworkRecipeElement>,
+    val equipment: List<NetworkRecipeElement>
 )
 
-data class RecipeElement(
+data class NetworkRecipeElement(
     val id: Int,
     val name: String,
     val image: String
 )
 
-data class Ingredient(
+data class NetworkIngredient(
     val id: Int,
     val name: String,
     val original: String,
