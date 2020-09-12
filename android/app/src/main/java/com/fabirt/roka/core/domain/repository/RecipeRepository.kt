@@ -33,4 +33,9 @@ interface RecipeRepository {
      * Search for a specific favorite recipe.
      */
     fun requestFavoriteRecipeById(id: Int): Flow<Recipe?>
+
+    /**
+     * Delete [recipe] from the database.
+     */
+    suspend fun deleteFavoriteRecipe(recipe: Recipe)
 }

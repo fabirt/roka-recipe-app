@@ -15,6 +15,8 @@ class RecipeDetailViewModel @ViewModelInject constructor(
     val state: LiveData<RecipeDetailState>
         get() = _state
 
+    private var isFavorite = false
+
     fun requestRecipeInfo(recipe: Recipe) {
         viewModelScope.launch {
             _state.value = RecipeDetailState.Loading(recipe)
@@ -37,7 +39,23 @@ class RecipeDetailViewModel @ViewModelInject constructor(
         }
     }
 
-    fun saveFavoriteRecipe() {
+    fun saveOrDeleteRecipe() {
+        if (isFavorite) {
+            deleteFavoriteRecipe()
+        } else {
+            saveFavoriteRecipe()
+        }
+
+    }
+
+    fun isFavorite(id: Int): LiveData<Boolean> {
+        return repository.requestFavoriteRecipeById(id).map {
+            isFavorite = it != null
+            isFavorite
+        }.asLiveData()
+    }
+
+    private fun saveFavoriteRecipe() {
         viewModelScope.launch {
             _state.value?.let { state ->
                 if (state is RecipeDetailState.Success) {
@@ -47,9 +65,9 @@ class RecipeDetailViewModel @ViewModelInject constructor(
         }
     }
 
-    fun isFavorite(id: Int): LiveData<Boolean> {
-        return repository.requestFavoriteRecipeById(id).map {
-            it != null
-        }.asLiveData()
+    private fun deleteFavoriteRecipe() {
+        viewModelScope.launch {
+            _state.value?.recipe?.let { repository.deleteFavoriteRecipe(it) }
+        }
     }
 }

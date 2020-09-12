@@ -24,4 +24,11 @@ interface RecipeDao {
         ingredients: List<DatabaseIngredient>,
         instructions: List<DatabaseInstruction>
     )
+
+    @Delete
+    suspend fun deleteRecipe(
+        recipe: DatabaseRecipe,
+        ingredients: List<DatabaseIngredient>,
+        instructions: List<DatabaseInstruction>
+    )
 }

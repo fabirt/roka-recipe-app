@@ -86,18 +86,15 @@ class RecipeDetailFragment : Fragment() {
         }
 
         ivSave.setOnClickListener {
-            // Save in the database
             it.startAnimation(pulseAnim)
-            viewModel.saveFavoriteRecipe()
+            viewModel.saveOrDeleteRecipe()
         }
 
         ivShare.setOnClickListener {
-            // Share recipe
             shareRecipe()
         }
 
         ivWeb.setOnClickListener {
-            // Open web view
             openWebView()
         }
     }

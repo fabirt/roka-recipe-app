@@ -66,6 +66,15 @@ class RecipeRepositoryImpl @Inject constructor(
         return recipeDao.getRecipeById(id).map { it?.asDomainModel() }
     }
 
+    override suspend fun deleteFavoriteRecipe(recipe: Recipe) {
+        val model = recipe.toDatabaseModel()
+        recipeDao.deleteRecipe(
+            recipe = model.recipe,
+            ingredients = model.ingredients,
+            instructions = model.instructions
+        )
+    }
+
     private suspend fun getFakeData(): List<Recipe> {
         delay(600)
         val data = Recipe(
