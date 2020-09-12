@@ -1,4 +1,4 @@
-package com.fabirt.roka.features.detail.presentation.view_model
+package com.fabirt.roka.features.detail.presentation.viewmodel
 
 import com.fabirt.roka.core.domain.model.Recipe
 import com.fabirt.roka.core.error.Failure

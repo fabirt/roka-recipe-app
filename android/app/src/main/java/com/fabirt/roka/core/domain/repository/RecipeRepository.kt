@@ -28,4 +28,9 @@ interface RecipeRepository {
      * Save [recipe] in the database.
      */
     suspend fun saveFavoriteRecipe(recipe: Recipe)
+
+    /**
+     * Search for a specific favorite recipe.
+     */
+    fun requestFavoriteRecipeById(id: Int): Flow<Recipe?>
 }

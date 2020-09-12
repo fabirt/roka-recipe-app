@@ -1,14 +1,17 @@
 package com.fabirt.roka.features.detail.presentation.view
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsets
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import androidx.core.widget.ImageViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -20,8 +23,8 @@ import com.fabirt.roka.MainGraphDirections
 import com.fabirt.roka.R
 import com.fabirt.roka.core.utils.bindNetworkImage
 import com.fabirt.roka.features.detail.presentation.adapters.RecipeDetailAdapter
-import com.fabirt.roka.features.detail.presentation.view_model.RecipeDetailState
-import com.fabirt.roka.features.detail.presentation.view_model.RecipeDetailViewModel
+import com.fabirt.roka.features.detail.presentation.viewmodel.RecipeDetailState
+import com.fabirt.roka.features.detail.presentation.viewmodel.RecipeDetailViewModel
 import kotlinx.android.synthetic.main.fragment_recipe_detail.*
 import kotlinx.android.synthetic.main.view_error.*
 import kotlinx.android.synthetic.main.view_spin_indicator.*
@@ -31,6 +34,10 @@ class RecipeDetailFragment : Fragment() {
     private val viewModel: RecipeDetailViewModel by activityViewModels()
     private lateinit var adapter: RecipeDetailAdapter
     private lateinit var pulseAnim: Animation
+
+    companion object {
+        private const val TAG = "RecipeDetailFragment"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -102,6 +109,14 @@ class RecipeDetailFragment : Fragment() {
             tvPeople.text = recipe.servings?.toString()
             tvTime.text = getString(R.string.minutes_label, recipe.readyInMinutes)
             tvScore.text = recipe.score?.toString()
+
+            viewModel.isFavorite(recipe.id).observe(viewLifecycleOwner, Observer { isFavorite ->
+                var tint = requireContext().getColor(R.color.colorSurface)
+                if (isFavorite) {
+                    tint = requireContext().getColor(R.color.colorAccent)
+                }
+                ImageViewCompat.setImageTintList(ivSave, ColorStateList.valueOf(tint))
+            })
         }
     }
 

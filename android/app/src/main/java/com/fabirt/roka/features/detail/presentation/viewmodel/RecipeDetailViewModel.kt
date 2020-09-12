@@ -1,12 +1,10 @@
-package com.fabirt.roka.features.detail.presentation.view_model
+package com.fabirt.roka.features.detail.presentation.viewmodel
 
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.fabirt.roka.core.domain.model.Recipe
 import com.fabirt.roka.core.domain.repository.RecipeRepository
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class RecipeDetailViewModel @ViewModelInject constructor(
@@ -47,5 +45,11 @@ class RecipeDetailViewModel @ViewModelInject constructor(
                 }
             }
         }
+    }
+
+    fun isFavorite(id: Int): LiveData<Boolean> {
+        return repository.requestFavoriteRecipeById(id).map {
+            it != null
+        }.asLiveData()
     }
 }

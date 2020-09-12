@@ -26,7 +26,7 @@ class RecipeRepositoryImpl @Inject constructor(
         addRecipeInformation: Boolean
     ): Either<Failure, List<Recipe>> {
         return try {
-            //return right(getFakeData())
+            return right(getFakeData())
             val result = service.searchRecipes(query, addRecipeInformation)
             val recipes = result.results.map { it.asDomainModel() }
             right(recipes)
@@ -39,7 +39,7 @@ class RecipeRepositoryImpl @Inject constructor(
         id: Int
     ): Either<Failure, Recipe> {
         return try {
-            //return right(getFakeData().first())
+            return right(getFakeData().first())
             val response = service.requestRecipeInformation(id)
             right(response.asDomainModel())
         } catch (e: Exception) {
@@ -60,6 +60,10 @@ class RecipeRepositoryImpl @Inject constructor(
             ingredients = model.ingredients,
             instructions = model.instructions
         )
+    }
+
+    override fun requestFavoriteRecipeById(id: Int): Flow<Recipe?> {
+        return recipeDao.getRecipeById(id).map { it?.asDomainModel() }
     }
 
     private suspend fun getFakeData(): List<Recipe> {

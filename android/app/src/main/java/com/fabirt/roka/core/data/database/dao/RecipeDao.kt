@@ -14,6 +14,10 @@ interface RecipeDao {
     @Query("SELECT * FROM recipes")
     fun getRecipesWithInformation(): Flow<List<DatabaseRecipeInformation>>
 
+    @Transaction
+    @Query("SELECT * FROM recipes WHERE id = :id")
+    fun getRecipeById(id: Int): Flow<DatabaseRecipeInformation?>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertRecipe(
         recipe: DatabaseRecipe,

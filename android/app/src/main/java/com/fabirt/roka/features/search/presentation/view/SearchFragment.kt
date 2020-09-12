@@ -18,7 +18,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fabirt.roka.R
 import com.fabirt.roka.core.domain.model.Recipe
-import com.fabirt.roka.features.detail.presentation.view_model.RecipeDetailViewModel
+import com.fabirt.roka.features.detail.presentation.viewmodel.RecipeDetailViewModel
 import com.fabirt.roka.features.search.presentation.adapters.RecipeAdapter
 import com.fabirt.roka.features.search.presentation.view_model.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
