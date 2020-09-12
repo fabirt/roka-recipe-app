@@ -15,7 +15,9 @@ data class RecipeInformationModel(
     @SerializedName("spoonacularScore")
     val score: Float?,
     @SerializedName("analyzedInstructions")
-    val instructions: List<RecipeInstructions>?
+    val instructions: List<RecipeInstructions>?,
+    @SerializedName("extendedIngredients")
+    val ingredients: List<Ingredient>?
 )
 
 data class RecipeInstructions(
@@ -33,6 +35,14 @@ data class RecipeElement(
     val id: Int,
     val name: String,
     val image: String
+)
+
+data class Ingredient(
+    val id: Int,
+    val name: String,
+    val original: String,
+    val amount: Float,
+    val unit: String
 )
 
 /*
@@ -74,6 +84,34 @@ data class RecipeElement(
             "pescatarian"
         ],
         "occasions": [],
+        "extendedIngredients": [
+            {
+                "id": 20081,
+                "aisle": "Baking",
+                "image": "flour.png",
+                "consistency": "solid",
+                "name": "flour",
+                "original": "2 tablespoons Flour",
+                "originalString": "2 tablespoons Flour",
+                "originalName": "Flour",
+                "amount": 2.0,
+                "unit": "tablespoons",
+                "meta": [],
+                "metaInformation": [],
+                "measures": {
+                    "us": {
+                        "amount": 2.0,
+                        "unitShort": "Tbsps",
+                        "unitLong": "Tbsps"
+                    },
+                    "metric": {
+                        "amount": 2.0,
+                        "unitShort": "Tbsps",
+                        "unitLong": "Tbsps"
+                    }
+                }
+            }
+        ],
         "analyzedInstructions": [
             {
                 "name": "",

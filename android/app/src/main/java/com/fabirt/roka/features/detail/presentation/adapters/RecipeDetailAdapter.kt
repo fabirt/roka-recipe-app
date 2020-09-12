@@ -1,5 +1,6 @@
 package com.fabirt.roka.features.detail.presentation.adapters
 
+import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -17,15 +18,18 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.lang.ClassCastException
 
-private const val ITEM_VIEW_TYPE_SUMMARY = 0
-private const val ITEM_VIEW_TYPE_TITLE = 1
-private const val ITEM_VIEW_TYPE_INGREDIENT = 2
-private const val ITEM_VIEW_TYPE_DIRECTION = 3
-
 class RecipeDetailAdapter :
     ListAdapter<RecipeDetailItem, RecyclerView.ViewHolder>(RecipeDetailItemDiffCallback()) {
 
     private val adapterScope = CoroutineScope(Dispatchers.Default)
+
+    companion object {
+        private const val TAG = "RecipeDetailAdapter"
+        private const val ITEM_VIEW_TYPE_SUMMARY = 0
+        private const val ITEM_VIEW_TYPE_TITLE = 1
+        private const val ITEM_VIEW_TYPE_INGREDIENT = 2
+        private const val ITEM_VIEW_TYPE_DIRECTION = 3
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -45,7 +49,7 @@ class RecipeDetailAdapter :
             }
             is IngredientViewHolder -> {
                 val item = getItem(position) as RecipeDetailItem.RecipeIngredient
-                holder.bind(item.element.name)
+                holder.bind(item.ingredient.original)
             }
             is DirectionViewHolder -> {
                 val item = getItem(position) as RecipeDetailItem.RecipeDirection
@@ -63,30 +67,31 @@ class RecipeDetailAdapter :
         }
     }
 
-    fun submitRecipeInfo(recipe: RecipeInformationModel) {
+    fun submitRecipeInfo(context: Context, recipe: RecipeInformationModel) {
         adapterScope.launch {
             val items = mutableListOf<RecipeDetailItem>()
-            val instructions = recipe.instructions
-            if (instructions?.isNotEmpty() == true) {
-                val ingredients = mutableListOf<RecipeDetailItem.RecipeIngredient>()
-                val directions = mutableListOf<RecipeDetailItem.RecipeDirection>()
-                for (step in instructions.first().steps) {
-                    val direction = RecipeDetailItem.RecipeDirection(step.number, step.step)
-                    directions.add(direction)
-                    for (e in step.ingredients) {
-                        val ingredient = RecipeDetailItem.RecipeIngredient(e)
-                        ingredients.add(ingredient)
-                    }
-                }
-                items.add(RecipeDetailItem.SectionTitle("Ingredients", -100))
-                items.addAll(ingredients)
-                items.add(RecipeDetailItem.SectionTitle("Directions", -101))
-                items.addAll(directions)
 
-                withContext(Dispatchers.Main) {
-                    Log.i("RecipeDetailAdapter", items.toString())
-                    submitList(items)
+            if (recipe.ingredients?.isNotEmpty() == true) {
+                val ingredientsTitle = context.getString(R.string.ingredients_title)
+                val ingredients = recipe.ingredients.map { ingredient ->
+                    RecipeDetailItem.RecipeIngredient(ingredient)
                 }
+                items.add(RecipeDetailItem.SectionTitle(ingredientsTitle, -100))
+                items.addAll(ingredients)
+            }
+
+            if (recipe.instructions?.isNotEmpty() == true) {
+                val preparationTitle = context.getString(R.string.preparation_title)
+                val directions = recipe.instructions.first().steps.map { step ->
+                    RecipeDetailItem.RecipeDirection(step.number, step.step)
+                }
+                items.add(RecipeDetailItem.SectionTitle(preparationTitle, -101))
+                items.addAll(directions)
+            }
+
+            withContext(Dispatchers.Main) {
+                Log.i(TAG, items.toString())
+                submitList(items)
             }
         }
     }
@@ -145,16 +150,11 @@ class RecipeDetailAdapter :
         override fun areItemsTheSame(
             oldItem: RecipeDetailItem,
             newItem: RecipeDetailItem
-        ): Boolean {
-            return oldItem.id == newItem.id
-        }
+        ) = oldItem.id == newItem.id && oldItem::class == newItem::class
 
         override fun areContentsTheSame(
             oldItem: RecipeDetailItem,
             newItem: RecipeDetailItem
-        ): Boolean {
-            return oldItem == newItem
-        }
+        ) = oldItem == newItem
     }
-
 }

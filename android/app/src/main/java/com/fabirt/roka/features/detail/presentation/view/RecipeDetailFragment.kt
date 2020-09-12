@@ -85,7 +85,7 @@ class RecipeDetailFragment : Fragment() {
 
     private fun buildView(recipe: RecipeInformationModel) {
         rvDetails.scheduleLayoutAnimation()
-        adapter.submitRecipeInfo(recipe)
+        adapter.submitRecipeInfo(requireContext(), recipe)
         bindNetworkImage(ivRecipe, recipe.imageUrl)
         tvName.text = recipe.title
         tvPeople.text = recipe.servings?.toString()

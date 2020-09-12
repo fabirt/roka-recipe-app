@@ -1,9 +1,6 @@
 package com.fabirt.roka.core.domain.repository
 
-import com.fabirt.roka.core.data.network.model.InstructionStep
-import com.fabirt.roka.core.data.network.model.RecipeElement
-import com.fabirt.roka.core.data.network.model.RecipeInformationModel
-import com.fabirt.roka.core.data.network.model.RecipeInstructions
+import com.fabirt.roka.core.data.network.model.*
 import com.fabirt.roka.core.data.network.services.RecipeService
 import com.fabirt.roka.core.error.Failure
 import com.fabirt.roka.core.utils.Either
@@ -172,6 +169,15 @@ class RecipeRepositoryImpl @Inject constructor(
                             listOf()
                         )
                     )
+                )
+            ),
+            listOf(
+                Ingredient(
+                    20081,
+                    "flour",
+                    "2 tablespoons Flour",
+                    2.0f,
+                    "tablespoons"
                 )
             )
         )
