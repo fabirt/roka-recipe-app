@@ -13,9 +13,9 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.FragmentNavigatorExtras
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.fabirt.roka.MainGraphDirections
 import com.fabirt.roka.R
 import com.fabirt.roka.core.domain.model.Recipe
 import com.fabirt.roka.features.detail.presentation.viewmodel.RecipeDetailViewModel
@@ -47,7 +47,7 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = RecipeAdapter(listOf(), ::onRecipePressed)
+        adapter = RecipeAdapter(listOf(), ::openRecipeDetail)
         rvRecipes.layoutManager = LinearLayoutManager(requireContext())
         rvRecipes.adapter = adapter
         setupListeners()
@@ -127,14 +127,12 @@ class SearchFragment : Fragment() {
         }
     }
 
-    private fun onRecipePressed(recipe: Recipe, image: ImageView) {
+    private fun openRecipeDetail(recipe: Recipe, image: ImageView) {
         detailViewModel.requestRecipeInfo(recipe)
         dismissKeyboard(editTextSearch)
-        val action = SearchFragmentDirections.actionSearchFragmentToRecipeDetailFragment()
-        val extras = FragmentNavigatorExtras(
-            image to "recipeImage"
-        )
-        findNavController().navigate(action, extras)
+        val navController = Navigation.findNavController(requireActivity(), R.id.mainNavHostFragment)
+        val action = MainGraphDirections.actionGlobalRecipeDetailFragment()
+        navController.navigate(action)
     }
 
     private fun dismissKeyboard(view: View) {

@@ -35,11 +35,40 @@
             android:name="title"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/recipeDetailFragment"
+        android:name="com.fabirt.roka.features.detail.presentation.view.RecipeDetailFragment"
+        android:label="fragment_recipe_detail"
+        tools:layout="@layout/fragment_recipe_detail" >
+        <action
+            android:id="@+id/action_recipeDetailFragment_to_photoRecipeFragment"
+            app:destination="@id/photoRecipeFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+        <action
+            android:id="@+id/action_recipeDetailFragment_to_webDetailFragment"
+            app:destination="@id/webDetailFragment"
+            app:enterAnim="@anim/slide_in_up"
+            app:exitAnim="@anim/scale_move_out"
+            app:popEnterAnim="@anim/scale_move_in"
+            app:popExitAnim="@anim/slide_out_down" />
+    </fragment>
+    <fragment
+        android:id="@+id/photoRecipeFragment"
+        android:name="com.fabirt.roka.features.detail.presentation.view.PhotoRecipeFragment"
+        android:label="fragment_photo_recipe"
+        tools:layout="@layout/fragment_photo_recipe" >
+        <argument
+            android:name="imageUrl"
+            app:argType="string" />
+    </fragment>
     <action
-        android:id="@+id/action_global_webDetailFragment"
-        app:destination="@id/webDetailFragment"
-        app:enterAnim="@anim/slide_in_up"
-        app:exitAnim="@anim/scale_move_out"
-        app:popEnterAnim="@anim/scale_move_in"
-        app:popExitAnim="@anim/slide_out_down" />
+        android:id="@+id/action_global_recipeDetailFragment"
+        app:destination="@id/recipeDetailFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right" />
 </navigation>
