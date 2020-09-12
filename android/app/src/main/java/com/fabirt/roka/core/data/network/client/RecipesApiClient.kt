@@ -31,7 +31,7 @@ object RecipesApiClient {
         return httpClient.build()
     }
 
-    fun getRecipeService(): RecipeService {
+    fun createRecipeService(): RecipeService {
         return Retrofit.Builder()
             .client(getHttpClient())
             .baseUrl(K.BASE_URL)
