@@ -17,7 +17,7 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fabirt.roka.R
-import com.fabirt.roka.core.data.network.model.NetworkRecipe
+import com.fabirt.roka.core.domain.model.Recipe
 import com.fabirt.roka.features.detail.presentation.view_model.RecipeDetailViewModel
 import com.fabirt.roka.features.search.presentation.adapters.RecipeAdapter
 import com.fabirt.roka.features.search.presentation.view_model.SearchViewModel
@@ -127,7 +127,7 @@ class SearchFragment : Fragment() {
         }
     }
 
-    private fun onRecipePressed(recipe: NetworkRecipe, image: ImageView) {
+    private fun onRecipePressed(recipe: Recipe, image: ImageView) {
         detailViewModel.requestRecipeInfo(recipe)
         dismissKeyboard(editTextSearch)
         val action = SearchFragmentDirections.actionSearchFragmentToRecipeDetailFragment()

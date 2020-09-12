@@ -7,12 +7,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.fabirt.roka.R
-import com.fabirt.roka.core.data.network.model.NetworkRecipe
+import com.fabirt.roka.core.domain.model.Recipe
 import com.fabirt.roka.core.utils.bindNetworkImage
 
 class RecipeAdapter(
-    private var recipes: List<NetworkRecipe>,
-    private val onRecipePressed: (NetworkRecipe, ImageView) -> Unit
+    private var recipes: List<Recipe>,
+    private val onRecipePressed: (Recipe, ImageView) -> Unit
 ) : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
@@ -28,7 +28,7 @@ class RecipeAdapter(
         holder.bind(recipe)
     }
 
-    fun submitList(data: List<NetworkRecipe>) {
+    fun submitList(data: List<Recipe>) {
         recipes = data
         notifyDataSetChanged()
     }
@@ -39,7 +39,7 @@ class RecipeAdapter(
         private val author: TextView = itemView.findViewById(R.id.textAuthor)
         private val time: TextView = itemView.findViewById(R.id.textTime)
 
-        fun bind(recipe: NetworkRecipe) {
+        fun bind(recipe: Recipe) {
             val defaultAuthor = itemView.context.getString(R.string.unknown)
             title.text = recipe.title
             author.text =

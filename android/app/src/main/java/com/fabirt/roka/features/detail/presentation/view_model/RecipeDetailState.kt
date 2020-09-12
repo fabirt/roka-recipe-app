@@ -1,17 +1,17 @@
 package com.fabirt.roka.features.detail.presentation.view_model
 
-import com.fabirt.roka.core.data.network.model.NetworkRecipe
+import com.fabirt.roka.core.domain.model.Recipe
 import com.fabirt.roka.core.error.Failure
 
 sealed class RecipeDetailState {
-    abstract val recipe: NetworkRecipe
+    abstract val recipe: Recipe
 
-    data class Loading(override val recipe: NetworkRecipe) : RecipeDetailState()
+    data class Loading(override val recipe: Recipe) : RecipeDetailState()
 
     data class Error(
-        override val recipe: NetworkRecipe,
+        override val recipe: Recipe,
         val failure: Failure
     ) : RecipeDetailState()
 
-    data class Success(override val recipe: NetworkRecipe) : RecipeDetailState()
+    data class Success(override val recipe: Recipe) : RecipeDetailState()
 }

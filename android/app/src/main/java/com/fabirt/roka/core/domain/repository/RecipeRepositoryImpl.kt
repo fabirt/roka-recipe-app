@@ -4,6 +4,9 @@ import com.fabirt.roka.core.data.database.dao.RecipeDao
 import com.fabirt.roka.core.data.database.entities.DatabaseRecipeInformation
 import com.fabirt.roka.core.data.network.model.*
 import com.fabirt.roka.core.data.network.services.RecipeService
+import com.fabirt.roka.core.domain.model.Ingredient
+import com.fabirt.roka.core.domain.model.Instruction
+import com.fabirt.roka.core.domain.model.Recipe
 import com.fabirt.roka.core.error.Failure
 import com.fabirt.roka.core.utils.Either
 import com.fabirt.roka.core.utils.left
@@ -18,10 +21,11 @@ class RecipeRepositoryImpl @Inject constructor(
     override suspend fun searchRecipes(
         query: String,
         addRecipeInformation: Boolean
-    ): Either<Failure, List<NetworkRecipe>> {
+    ): Either<Failure, List<Recipe>> {
         return try {
             val result = service.searchRecipes(query, addRecipeInformation)
-            right(result.results)
+            val recipes = result.results.map { it.asDomainModel() }
+            right(recipes)
         } catch (e: Exception) {
             left(Failure.UnexpectedFailure)
         }
@@ -29,10 +33,10 @@ class RecipeRepositoryImpl @Inject constructor(
 
     override suspend fun requestRecipeInformation(
         id: Int
-    ): Either<Failure, NetworkRecipe> {
+    ): Either<Failure, Recipe> {
         return try {
             val response = service.requestRecipeInformation(id)
-            right(response)
+            right(response.asDomainModel())
         } catch (e: Exception) {
             left(Failure.UnexpectedFailure)
         }
@@ -42,160 +46,51 @@ class RecipeRepositoryImpl @Inject constructor(
         return recipeDao.getRecipesWithInformation()
     }
 
-    private suspend fun getFakeData(): List<NetworkRecipe> {
+    private suspend fun getFakeData(): List<Recipe> {
         delay(600)
-        val data = NetworkRecipe(
-            1,
-            "Foodista",
-            "Pasta With Tuna",
-            45,
-            4,
-            "http://www.foodista.com/recipe/K6QWSKQM/pasta-with-tuna",
-            "https://spoonacular.com/recipeImages/654959-312x231.jpg",
-            "Summary",
-            91f,
-            listOf(
-                NetworkInstructions(
-                    listOf(
-                        NetworkStep(
-                            1,
-                            "Cook pasta in a large pot of boiling water until al dente.",
-                            listOf(
-                                NetworkRecipeElement(
-                                    20420,
-                                    "pasta",
-                                    ""
-                                ),
-                                NetworkRecipeElement(
-                                    14412,
-                                    "water",
-                                    ""
-                                )
-                            ),
-                            listOf(
-                                NetworkRecipeElement(
-                                    404752,
-                                    "pot",
-                                    ""
-                                )
-                            )
-                        ),
-                        NetworkStep(
-                            2,
-                            "Drain and return to warm pot. Put olive oil in saucepan and add onion.",
-                            listOf(
-                                NetworkRecipeElement(
-                                    4053,
-                                    "olive oil",
-                                    ""
-                                ),
-                                NetworkRecipeElement(
-                                    11282,
-                                    "onion",
-                                    ""
-                                )
-                            ),
-                            listOf(
-                                NetworkRecipeElement(
-                                    404669,
-                                    "sauce pan",
-                                    ""
-                                ),
-                                NetworkRecipeElement(
-                                    404752,
-                                    "pot",
-                                    ""
-                                )
-                            )
-                        ),
-                        NetworkStep(
-                            3,
-                            "Saute until transparent. Stir in flour and cook for a few seconds and then whisk in milk. Stir constantly until this thickens.",
-                            listOf(
-                                NetworkRecipeElement(
-                                    20081,
-                                    "all purpose flour",
-                                    ""
-                                ),
-                                NetworkRecipeElement(
-                                    1077,
-                                    "milk",
-                                    ""
-                                )
-                            ),
-                            listOf(
-                                NetworkRecipeElement(
-                                    404661,
-                                    "whisk",
-                                    ""
-                                )
-                            )
-                        ),
-                        NetworkStep(
-                            4,
-                            "Add peas, tuna (shredded into chunks,) parsley, green onions, cheese and hot pepper sauce.",
-                            listOf(
-                                NetworkRecipeElement(
-                                    6168,
-                                    "hot sauce",
-                                    ""
-                                ),
-                                NetworkRecipeElement(
-                                    11291,
-                                    "green onions",
-                                    ""
-                                ),
-                                NetworkRecipeElement(
-                                    11297,
-                                    "parsley",
-                                    ""
-                                ),
-                                NetworkRecipeElement(
-                                    1041009,
-                                    "cheese",
-                                    ""
-                                ),
-                                NetworkRecipeElement(
-                                    11304,
-                                    "peas",
-                                    ""
-                                ),
-                                NetworkRecipeElement(
-                                    10015121,
-                                    "tuna",
-                                    ""
-                                )
-                            ),
-                            listOf()
-                        ),
-                        NetworkStep(
-                            5,
-                            "Pour over pasta and stir gently to mix.",
-                            listOf(
-                                NetworkRecipeElement(
-                                    20420,
-                                    "pasta",
-                                    ""
-                                )
-                            ),
-                            listOf()
-                        ),
-                        NetworkStep(
-                            6,
-                            "Serve at once.",
-                            listOf(),
-                            listOf()
-                        )
-                    )
+        val data = Recipe(
+            id = 1,
+            sourceName = "Foodista",
+            title = "Pasta With Tuna",
+            readyInMinutes = 45,
+            servings = 4,
+            sourceUrl = "http://www.foodista.com/recipe/K6QWSKQM/pasta-with-tuna",
+            imageUrl = "https://spoonacular.com/recipeImages/654959-312x231.jpg",
+            summary = "Summary",
+            score = 91f,
+            ingredients = listOf(
+                Ingredient(
+                    id = 20081,
+                    name = "flour",
+                    original = "2 tablespoons Flour",
+                    amount = 2.0f,
+                    unit = "tablespoons"
                 )
             ),
-            listOf(
-                NetworkIngredient(
-                    20081,
-                    "flour",
-                    "2 tablespoons Flour",
-                    2.0f,
-                    "tablespoons"
+            instructions = listOf(
+                Instruction(
+                    1,
+                    "Cook pasta in a large pot of boiling water until al dente."
+                ),
+                Instruction(
+                    2,
+                    "Drain and return to warm pot. Put olive oil in saucepan and add onion."
+                ),
+                Instruction(
+                    3,
+                    "Saute until transparent. Stir in flour and cook for a few seconds and then whisk in milk. Stir constantly until this thickens."
+                ),
+                Instruction(
+                    4,
+                    "Add peas, tuna (shredded into chunks,) parsley, green onions, cheese and hot pepper sauce."
+                ),
+                Instruction(
+                    5,
+                    "Pour over pasta and stir gently to mix."
+                ),
+                Instruction(
+                    6,
+                    "Serve at once."
                 )
             )
         )

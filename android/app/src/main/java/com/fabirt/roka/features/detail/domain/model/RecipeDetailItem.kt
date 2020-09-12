@@ -1,6 +1,7 @@
 package com.fabirt.roka.features.detail.domain.model
 
-import com.fabirt.roka.core.data.network.model.NetworkIngredient
+import com.fabirt.roka.core.domain.model.Ingredient
+import com.fabirt.roka.core.domain.model.Instruction
 
 sealed class RecipeDetailItem {
     abstract val id: Int
@@ -9,13 +10,13 @@ sealed class RecipeDetailItem {
 
     data class SectionTitle(val text: String, override val id: Int) : RecipeDetailItem()
 
-    data class RecipeIngredient(val ingredient: NetworkIngredient) : RecipeDetailItem() {
+    data class RecipeIngredient(val ingredient: Ingredient) : RecipeDetailItem() {
         override val id: Int
             get() = ingredient.id
     }
 
-    data class RecipeDirection(val number: Int, val text: String) : RecipeDetailItem() {
+    data class RecipeDirection(val instruction: Instruction) : RecipeDetailItem() {
         override val id: Int
-            get() = number + text.hashCode()
+            get() = instruction.number + instruction.hashCode()
     }
 }

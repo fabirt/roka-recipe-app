@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.fabirt.roka.core.data.network.model.NetworkRecipe
+import com.fabirt.roka.core.domain.model.Recipe
 import com.fabirt.roka.core.domain.repository.RecipeRepository
 import kotlinx.coroutines.launch
 
@@ -17,7 +17,7 @@ class RecipeDetailViewModel @ViewModelInject constructor(
     val state: LiveData<RecipeDetailState>
         get() = _state
 
-    fun requestRecipeInfo(recipe: NetworkRecipe) {
+    fun requestRecipeInfo(recipe: Recipe) {
         viewModelScope.launch {
             _state.value = RecipeDetailState.Loading(recipe)
             val result = repository.requestRecipeInformation(recipe.id)

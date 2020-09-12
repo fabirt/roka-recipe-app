@@ -1,7 +1,7 @@
 package com.fabirt.roka.core.domain.repository
 
 import com.fabirt.roka.core.data.database.entities.DatabaseRecipeInformation
-import com.fabirt.roka.core.data.network.model.NetworkRecipe
+import com.fabirt.roka.core.domain.model.Recipe
 import com.fabirt.roka.core.error.Failure
 import com.fabirt.roka.core.utils.Either
 
@@ -12,12 +12,12 @@ interface RecipeRepository {
     suspend fun searchRecipes(
         query: String,
         addRecipeInformation: Boolean
-    ): Either<Failure, List<NetworkRecipe>>
+    ): Either<Failure, List<Recipe>>
 
     /**
      * Request the recipe information for the given [id].
      */
-    suspend fun requestRecipeInformation(id: Int): Either<Failure, NetworkRecipe>
+    suspend fun requestRecipeInformation(id: Int): Either<Failure, Recipe>
 
     /**
      * Request favorite recipes from the local database.

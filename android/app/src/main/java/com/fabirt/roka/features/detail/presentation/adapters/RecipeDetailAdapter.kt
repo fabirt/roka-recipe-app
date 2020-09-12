@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.fabirt.roka.R
-import com.fabirt.roka.core.data.network.model.NetworkRecipe
+import com.fabirt.roka.core.domain.model.Recipe
 import com.fabirt.roka.features.detail.domain.model.RecipeDetailItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -53,7 +53,7 @@ class RecipeDetailAdapter :
             }
             is DirectionViewHolder -> {
                 val item = getItem(position) as RecipeDetailItem.RecipeDirection
-                holder.bind(item.text, item.number)
+                holder.bind(item.instruction.step, item.instruction.number)
             }
         }
     }
@@ -67,7 +67,7 @@ class RecipeDetailAdapter :
         }
     }
 
-    fun submitRecipeInfo(context: Context, recipe: NetworkRecipe) {
+    fun submitRecipeInfo(context: Context, recipe: Recipe) {
         adapterScope.launch {
             val items = mutableListOf<RecipeDetailItem>()
 
@@ -82,8 +82,8 @@ class RecipeDetailAdapter :
 
             if (recipe.instructions?.isNotEmpty() == true) {
                 val preparationTitle = context.getString(R.string.preparation_title)
-                val directions = recipe.instructions.first().steps.map { step ->
-                    RecipeDetailItem.RecipeDirection(step.number, step.step)
+                val directions = recipe.instructions.map { instruction ->
+                    RecipeDetailItem.RecipeDirection(instruction)
                 }
                 items.add(RecipeDetailItem.SectionTitle(preparationTitle, -101))
                 items.addAll(directions)

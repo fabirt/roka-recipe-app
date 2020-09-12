@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.fabirt.roka.core.data.network.model.NetworkRecipe
+import com.fabirt.roka.core.domain.model.Recipe
 import com.fabirt.roka.core.domain.repository.RecipeRepository
 import com.fabirt.roka.core.error.Failure
 import kotlinx.coroutines.launch
@@ -15,8 +15,8 @@ class SearchViewModel @ViewModelInject constructor(
     private val repository: RecipeRepository
 ) : ViewModel() {
 
-    private val _recipes = MutableLiveData<List<NetworkRecipe>>()
-    val recipes: LiveData<List<NetworkRecipe>>
+    private val _recipes = MutableLiveData<List<Recipe>>()
+    val recipes: LiveData<List<Recipe>>
         get() = _recipes
 
     private val _isSearching = MutableLiveData(true)
