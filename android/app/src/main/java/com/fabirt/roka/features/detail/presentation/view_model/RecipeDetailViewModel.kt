@@ -17,7 +17,7 @@ class RecipeDetailViewModel @ViewModelInject constructor(
     val state: LiveData<RecipeDetailState>
         get() = _state
 
-    fun setRecipeInfo(recipe: RecipeInformationModel) {
+    fun requestRecipeInfo(recipe: RecipeInformationModel) {
         viewModelScope.launch {
             _state.value = RecipeDetailState.Loading(recipe)
             val result = repository.requestRecipeInformation(recipe.id)
@@ -30,6 +30,12 @@ class RecipeDetailViewModel @ViewModelInject constructor(
                 }
             )
             _state.value = newState
+        }
+    }
+
+    fun retryRecipeRequest() {
+        _state.value?.recipe?.let {
+            requestRecipeInfo(it)
         }
     }
 }

@@ -23,6 +23,8 @@ import com.fabirt.roka.features.detail.presentation.adapters.RecipeDetailAdapter
 import com.fabirt.roka.features.detail.presentation.view_model.RecipeDetailState
 import com.fabirt.roka.features.detail.presentation.view_model.RecipeDetailViewModel
 import kotlinx.android.synthetic.main.fragment_recipe_detail.*
+import kotlinx.android.synthetic.main.view_error.*
+import kotlinx.android.synthetic.main.view_spin_indicator.*
 
 class RecipeDetailFragment : Fragment() {
 
@@ -49,6 +51,15 @@ class RecipeDetailFragment : Fragment() {
         val layoutManager = LinearLayoutManager(requireContext())
         rvDetails.adapter = adapter
         rvDetails.layoutManager = layoutManager
+        setupListeners()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        configureStatusBar(true)
+    }
+
+    private fun setupListeners() {
         viewModel.state.observe(viewLifecycleOwner, Observer(::buildView))
 
         btnBack.setOnApplyWindowInsetsListener(::applyTopWindowInsets)
@@ -60,6 +71,10 @@ class RecipeDetailFragment : Fragment() {
 
         ivRecipe.setOnClickListener {
             openPhotoFragment()
+        }
+
+        btnRetry.setOnClickListener {
+            viewModel.retryRecipeRequest()
         }
 
         ivSave.setOnClickListener {
@@ -78,11 +93,6 @@ class RecipeDetailFragment : Fragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        configureStatusBar(true)
-    }
-
     private fun buildView(state: RecipeDetailState) {
         bindNetworkImage(ivRecipe, state.recipe.imageUrl)
         tvName.text = state.recipe.title
@@ -92,13 +102,21 @@ class RecipeDetailFragment : Fragment() {
 
         when (state) {
             is RecipeDetailState.Loading -> {
-                // Show Loading
+                spinView.visibility = View.VISIBLE
+                errorView.visibility = View.GONE
+                rvDetails.visibility = View.GONE
             }
             is RecipeDetailState.Error -> {
-                // Show Error
+                tvErrorSubtitle.text = state.failure.toString()
+                spinView.visibility = View.GONE
+                errorView.visibility = View.VISIBLE
+                rvDetails.visibility = View.GONE
             }
             is RecipeDetailState.Success -> {
                 rvDetails.scheduleLayoutAnimation()
+                spinView.visibility = View.GONE
+                errorView.visibility = View.GONE
+                rvDetails.visibility = View.VISIBLE
                 adapter.submitRecipeInfo(requireContext(), state.recipe)
             }
         }

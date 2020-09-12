@@ -128,7 +128,7 @@ class SearchFragment : Fragment() {
     }
 
     private fun onRecipePressed(recipe: RecipeInformationModel, image: ImageView) {
-        detailViewModel.setRecipeInfo(recipe)
+        detailViewModel.requestRecipeInfo(recipe)
         dismissKeyboard(editTextSearch)
         val action = SearchFragmentDirections.actionSearchFragmentToRecipeDetailFragment()
         val extras = FragmentNavigatorExtras(
