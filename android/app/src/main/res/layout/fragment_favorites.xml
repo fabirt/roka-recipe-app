@@ -26,14 +26,25 @@
         android:layout_marginTop="16dp"
         android:clipToPadding="false"
         android:overScrollMode="never"
+        android:paddingHorizontal="8dp"
         android:paddingTop="8dp"
         android:paddingBottom="24dp"
-        android:paddingHorizontal="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvTitle"
         tools:itemCount="16"
         tools:listitem="@layout/view_favorite_recipe" />
+
+    <include
+        layout="@layout/view_empty"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="16dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

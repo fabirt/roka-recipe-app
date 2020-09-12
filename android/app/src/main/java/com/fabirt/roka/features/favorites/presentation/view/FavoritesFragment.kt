@@ -18,6 +18,7 @@ import com.fabirt.roka.features.favorites.presentation.adapters.FavoritesAdapter
 import com.fabirt.roka.features.favorites.presentation.viewmodel.FavoritesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_favorites.*
+import kotlinx.android.synthetic.main.view_empty.*
 
 @AndroidEntryPoint
 class FavoritesFragment : Fragment() {
@@ -48,7 +49,16 @@ class FavoritesFragment : Fragment() {
         rvFavorites.layoutManager = layoutManager
         rvFavorites.adapter = adapter
         viewModel.recipes.observe(viewLifecycleOwner, Observer { recipes ->
-            adapter.submitList(recipes)
+            if (recipes.isEmpty()) {
+                rvFavorites.visibility = View.INVISIBLE
+                emptyTextView.text = getString(R.string.no_favorites)
+                emptyImageView.setImageResource(R.drawable.ic_favorites)
+                emptyView.visibility = View.VISIBLE
+            } else {
+                rvFavorites.visibility = View.VISIBLE
+                emptyView.visibility = View.GONE
+                adapter.submitList(recipes)
+            }
         })
     }
 

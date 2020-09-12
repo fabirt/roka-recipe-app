@@ -24,4 +24,5 @@
     <string name="share_content">Hi! look at this delicious %1$s here %2$s</string>
     <string name="ingredients_title">Ingredients</string>
     <string name="preparation_title">Preparation</string>
+    <string name="no_favorites">Find your favorite recipes\nand save them</string>
 </resources>
