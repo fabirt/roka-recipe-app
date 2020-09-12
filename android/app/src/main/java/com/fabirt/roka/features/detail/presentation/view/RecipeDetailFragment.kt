@@ -52,6 +52,7 @@ class RecipeDetailFragment : Fragment() {
         rvDetails.adapter = adapter
         rvDetails.layoutManager = layoutManager
         setupListeners()
+        buildStaticViews()
     }
 
     override fun onDestroyView() {
@@ -93,13 +94,17 @@ class RecipeDetailFragment : Fragment() {
         }
     }
 
-    private fun buildView(state: RecipeDetailState) {
-        bindNetworkImage(ivRecipe, state.recipe.imageUrl)
-        tvName.text = state.recipe.title
-        tvPeople.text = state.recipe.servings?.toString()
-        tvTime.text = getString(R.string.minutes_label, state.recipe.readyInMinutes)
-        tvScore.text = state.recipe.score?.toString()
+    private fun buildStaticViews() {
+        viewModel.state.value?.recipe?.let { recipe ->
+            bindNetworkImage(ivRecipe, recipe.imageUrl)
+            tvName.text = recipe.title
+            tvPeople.text = recipe.servings?.toString()
+            tvTime.text = getString(R.string.minutes_label, recipe.readyInMinutes)
+            tvScore.text = recipe.score?.toString()
+        }
+    }
 
+    private fun buildView(state: RecipeDetailState) {
         when (state) {
             is RecipeDetailState.Loading -> {
                 spinView.visibility = View.VISIBLE

@@ -17,8 +17,8 @@ class RecipeRepositoryImpl @Inject constructor(
         addRecipeInformation: Boolean
     ): Either<Failure, List<RecipeInformationModel>> {
         return try {
-            //val result = service.searchRecipes(query, addRecipeInformation)
-            right(getFakeData())
+            val result = service.searchRecipes(query, addRecipeInformation)
+            right(result.results)
         } catch (e: Exception) {
             left(Failure.UnexpectedFailure)
         }
@@ -28,8 +28,8 @@ class RecipeRepositoryImpl @Inject constructor(
         id: Int
     ): Either<Failure, RecipeInformationModel> {
         return try {
-            delay(1000)
-            right(getFakeData().first())
+            val response = service.requestRecipeInformation(id)
+            right(response)
         } catch (e: Exception) {
             left(Failure.UnexpectedFailure)
         }
