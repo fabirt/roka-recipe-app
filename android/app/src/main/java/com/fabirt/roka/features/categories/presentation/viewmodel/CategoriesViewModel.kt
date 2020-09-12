@@ -1,4 +1,4 @@
-package com.fabirt.roka.features.categories.presentation.view_model
+package com.fabirt.roka.features.categories.presentation.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

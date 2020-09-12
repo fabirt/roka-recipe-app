@@ -11,7 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fabirt.roka.R
 import com.fabirt.roka.features.categories.presentation.adapters.CategoriesAdapter
-import com.fabirt.roka.features.categories.presentation.view_model.CategoriesViewModel
+import com.fabirt.roka.features.categories.presentation.viewmodel.CategoriesViewModel
 import kotlinx.android.synthetic.main.fragment_categories.*
 import kotlinx.android.synthetic.main.view_spin_indicator.*
 

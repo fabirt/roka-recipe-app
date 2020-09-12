@@ -1,4 +1,4 @@
-package com.fabirt.roka.features.search.presentation.view_model
+package com.fabirt.roka.features.search.presentation.viewmodel
 
 import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
