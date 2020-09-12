@@ -5,12 +5,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
+import com.fabirt.roka.MainGraphDirections
 import com.fabirt.roka.R
 import com.fabirt.roka.core.domain.model.Recipe
+import com.fabirt.roka.core.utils.findMainNavController
+import com.fabirt.roka.features.detail.presentation.viewmodel.RecipeDetailViewModel
 import com.fabirt.roka.features.favorites.presentation.adapters.FavoritesAdapter
 import com.fabirt.roka.features.favorites.presentation.viewmodel.FavoritesViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,6 +23,7 @@ import kotlinx.android.synthetic.main.fragment_favorites.*
 class FavoritesFragment : Fragment() {
 
     private val viewModel: FavoritesViewModel by viewModels()
+    private val detailViewModel: RecipeDetailViewModel by activityViewModels()
     private lateinit var adapter: FavoritesAdapter
 
     companion object {
@@ -49,6 +53,8 @@ class FavoritesFragment : Fragment() {
     }
 
     private fun openRecipeDetail(recipe: Recipe) {
-        Toast.makeText(requireContext(), recipe.title, Toast.LENGTH_SHORT).show()
+        detailViewModel.presentRecipeInfo(recipe)
+        val action = MainGraphDirections.actionGlobalRecipeDetailFragment()
+        findMainNavController().navigate(action)
     }
 }

@@ -13,11 +13,11 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fabirt.roka.MainGraphDirections
 import com.fabirt.roka.R
 import com.fabirt.roka.core.domain.model.Recipe
+import com.fabirt.roka.core.utils.findMainNavController
 import com.fabirt.roka.features.detail.presentation.viewmodel.RecipeDetailViewModel
 import com.fabirt.roka.features.search.presentation.adapters.RecipeAdapter
 import com.fabirt.roka.features.search.presentation.viewmodel.SearchViewModel
@@ -130,9 +130,8 @@ class SearchFragment : Fragment() {
     private fun openRecipeDetail(recipe: Recipe, image: ImageView) {
         detailViewModel.requestRecipeInfo(recipe)
         dismissKeyboard(editTextSearch)
-        val navController = Navigation.findNavController(requireActivity(), R.id.mainNavHostFragment)
         val action = MainGraphDirections.actionGlobalRecipeDetailFragment()
-        navController.navigate(action)
+        findMainNavController().navigate(action)
     }
 
     private fun dismissKeyboard(view: View) {

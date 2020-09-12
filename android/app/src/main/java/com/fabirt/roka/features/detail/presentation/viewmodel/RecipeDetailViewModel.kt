@@ -33,6 +33,10 @@ class RecipeDetailViewModel @ViewModelInject constructor(
         }
     }
 
+    fun presentRecipeInfo(recipe: Recipe) {
+        _state.value = RecipeDetailState.Success(recipe)
+    }
+
     fun retryRecipeRequest() {
         _state.value?.recipe?.let {
             requestRecipeInfo(it)
