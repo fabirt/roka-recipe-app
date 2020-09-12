@@ -18,15 +18,15 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fabirt.roka.MainGraphDirections
 import com.fabirt.roka.R
-import com.fabirt.roka.core.data.network.model.RecipeInformationModel
 import com.fabirt.roka.core.utils.bindNetworkImage
 import com.fabirt.roka.features.detail.presentation.adapters.RecipeDetailAdapter
-import com.fabirt.roka.features.detail.presentation.view_model.DetailViewModel
+import com.fabirt.roka.features.detail.presentation.view_model.RecipeDetailState
+import com.fabirt.roka.features.detail.presentation.view_model.RecipeDetailViewModel
 import kotlinx.android.synthetic.main.fragment_recipe_detail.*
 
 class RecipeDetailFragment : Fragment() {
 
-    private val viewModel: DetailViewModel by activityViewModels()
+    private val viewModel: RecipeDetailViewModel by activityViewModels()
     private lateinit var adapter: RecipeDetailAdapter
     private lateinit var pulseAnim: Animation
 
@@ -49,7 +49,7 @@ class RecipeDetailFragment : Fragment() {
         val layoutManager = LinearLayoutManager(requireContext())
         rvDetails.adapter = adapter
         rvDetails.layoutManager = layoutManager
-        viewModel.recipeInfo.observe(viewLifecycleOwner, Observer(::buildView))
+        viewModel.state.observe(viewLifecycleOwner, Observer(::buildView))
 
         btnBack.setOnApplyWindowInsetsListener(::applyTopWindowInsets)
         ivSave.setOnApplyWindowInsetsListener(::applyTopWindowInsets)
@@ -83,18 +83,29 @@ class RecipeDetailFragment : Fragment() {
         configureStatusBar(true)
     }
 
-    private fun buildView(recipe: RecipeInformationModel) {
-        rvDetails.scheduleLayoutAnimation()
-        adapter.submitRecipeInfo(requireContext(), recipe)
-        bindNetworkImage(ivRecipe, recipe.imageUrl)
-        tvName.text = recipe.title
-        tvPeople.text = recipe.servings?.toString()
-        tvTime.text = getString(R.string.minutes_label, recipe.readyInMinutes)
-        tvScore.text = recipe.score?.toString()
+    private fun buildView(state: RecipeDetailState) {
+        bindNetworkImage(ivRecipe, state.recipe.imageUrl)
+        tvName.text = state.recipe.title
+        tvPeople.text = state.recipe.servings?.toString()
+        tvTime.text = getString(R.string.minutes_label, state.recipe.readyInMinutes)
+        tvScore.text = state.recipe.score?.toString()
+
+        when (state) {
+            is RecipeDetailState.Loading -> {
+                // Show Loading
+            }
+            is RecipeDetailState.Error -> {
+                // Show Error
+            }
+            is RecipeDetailState.Success -> {
+                rvDetails.scheduleLayoutAnimation()
+                adapter.submitRecipeInfo(requireContext(), state.recipe)
+            }
+        }
     }
 
     private fun openPhotoFragment() {
-        viewModel.recipeInfo.value?.let { recipe ->
+        viewModel.state.value?.recipe?.let { recipe ->
             val action = RecipeDetailFragmentDirections
                 .actionRecipeDetailFragmentToPhotoRecipeFragment(recipe.imageUrl)
             val extras = FragmentNavigatorExtras(
@@ -124,7 +135,7 @@ class RecipeDetailFragment : Fragment() {
     }
 
     private fun shareRecipe() {
-        viewModel.recipeInfo.value?.let { recipe ->
+        viewModel.state.value?.recipe?.let { recipe ->
             val url = recipe.sourceUrl
             if (url != null && url.isNotEmpty()) {
                 val title = recipe.title
@@ -142,7 +153,7 @@ class RecipeDetailFragment : Fragment() {
     }
 
     private fun openWebView(useBrowser: Boolean = false) {
-        viewModel.recipeInfo.value?.let {recipe->
+        viewModel.state.value?.recipe?.let { recipe ->
             val url = recipe.sourceUrl
             if (url != null && url.isNotEmpty()) {
                 if (useBrowser) {
@@ -165,5 +176,4 @@ class RecipeDetailFragment : Fragment() {
             }
         }
     }
-
 }

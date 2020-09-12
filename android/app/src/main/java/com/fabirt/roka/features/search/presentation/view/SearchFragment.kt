@@ -18,7 +18,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fabirt.roka.R
 import com.fabirt.roka.core.data.network.model.RecipeInformationModel
-import com.fabirt.roka.features.detail.presentation.view_model.DetailViewModel
+import com.fabirt.roka.features.detail.presentation.view_model.RecipeDetailViewModel
 import com.fabirt.roka.features.search.presentation.adapters.RecipeAdapter
 import com.fabirt.roka.features.search.presentation.view_model.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,7 +31,7 @@ import kotlinx.android.synthetic.main.view_spin_indicator.*
 @AndroidEntryPoint
 class SearchFragment : Fragment() {
     private val viewModel: SearchViewModel by viewModels()
-    private val detailViewModel: DetailViewModel by activityViewModels()
+    private val detailViewModel: RecipeDetailViewModel by activityViewModels()
     private lateinit var adapter: RecipeAdapter
 
     companion object {

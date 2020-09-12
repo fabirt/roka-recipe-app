@@ -7,40 +7,29 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fabirt.roka.core.data.network.model.RecipeInformationModel
 import com.fabirt.roka.core.domain.repository.RecipeRepository
-import com.fabirt.roka.core.error.Failure
 import kotlinx.coroutines.launch
 
-class DetailViewModel @ViewModelInject constructor(
+class RecipeDetailViewModel @ViewModelInject constructor(
     private val repository: RecipeRepository
 ) : ViewModel() {
 
-    private val _recipeInfo = MutableLiveData<RecipeInformationModel>()
-    val recipeInfo: LiveData<RecipeInformationModel>
-        get() = _recipeInfo
-
-    private val _isLoading = MutableLiveData(true)
-    val isLoading: LiveData<Boolean>
-        get() = _isLoading
-
-    private val _failure = MutableLiveData<Failure?>()
-    val failure: LiveData<Failure?>
-        get() = _failure
+    private val _state = MutableLiveData<RecipeDetailState>()
+    val state: LiveData<RecipeDetailState>
+        get() = _state
 
     fun setRecipeInfo(recipe: RecipeInformationModel) {
         viewModelScope.launch {
-            _recipeInfo.value = recipe
-            _failure.value = null
-            _isLoading.value = true
+            _state.value = RecipeDetailState.Loading(recipe)
             val result = repository.requestRecipeInformation(recipe.id)
-            _isLoading.value = false
-            result.fold(
+            val newState = result.fold(
                 { failure ->
-                    _failure.value = failure
+                    RecipeDetailState.Error(recipe, failure)
                 },
                 { recipe ->
-                    _recipeInfo.value = recipe
+                    RecipeDetailState.Success(recipe)
                 }
             )
+            _state.value = newState
         }
     }
 }
