@@ -5,9 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.transition.TransitionInflater
 import com.fabirt.roka.R
+import com.fabirt.roka.core.utils.applyTopWindowInsets
 import com.fabirt.roka.core.utils.bindNetworkImage
 import com.fabirt.roka.core.utils.configureStatusBar
 import kotlinx.android.synthetic.main.fragment_photo_recipe.*
@@ -37,5 +39,9 @@ class PhotoRecipeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bindNetworkImage(ivRecipe, args.imageUrl)
+        btnBack.applyTopWindowInsets()
+        btnBack.setOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 }
