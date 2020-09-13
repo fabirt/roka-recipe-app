@@ -28,7 +28,7 @@
         android:fontFamily="@font/sf_pro_text_medium"
         android:gravity="center"
         android:textColor="@color/colorSurface"
-        android:textSize="20sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@id/ivCategoryItem"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

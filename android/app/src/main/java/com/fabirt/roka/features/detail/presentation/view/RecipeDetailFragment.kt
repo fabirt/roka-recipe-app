@@ -61,11 +61,6 @@ class RecipeDetailFragment : Fragment() {
         buildStaticViews()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        configureStatusBar()
-    }
-
     private fun setupListeners() {
         viewModel.state.observe(viewLifecycleOwner, Observer(::buildView))
 

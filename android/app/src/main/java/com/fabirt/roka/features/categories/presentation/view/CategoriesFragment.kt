@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fabirt.roka.R
+import com.fabirt.roka.core.utils.configureStatusBar
 import com.fabirt.roka.features.categories.domain.model.CategoryItem
 import com.fabirt.roka.features.categories.presentation.adapters.CategoriesAdapter
 import com.fabirt.roka.features.categories.presentation.viewmodel.CategoriesViewModel
@@ -28,6 +29,7 @@ class CategoriesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        configureStatusBar()
         return inflater.inflate(R.layout.fragment_categories, container, false)
     }
 

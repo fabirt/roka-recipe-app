@@ -12,6 +12,7 @@ import android.webkit.WebViewClient
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.fabirt.roka.R
+import com.fabirt.roka.core.utils.configureStatusBar
 import kotlinx.android.synthetic.main.fragment_web_detail.*
 
 class WebDetailFragment : Fragment(), WebViewDelegate {
@@ -21,6 +22,7 @@ class WebDetailFragment : Fragment(), WebViewDelegate {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        configureStatusBar()
         return inflater.inflate(R.layout.fragment_web_detail, container, false)
     }
 

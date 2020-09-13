@@ -9,6 +9,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.transition.TransitionInflater
 import com.fabirt.roka.R
 import com.fabirt.roka.core.utils.bindNetworkImage
+import com.fabirt.roka.core.utils.configureStatusBar
 import kotlinx.android.synthetic.main.fragment_photo_recipe.*
 
 class PhotoRecipeFragment : Fragment() {
@@ -29,6 +30,7 @@ class PhotoRecipeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        configureStatusBar()
         return inflater.inflate(R.layout.fragment_photo_recipe, container, false)
     }
 
