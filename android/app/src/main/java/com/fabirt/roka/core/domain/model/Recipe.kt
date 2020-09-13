@@ -36,6 +36,7 @@ fun Recipe.toDatabaseModel(): DatabaseRecipeInformation {
     val dbRecipe = DatabaseRecipe(
         id = id,
         title = title,
+        createdAt = System.currentTimeMillis(),
         sourceName = sourceName,
         sourceUrl = sourceUrl,
         imageUrl = imageUrl,

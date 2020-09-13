@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 interface RecipeDao {
 
     @Transaction
-    @Query("SELECT * FROM recipes")
+    @Query("SELECT * FROM recipes ORDER BY created_at DESC")
     fun getRecipesWithInformation(): Flow<List<DatabaseRecipeInformation>>
 
     @Transaction
