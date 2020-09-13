@@ -91,7 +91,7 @@ class RecipeRepositoryImpl @Inject constructor(
     }
 
     private suspend fun getFakeData(): List<Recipe> {
-        delay(600)
+        delay(2000)
         val data = Recipe(
             id = 1,
             sourceName = "Foodista",

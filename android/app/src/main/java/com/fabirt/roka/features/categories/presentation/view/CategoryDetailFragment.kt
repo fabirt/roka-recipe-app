@@ -20,6 +20,8 @@ import com.fabirt.roka.features.categories.presentation.viewmodel.CategoryDetail
 import com.fabirt.roka.features.detail.presentation.viewmodel.RecipeDetailViewModel
 import com.fabirt.roka.features.search.presentation.adapters.RecipeAdapter
 import kotlinx.android.synthetic.main.fragment_category_detail.*
+import kotlinx.android.synthetic.main.view_error.*
+import kotlinx.android.synthetic.main.view_spin_indicator.*
 
 class CategoryDetailFragment : Fragment() {
     private val viewModel: CategoryDetailViewModel by activityViewModels()
@@ -49,6 +51,14 @@ class CategoryDetailFragment : Fragment() {
             findNavController().navigateUp()
         }
 
+        btnRetry.setOnClickListener {
+            viewModel.requestRecipesForCategory(viewModel.category.value!!)
+        }
+
+        setupObservers()
+    }
+
+    private fun setupObservers() {
         viewModel.category.observe(viewLifecycleOwner, Observer { category ->
             tvTitle.text = category.name
             bindNetworkImage(ivCategoryItem, category.imageUrl)
@@ -57,17 +67,37 @@ class CategoryDetailFragment : Fragment() {
         viewModel.state.observe(viewLifecycleOwner, Observer { state ->
             when (state) {
                 CategoryDetailState.Loading -> {
-
+                    buildLoading()
                 }
                 is CategoryDetailState.Success -> {
-                    rvRecipes.scheduleLayoutAnimation()
-                    adapter.submitList(state.recipes)
+                    buildSuccess(state)
                 }
                 is CategoryDetailState.Error -> {
-
+                    buildFailure(state)
                 }
             }
         })
+    }
+
+    private fun buildLoading() {
+        spinView.visibility = View.VISIBLE
+        rvRecipes.visibility = View.GONE
+        errorView.visibility = View.GONE
+    }
+
+    private fun buildSuccess(state: CategoryDetailState.Success) {
+        spinView.visibility = View.GONE
+        rvRecipes.visibility = View.VISIBLE
+        errorView.visibility = View.GONE
+        rvRecipes.scheduleLayoutAnimation()
+        adapter.submitList(state.recipes)
+    }
+
+    private fun buildFailure(state: CategoryDetailState.Error) {
+        spinView.visibility = View.GONE
+        rvRecipes.visibility = View.GONE
+        errorView.visibility = View.VISIBLE
+        tvErrorSubtitle.text = state.failure.toString()
     }
 
     private fun openRecipeDetail(recipe: Recipe) {

@@ -63,4 +63,23 @@
         tools:layoutAnimation="@null"
         tools:listitem="@layout/view_recipe" />
 
+    <include
+        layout="@layout/view_error"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivCategoryItem" />
+
+    <include
+        layout="@layout/view_spin_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivCategoryItem" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

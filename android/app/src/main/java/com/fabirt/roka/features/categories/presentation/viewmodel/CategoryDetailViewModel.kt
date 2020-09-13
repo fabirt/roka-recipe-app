@@ -26,7 +26,7 @@ class CategoryDetailViewModel @ViewModelInject constructor(
         requestRecipesForCategory(categoryItem)
     }
 
-    private fun requestRecipesForCategory(categoryItem: CategoryItem) {
+    fun requestRecipesForCategory(categoryItem: CategoryItem) {
         viewModelScope.launch {
             _state.value = CategoryDetailState.Loading
             val options = mapOf(parent!! to categoryItem.name)
