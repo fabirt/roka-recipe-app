@@ -25,4 +25,6 @@
     <string name="ingredients_title">Ingredients</string>
     <string name="preparation_title">Preparation</string>
     <string name="no_favorites">Find your favorite recipes\nand save them</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
