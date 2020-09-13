@@ -1,10 +1,7 @@
 package com.fabirt.roka.features.categories.presentation.viewmodel
 
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.fabirt.roka.core.domain.repository.RecipeRepository
 import com.fabirt.roka.features.categories.domain.model.CategoryItem
 import kotlinx.coroutines.delay
@@ -31,6 +28,14 @@ class CategoryDetailViewModel @ViewModelInject constructor(
         viewModelScope.launch {
             _state.value = CategoryDetailState.Loading
             delay(2000)
+            val result = repository.searchRecipes("", false)
+            result.fold(
+                { failure ->
+                    _state.value = CategoryDetailState.Error(failure)
+                }, { recipes ->
+                    _state.value = CategoryDetailState.Success(recipes)
+                }
+            )
         }
     }
 }

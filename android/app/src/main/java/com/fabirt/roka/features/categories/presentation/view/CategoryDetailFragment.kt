@@ -7,13 +7,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.fabirt.roka.R
+import com.fabirt.roka.core.domain.model.Recipe
+import com.fabirt.roka.core.utils.navigateToRecipeDetail
 import com.fabirt.roka.features.categories.presentation.viewmodel.CategoryDetailState
 import com.fabirt.roka.features.categories.presentation.viewmodel.CategoryDetailViewModel
+import com.fabirt.roka.features.detail.presentation.viewmodel.RecipeDetailViewModel
+import com.fabirt.roka.features.search.presentation.adapters.RecipeAdapter
 import kotlinx.android.synthetic.main.fragment_category_detail.*
 
 class CategoryDetailFragment : Fragment() {
     private val viewModel: CategoryDetailViewModel by activityViewModels()
+    private val recipeDetailViewModel: RecipeDetailViewModel by activityViewModels()
+    private lateinit var adapter: RecipeAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,6 +32,12 @@ class CategoryDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        adapter = RecipeAdapter(listOf()) { recipe, _ ->
+            openRecipeDetail(recipe)
+        }
+        rvRecipes.layoutManager = LinearLayoutManager(requireContext())
+        rvRecipes.adapter = adapter
+
         viewModel.category.observe(viewLifecycleOwner, Observer { category ->
             tvTitle.text = category.name
         })
@@ -35,12 +48,18 @@ class CategoryDetailFragment : Fragment() {
 
                 }
                 is CategoryDetailState.Success -> {
-
+                    rvRecipes.scheduleLayoutAnimation()
+                    adapter.submitList(state.recipes)
                 }
                 is CategoryDetailState.Error -> {
 
                 }
             }
         })
+    }
+
+    private fun openRecipeDetail(recipe: Recipe) {
+        recipeDetailViewModel.requestRecipeInfo(recipe)
+        navigateToRecipeDetail()
     }
 }

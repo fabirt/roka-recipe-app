@@ -9,10 +9,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
-import com.fabirt.roka.MainGraphDirections
 import com.fabirt.roka.R
 import com.fabirt.roka.core.domain.model.Recipe
-import com.fabirt.roka.core.utils.findMainNavController
+import com.fabirt.roka.core.utils.navigateToRecipeDetail
 import com.fabirt.roka.features.detail.presentation.viewmodel.RecipeDetailViewModel
 import com.fabirt.roka.features.favorites.presentation.adapters.FavoritesAdapter
 import com.fabirt.roka.features.favorites.presentation.viewmodel.FavoritesViewModel
@@ -64,7 +63,6 @@ class FavoritesFragment : Fragment() {
 
     private fun openRecipeDetail(recipe: Recipe) {
         detailViewModel.presentRecipeInfo(recipe)
-        val action = MainGraphDirections.actionGlobalRecipeDetailFragment()
-        findMainNavController().navigate(action)
+        navigateToRecipeDetail()
     }
 }

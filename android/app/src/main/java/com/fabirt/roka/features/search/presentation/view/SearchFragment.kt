@@ -14,10 +14,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.fabirt.roka.MainGraphDirections
 import com.fabirt.roka.R
 import com.fabirt.roka.core.domain.model.Recipe
-import com.fabirt.roka.core.utils.findMainNavController
+import com.fabirt.roka.core.utils.navigateToRecipeDetail
 import com.fabirt.roka.features.detail.presentation.viewmodel.RecipeDetailViewModel
 import com.fabirt.roka.features.search.presentation.adapters.RecipeAdapter
 import com.fabirt.roka.features.search.presentation.viewmodel.SearchViewModel
@@ -130,8 +129,7 @@ class SearchFragment : Fragment() {
     private fun openRecipeDetail(recipe: Recipe, image: ImageView) {
         detailViewModel.requestRecipeInfo(recipe)
         dismissKeyboard(editTextSearch)
-        val action = MainGraphDirections.actionGlobalRecipeDetailFragment()
-        findMainNavController().navigate(action)
+        navigateToRecipeDetail()
     }
 
     private fun dismissKeyboard(view: View) {

@@ -21,6 +21,7 @@ class RecipeRepositoryImpl @Inject constructor(
     private val service: RecipeService,
     private val recipeDao: RecipeDao
 ) : RecipeRepository {
+
     override suspend fun searchRecipes(
         query: String,
         addRecipeInformation: Boolean
