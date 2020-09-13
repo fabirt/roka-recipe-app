@@ -5,6 +5,7 @@ import com.fabirt.roka.features.categories.domain.model.CategoryItem
 
 val categoriesList: List<Category> = listOf(
     Category(
+        "cuisine",
         "Cuisines",
         listOf(
             CategoryItem("African", "https://images-cdn.newscred.com/Zz1iNmVhMTZhNDdiZTkyYWVmMjA4NDI5MzgyOTRiYjk3MQ==/Zz04MzhmMTcwMmMyMmUxZGQ3Y2M0YWNlZmM4OTcxNTdkOQ%3D%3D.jpeg?width=1200"),
@@ -31,12 +32,13 @@ val categoriesList: List<Category> = listOf(
         )
     ),
     Category(
+        "diet",
         "Diets",
         listOf(
             CategoryItem("Gluten Free", "https://i0.wp.com/www.diegocoquillat.com/wp-content/uploads/2018/11/sin_gluten2.png?fit=702%2C336&ssl=1"),
             CategoryItem("Ketogenic", "https://i.blogs.es/aa8690/aguacate_huevos/450_1000.jpg"),
             CategoryItem("Vegetarian", "https://i0.wp.com/images-prod.healthline.com/hlcmsresource/images/AN_images/vegetarian-diet-plan-1296x728-feature.jpg?w=1155&h=1528"),
-            CategoryItem("Lacto-Vegatarian", "https://s3-us-west-1.amazonaws.com/contentlab.studiod/getty/d817388bbe294ace959d7b55f42fca0e.jpg"),
+            CategoryItem("Lacto-Vegetarian", "https://s3-us-west-1.amazonaws.com/contentlab.studiod/getty/d817388bbe294ace959d7b55f42fca0e.jpg"),
             CategoryItem("Ovo-Vegetarian", "https://caitlinbenham.weebly.com/uploads/4/5/2/7/45271833/9122438.jpg?305"),
             CategoryItem("Vegan", "https://cdn.loveandlemons.com/wp-content/uploads/2019/12/vegan-recipes-500x375.jpg"),
             CategoryItem("Pescetarian", "https://st4.depositphotos.com/9012638/29097/i/450/depositphotos_290973290-stock-photo-pescetarian-diet-plan-ingredients.jpg"),
@@ -45,6 +47,7 @@ val categoriesList: List<Category> = listOf(
         )
     ),
     Category(
+        "type",
         "Meal Types",
         listOf(
             CategoryItem("Main Course", "https://img.taste.com.au/WMldfrFD/taste/2016/11/chicken-and-prosciutto-parmigiana-79468-1.jpeg"),
@@ -64,6 +67,7 @@ val categoriesList: List<Category> = listOf(
         )
     ),
     Category(
+        "intolerances",
         "Intolerances",
         listOf(
             CategoryItem("Dairy", "https://static01.nyt.com/images/2019/02/19/well/ask-food/ask-food-superJumbo.jpg"),

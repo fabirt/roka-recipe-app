@@ -44,8 +44,8 @@ class CategoriesFragment : Fragment() {
         })
     }
 
-    private fun navigateToCategoryDetail(category: CategoryItem) {
-        detailViewModel.setCurrentCategory(category)
+    private fun navigateToCategoryDetail(parent: String, category: CategoryItem) {
+        detailViewModel.setCurrentCategory(parent, category)
         val action = CategoriesFragmentDirections.actionCategoriesFragmentToCategoryDetailFragment()
         findNavController().navigate(action)
     }

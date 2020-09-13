@@ -4,12 +4,13 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.fabirt.roka.core.domain.repository.RecipeRepository
 import com.fabirt.roka.features.categories.domain.model.CategoryItem
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class CategoryDetailViewModel @ViewModelInject constructor(
     private val repository: RecipeRepository
 ) : ViewModel() {
+
+    private var parent: String? = null
 
     private val _category = MutableLiveData<CategoryItem>()
     val category: LiveData<CategoryItem>
@@ -19,7 +20,8 @@ class CategoryDetailViewModel @ViewModelInject constructor(
     val state: LiveData<CategoryDetailState>
         get() = _state
 
-    fun setCurrentCategory(categoryItem: CategoryItem) {
+    fun setCurrentCategory(parent: String, categoryItem: CategoryItem) {
+        this.parent = parent
         _category.value = categoryItem
         requestRecipesForCategory(categoryItem)
     }
@@ -27,8 +29,8 @@ class CategoryDetailViewModel @ViewModelInject constructor(
     private fun requestRecipesForCategory(categoryItem: CategoryItem) {
         viewModelScope.launch {
             _state.value = CategoryDetailState.Loading
-            delay(2000)
-            val result = repository.searchRecipes("", false)
+            val options = mapOf(parent!! to categoryItem.name)
+            val result = repository.searchRecipes(true, options)
             result.fold(
                 { failure ->
                     _state.value = CategoryDetailState.Error(failure)

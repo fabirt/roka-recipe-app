@@ -15,6 +15,14 @@ interface RecipeRepository {
     ): Either<Failure, List<Recipe>>
 
     /**
+     * Search recipes by [options].
+     */
+    suspend fun searchRecipes(
+        addRecipeInformation: Boolean,
+        options: Map<String, String>
+    ): Either<Failure, List<Recipe>>
+
+    /**
      * Request the recipe information for the given [id].
      */
     suspend fun requestRecipeInformation(id: Int): Either<Failure, Recipe>

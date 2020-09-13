@@ -11,8 +11,9 @@ import com.fabirt.roka.core.utils.bindNetworkImage
 import com.fabirt.roka.features.categories.domain.model.CategoryItem
 
 class CategoryItemsAdapter(
+    private val parent: String,
     private val items: List<CategoryItem>,
-    private val onItemPressed: (CategoryItem) -> Unit
+    private val onItemPressed: (String, CategoryItem) -> Unit
 ) : RecyclerView.Adapter<CategoryItemsAdapter.CategoryItemsViewHolder>() {
     override fun getItemCount(): Int = items.size
 
@@ -33,7 +34,7 @@ class CategoryItemsAdapter(
             tvCategoryName.text = item.name
             bindNetworkImage(imageView, item.imageUrl)
             tvCategoryName.setOnClickListener {
-                onItemPressed(item)
+                onItemPressed(parent, item)
             }
         }
     }

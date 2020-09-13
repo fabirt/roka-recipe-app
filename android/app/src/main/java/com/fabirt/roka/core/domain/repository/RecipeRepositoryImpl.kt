@@ -36,6 +36,19 @@ class RecipeRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun searchRecipes(
+        addRecipeInformation: Boolean,
+        options: Map<String, String>
+    ): Either<Failure, List<Recipe>> {
+        return try {
+            val result = service.searchRecipes(addRecipeInformation, options)
+            val recipes = result.results.map { it.asDomainModel() }
+            right(recipes)
+        } catch (e: Exception) {
+            left(Failure.UnexpectedFailure)
+        }
+    }
+
     override suspend fun requestRecipeInformation(
         id: Int
     ): Either<Failure, Recipe> {
