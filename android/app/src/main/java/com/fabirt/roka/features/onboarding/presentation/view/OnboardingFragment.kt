@@ -4,23 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.datastore.preferences.createDataStore
-import androidx.datastore.preferences.edit
-import androidx.datastore.preferences.preferencesKey
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.fabirt.roka.R
-import com.fabirt.roka.core.constants.K
+import com.fabirt.roka.core.presentation.viewmodel.DataStoreViewModel
 import com.fabirt.roka.features.onboarding.constants.onboardingItems
 import com.fabirt.roka.features.onboarding.presentation.adapters.ViewPagerAdapter
 import kotlinx.android.synthetic.main.fragment_onboarding.*
-import kotlinx.coroutines.launch
 
 class OnboardingFragment : Fragment() {
 
+    private val dataStoreViewModel: DataStoreViewModel by activityViewModels()
     private lateinit var adapter: ViewPagerAdapter
     private var currentIndex = 0
 
@@ -63,21 +60,11 @@ class OnboardingFragment : Fragment() {
 
     private fun nextPage() {
         if (currentIndex >= 2) {
-            writeOnboardingDidShow()
+            dataStoreViewModel.writeOnboardingDidShow()
             val action = OnboardingFragmentDirections.actionOnboardingFragmentToHomeFragment()
             findNavController().navigate(action)
         } else {
             viewPager.setCurrentItem(currentIndex + 1, true)
-        }
-    }
-
-    private fun writeOnboardingDidShow() {
-        lifecycleScope.launch {
-            val dataStore = requireContext().createDataStore(name = K.SETTINGS_DATA_STORE_NAME)
-            val prefKey = preferencesKey<Boolean>(K.ONBOARDING_DID_SHOW_KEY)
-            dataStore.edit { preferences ->
-                preferences[prefKey] = true
-            }
         }
     }
 }

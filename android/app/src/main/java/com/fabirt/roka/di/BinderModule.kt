@@ -1,5 +1,7 @@
 package com.fabirt.roka.di
 
+import com.fabirt.roka.core.data.providers.DataStoreProvider
+import com.fabirt.roka.core.data.providers.DataStoreProviderImpl
 import com.fabirt.roka.core.domain.repository.RecipeRepository
 import com.fabirt.roka.core.domain.repository.RecipeRepositoryImpl
 import dagger.Binds
@@ -15,4 +17,9 @@ abstract class BinderModule {
     abstract fun bindRecipeRepository(
         recipeRepositoryImpl: RecipeRepositoryImpl
     ): RecipeRepository
+
+    @Binds
+    abstract fun bindDataStoreProvider(
+        dataStoreProviderImpl: DataStoreProviderImpl
+    ): DataStoreProvider
 }
