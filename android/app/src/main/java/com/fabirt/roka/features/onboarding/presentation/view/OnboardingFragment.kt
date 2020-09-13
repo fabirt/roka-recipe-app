@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.fabirt.roka.R
 import com.fabirt.roka.core.presentation.viewmodel.DataStoreViewModel
+import com.fabirt.roka.core.utils.configureStatusBar
 import com.fabirt.roka.features.onboarding.constants.onboardingItems
 import com.fabirt.roka.features.onboarding.presentation.adapters.ViewPagerAdapter
 import kotlinx.android.synthetic.main.fragment_onboarding.*
@@ -25,6 +26,7 @@ class OnboardingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        configureStatusBar()
         return inflater.inflate(R.layout.fragment_onboarding, container, false)
     }
 

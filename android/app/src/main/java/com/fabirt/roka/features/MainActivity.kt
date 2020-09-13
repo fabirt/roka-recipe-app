@@ -4,25 +4,17 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.activity.viewModels
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.Navigation
 import com.fabirt.roka.R
-import com.fabirt.roka.core.presentation.viewmodel.DataStoreViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
-    private val dataStoreViewModel: DataStoreViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(R.style.AppTheme)
         setContentView(R.layout.activity_main)
         configureStatusBarForFullscreen()
-        setupNavigation()
     }
 
     private fun configureStatusBarForFullscreen() {
@@ -37,6 +29,8 @@ class MainActivity : AppCompatActivity() {
         window.decorView.systemUiVisibility = flags
     }
 
+    /*
+    Dynamic start destination
     private fun setupNavigation() {
         val navController = Navigation.findNavController(this, R.id.mainNavHostFragment)
         val navGraph = navController.navInflater.inflate(R.navigation.main_graph)
@@ -50,4 +44,6 @@ class MainActivity : AppCompatActivity() {
             navController.graph = navGraph
         }
     }
+
+     */
 }
