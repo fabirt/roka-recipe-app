@@ -1,6 +1,8 @@
 # Roka Recipes App
 Personal project developed with the Android SDK.
 
+All recipe information is provided by [Spoonacular API.](https://spoonacular.com/food-api) 
+
 ## Design
 Design inspired by [Roka - Recipes and Food Plan App UI.](https://creativemarket.com/betush/3703359-Roka-Recipes-and-Food-Plan-App-UI)
 
