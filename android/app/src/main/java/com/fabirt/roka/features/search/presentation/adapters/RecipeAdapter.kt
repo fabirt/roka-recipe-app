@@ -34,6 +34,7 @@ class RecipeAdapter(
     }
 
     inner class RecipeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val container: View = itemView.findViewById(R.id.cardRecipe)
         private val image: ImageView = itemView.findViewById(R.id.ivRecipe)
         private val title: TextView = itemView.findViewById(R.id.textName)
         private val author: TextView = itemView.findViewById(R.id.textAuthor)
@@ -47,7 +48,7 @@ class RecipeAdapter(
             time.text =
                 itemView.context.getString(R.string.minutes_label, recipe.readyInMinutes ?: 0)
             bindNetworkImage(image, recipe.imageUrl)
-            itemView.setOnClickListener {
+            container.setOnClickListener {
                 onRecipePressed(recipe, image)
             }
         }
