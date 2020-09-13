@@ -27,7 +27,7 @@ class RecipeRepositoryImpl @Inject constructor(
         addRecipeInformation: Boolean
     ): Either<Failure, List<Recipe>> {
         return try {
-            //return right(getFakeData())
+            return right(getFakeData())
             val result = service.searchRecipes(query, addRecipeInformation)
             val recipes = result.results.map { it.asDomainModel() }
             right(recipes)
@@ -41,6 +41,7 @@ class RecipeRepositoryImpl @Inject constructor(
         options: Map<String, String>
     ): Either<Failure, List<Recipe>> {
         return try {
+            return right(getFakeData())
             val result = service.searchRecipes(addRecipeInformation, options)
             val recipes = result.results.map { it.asDomainModel() }
             right(recipes)
@@ -53,7 +54,7 @@ class RecipeRepositoryImpl @Inject constructor(
         id: Int
     ): Either<Failure, Recipe> {
         return try {
-            //return right(getFakeData().first())
+            return right(getFakeData().first())
             val response = service.requestRecipeInformation(id)
             right(response.asDomainModel())
         } catch (e: Exception) {

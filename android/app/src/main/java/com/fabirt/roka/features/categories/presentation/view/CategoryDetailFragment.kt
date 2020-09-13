@@ -7,9 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fabirt.roka.R
 import com.fabirt.roka.core.domain.model.Recipe
+import com.fabirt.roka.core.utils.applyTopWindowInsets
+import com.fabirt.roka.core.utils.bindNetworkImage
+import com.fabirt.roka.core.utils.configureStatusBar
 import com.fabirt.roka.core.utils.navigateToRecipeDetail
 import com.fabirt.roka.features.categories.presentation.viewmodel.CategoryDetailState
 import com.fabirt.roka.features.categories.presentation.viewmodel.CategoryDetailViewModel
@@ -26,11 +30,14 @@ class CategoryDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        configureStatusBar(false)
         return inflater.inflate(R.layout.fragment_category_detail, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        btnBack.applyTopWindowInsets()
 
         adapter = RecipeAdapter(listOf()) { recipe, _ ->
             openRecipeDetail(recipe)
@@ -38,8 +45,13 @@ class CategoryDetailFragment : Fragment() {
         rvRecipes.layoutManager = LinearLayoutManager(requireContext())
         rvRecipes.adapter = adapter
 
+        btnBack.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
         viewModel.category.observe(viewLifecycleOwner, Observer { category ->
             tvTitle.text = category.name
+            bindNetworkImage(ivCategoryItem, category.imageUrl)
         })
 
         viewModel.state.observe(viewLifecycleOwner, Observer { state ->

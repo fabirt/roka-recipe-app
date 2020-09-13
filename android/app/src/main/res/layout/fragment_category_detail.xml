@@ -6,23 +6,50 @@
     android:layout_height="match_parent"
     tools:context=".features.categories.presentation.view.CategoryDetailFragment">
 
+    <ImageView
+        android:id="@+id/ivCategoryItem"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:foreground="@drawable/recipe_image_overlay"
+        android:scaleType="centerCrop"
+        app:layout_constraintDimensionRatio="3:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription"
+        tools:src="@tools:sample/backgrounds/scenic" />
+
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="8dp"
         android:fontFamily="@font/sf_pro_text_medium"
         android:gravity="center"
+        android:textColor="@color/colorSurface"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@id/ivCategoryItem"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/hello_blank_fragment" />
+
+    <ImageView
+        android:id="@+id/btnBack"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@drawable/icon_button_ripple"
+        android:padding="12dp"
+        android:src="@drawable/ic_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/colorSurface"
+        tools:ignore="ContentDescription" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvRecipes"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
         android:clipToPadding="false"
         android:layoutAnimation="@anim/entrance_layout_anim"
         android:overScrollMode="never"
@@ -31,7 +58,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        app:layout_constraintTop_toBottomOf="@id/ivCategoryItem"
         tools:itemCount="3"
         tools:layoutAnimation="@null"
         tools:listitem="@layout/view_recipe" />

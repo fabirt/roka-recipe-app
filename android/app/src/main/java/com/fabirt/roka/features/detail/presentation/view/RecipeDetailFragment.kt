@@ -18,7 +18,9 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fabirt.roka.R
+import com.fabirt.roka.core.utils.applyTopWindowInsets
 import com.fabirt.roka.core.utils.bindNetworkImage
+import com.fabirt.roka.core.utils.configureStatusBar
 import com.fabirt.roka.features.detail.presentation.adapters.RecipeDetailAdapter
 import com.fabirt.roka.features.detail.presentation.viewmodel.RecipeDetailState
 import com.fabirt.roka.features.detail.presentation.viewmodel.RecipeDetailViewModel
@@ -61,14 +63,14 @@ class RecipeDetailFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        configureStatusBar(true)
+        configureStatusBar()
     }
 
     private fun setupListeners() {
         viewModel.state.observe(viewLifecycleOwner, Observer(::buildView))
 
-        btnBack.setOnApplyWindowInsetsListener(::applyTopWindowInsets)
-        ivSave.setOnApplyWindowInsetsListener(::applyTopWindowInsets)
+        btnBack.applyTopWindowInsets()
+        ivSave.applyTopWindowInsets()
 
         btnBack.setOnClickListener {
             findNavController().navigateUp()
@@ -146,25 +148,6 @@ class RecipeDetailFragment : Fragment() {
             )
             findNavController().navigate(action, extras)
         }
-    }
-
-    private fun configureStatusBar(isLight: Boolean) {
-        val window = requireActivity().window
-        val currentFlags = window.decorView.systemUiVisibility
-        if (isLight) {
-            window.decorView.systemUiVisibility =
-                currentFlags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-        } else {
-            window.decorView.systemUiVisibility =
-                currentFlags and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
-        }
-    }
-
-    private fun applyTopWindowInsets(view: View, insets: WindowInsets): WindowInsets {
-        val params = view.layoutParams as ViewGroup.MarginLayoutParams
-        params.setMargins(0, insets.systemWindowInsetTop, 0, 0)
-        view.layoutParams = params
-        return insets
     }
 
     private fun shareRecipe() {
