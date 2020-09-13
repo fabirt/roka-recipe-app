@@ -4,14 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.datastore.preferences.createDataStore
+import androidx.datastore.preferences.edit
+import androidx.datastore.preferences.preferencesKey
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.fabirt.roka.R
+import com.fabirt.roka.core.constants.K
 import com.fabirt.roka.features.onboarding.constants.onboardingItems
 import com.fabirt.roka.features.onboarding.presentation.adapters.ViewPagerAdapter
 import kotlinx.android.synthetic.main.fragment_onboarding.*
+import kotlinx.coroutines.launch
 
 class OnboardingFragment : Fragment() {
 
@@ -35,6 +41,14 @@ class OnboardingFragment : Fragment() {
         val child = viewPager.getChildAt(0)
         (child as? RecyclerView)?.overScrollMode = View.OVER_SCROLL_NEVER
 
+        registerOnChangeCallback()
+
+        buttonStart.setOnClickListener {
+            nextPage()
+        }
+    }
+
+    private fun registerOnChangeCallback() {
         viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageScrolled(
                 position: Int,
@@ -45,13 +59,24 @@ class OnboardingFragment : Fragment() {
                 currentIndex = position
             }
         })
-        val navController = view.findNavController()
-        buttonStart.setOnClickListener {
-            if (currentIndex >= 2) {
-                val action = OnboardingFragmentDirections.actionOnboardingFragmentToHomeFragment()
-                navController.navigate(action)
-            } else {
-                viewPager.setCurrentItem(currentIndex + 1, true)
+    }
+
+    private fun nextPage() {
+        if (currentIndex >= 2) {
+            writeOnboardingDidShow()
+            val action = OnboardingFragmentDirections.actionOnboardingFragmentToHomeFragment()
+            findNavController().navigate(action)
+        } else {
+            viewPager.setCurrentItem(currentIndex + 1, true)
+        }
+    }
+
+    private fun writeOnboardingDidShow() {
+        lifecycleScope.launch {
+            val dataStore = requireContext().createDataStore(name = K.SETTINGS_DATA_STORE_NAME)
+            val prefKey = preferencesKey<Boolean>(K.ONBOARDING_DID_SHOW_KEY)
+            dataStore.edit { preferences ->
+                preferences[prefKey] = true
             }
         }
     }
