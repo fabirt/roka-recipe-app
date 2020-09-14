@@ -8,15 +8,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fabirt.roka.R
 import com.fabirt.roka.core.domain.model.Recipe
 import com.fabirt.roka.core.utils.configureStatusBar
 import com.fabirt.roka.core.utils.navigateToRecipeDetail
 import com.fabirt.roka.features.search.presentation.adapters.PagingRecipeAdapter
+import com.fabirt.roka.features.search.presentation.adapters.RecipeLoadStateAdapter
 import com.fabirt.roka.features.search.presentation.viewmodel.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_search.*
@@ -48,7 +51,7 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         pagingAdapter = PagingRecipeAdapter(::openRecipeDetail)
         rvRecipes.layoutManager = LinearLayoutManager(requireContext())
-        rvRecipes.adapter = pagingAdapter
+        rvRecipes.adapter = pagingAdapter.withLoadStateFooter(RecipeLoadStateAdapter())
         setupListeners()
     }
 
@@ -82,6 +85,16 @@ class SearchFragment : Fragment() {
             requestSearch(shouldRetry = true)
         }
 
+        pagingAdapter.addLoadStateListener { loadStates ->
+            val loadState = loadStates.source.refresh
+            spinView.isVisible = loadState is LoadState.Loading
+            rvRecipes.isVisible = loadState is LoadState.NotLoading
+            errorView.isVisible = loadState is LoadState.Error
+            if (loadState is LoadState.Error) {
+                tvErrorSubtitle.text = loadState.error.toString()
+            }
+        }
+
         lifecycleScope.launch {
             viewModel.recipesFlow.collectLatest { pagingData ->
                 pagingAdapter.submitData(pagingData)
@@ -91,7 +104,7 @@ class SearchFragment : Fragment() {
 
     private fun requestSearch(shouldRetry: Boolean = false) {
         val text = editTextSearch.text.toString()
-        if (text.isNotEmpty() || shouldRetry) {
+        if (text.trim().isNotEmpty() || shouldRetry) {
             viewModel.query = text
             pagingAdapter.refresh()
         }
