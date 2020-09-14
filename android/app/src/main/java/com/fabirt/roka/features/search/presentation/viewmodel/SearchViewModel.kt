@@ -1,57 +1,35 @@
 package com.fabirt.roka.features.search.presentation.viewmodel
 
-import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.fabirt.roka.core.constants.K
+import com.fabirt.roka.core.data.network.services.RecipeService
 import com.fabirt.roka.core.domain.model.Recipe
 import com.fabirt.roka.core.domain.repository.RecipeRepository
-import com.fabirt.roka.core.error.Failure
-import kotlinx.coroutines.launch
+import com.fabirt.roka.features.search.domain.repository.SearchPagingSource
+import kotlinx.coroutines.flow.Flow
 
 class SearchViewModel @ViewModelInject constructor(
+    private val service: RecipeService,
     private val repository: RecipeRepository
 ) : ViewModel() {
 
-    private val _recipes = MutableLiveData<List<Recipe>>()
-    val recipes: LiveData<List<Recipe>>
-        get() = _recipes
-
-    private val _isSearching = MutableLiveData(true)
-    val isSearching: LiveData<Boolean>
-        get() = _isSearching
-
-    private val _failure = MutableLiveData<Failure?>()
-    val failure: LiveData<Failure?>
-        get() = _failure
+    val recipesFlow: Flow<PagingData<Recipe>>
+    var query = ""
 
     init {
-        requestRecipes()
+        recipesFlow = Pager(
+            config = PagingConfig((K.RECIPES_PER_PAGE)),
+            pagingSourceFactory = ::createPagingSource
+        ).flow
+            .cachedIn(viewModelScope)
     }
 
-    fun requestRecipes(query: String = "") {
-        viewModelScope.launch {
-            _failure.value = null
-            _isSearching.value = true
-            val result = repository.searchRecipes(
-                query = query,
-                addRecipeInformation = true,
-                number = K.RECIPES_PER_PAGE,
-                offset = 0
-            )
-            _isSearching.value = false
-            result.fold(
-                { failure ->
-                    Log.e("requestRecipes", failure.toString())
-                    _failure.value = failure
-                },
-                { recipes ->
-                    _recipes.value = recipes
-                }
-            )
-        }
+    private fun createPagingSource(): SearchPagingSource {
+        return SearchPagingSource(service, query)
     }
 }
