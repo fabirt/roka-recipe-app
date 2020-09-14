@@ -24,11 +24,13 @@ class RecipeRepositoryImpl @Inject constructor(
 
     override suspend fun searchRecipes(
         query: String,
-        addRecipeInformation: Boolean
+        addRecipeInformation: Boolean,
+        number: Int,
+        offset: Int
     ): Either<Failure, List<Recipe>> {
         return try {
-            return right(getFakeData())
-            val result = service.searchRecipes(query, addRecipeInformation)
+            //return right(getFakeData())
+            val result = service.searchRecipes(query, addRecipeInformation, number, offset)
             val recipes = result.results.map { it.asDomainModel() }
             right(recipes)
         } catch (e: Exception) {
@@ -38,11 +40,13 @@ class RecipeRepositoryImpl @Inject constructor(
 
     override suspend fun searchRecipes(
         addRecipeInformation: Boolean,
+        number: Int,
+        offset: Int,
         options: Map<String, String>
     ): Either<Failure, List<Recipe>> {
         return try {
-            return right(getFakeData())
-            val result = service.searchRecipes(addRecipeInformation, options)
+            //return right(getFakeData())
+            val result = service.searchRecipes(addRecipeInformation, number, offset, options)
             val recipes = result.results.map { it.asDomainModel() }
             right(recipes)
         } catch (e: Exception) {

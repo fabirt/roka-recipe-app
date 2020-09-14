@@ -2,6 +2,7 @@ package com.fabirt.roka.features.categories.presentation.viewmodel
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
+import com.fabirt.roka.core.constants.K
 import com.fabirt.roka.core.domain.repository.RecipeRepository
 import com.fabirt.roka.features.categories.domain.model.CategoryItem
 import kotlinx.coroutines.launch
@@ -30,7 +31,12 @@ class CategoryDetailViewModel @ViewModelInject constructor(
         viewModelScope.launch {
             _state.value = CategoryDetailState.Loading
             val options = mapOf(parent!! to categoryItem.name)
-            val result = repository.searchRecipes(true, options)
+            val result = repository.searchRecipes(
+                addRecipeInformation = true,
+                number = K.RECIPES_PER_PAGE,
+                offset = 0,
+                options = options
+            )
             result.fold(
                 { failure ->
                     _state.value = CategoryDetailState.Error(failure)

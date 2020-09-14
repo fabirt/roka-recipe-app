@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.fabirt.roka.core.constants.K
 import com.fabirt.roka.core.domain.model.Recipe
 import com.fabirt.roka.core.domain.repository.RecipeRepository
 import com.fabirt.roka.core.error.Failure
@@ -35,7 +36,12 @@ class SearchViewModel @ViewModelInject constructor(
         viewModelScope.launch {
             _failure.value = null
             _isSearching.value = true
-            val result = repository.searchRecipes(query, true)
+            val result = repository.searchRecipes(
+                query = query,
+                addRecipeInformation = true,
+                number = K.RECIPES_PER_PAGE,
+                offset = 0
+            )
             _isSearching.value = false
             result.fold(
                 { failure ->

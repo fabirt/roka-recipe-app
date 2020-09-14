@@ -11,7 +11,9 @@ interface RecipeRepository {
      */
     suspend fun searchRecipes(
         query: String,
-        addRecipeInformation: Boolean
+        addRecipeInformation: Boolean,
+        number: Int,
+        offset: Int
     ): Either<Failure, List<Recipe>>
 
     /**
@@ -19,6 +21,8 @@ interface RecipeRepository {
      */
     suspend fun searchRecipes(
         addRecipeInformation: Boolean,
+        number: Int,
+        offset: Int,
         options: Map<String, String>
     ): Either<Failure, List<Recipe>>
 
