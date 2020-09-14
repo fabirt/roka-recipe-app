@@ -3,6 +3,8 @@ package com.fabirt.roka.di
 import android.content.Context
 import com.fabirt.roka.core.data.database.AppDatabase
 import com.fabirt.roka.core.data.network.client.RecipesApiClient
+import com.fabirt.roka.core.data.network.services.RecipeService
+import com.fabirt.roka.core.data.network.services.RecipeServiceFakeImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,7 +18,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideRecipeService() = RecipesApiClient.createRecipeService()
+    fun provideRecipeService(): RecipeService = RecipeServiceFakeImpl()
 
     @Provides
     @Singleton

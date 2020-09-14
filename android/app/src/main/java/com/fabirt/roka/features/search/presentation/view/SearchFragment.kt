@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,7 +16,6 @@ import com.fabirt.roka.R
 import com.fabirt.roka.core.domain.model.Recipe
 import com.fabirt.roka.core.utils.configureStatusBar
 import com.fabirt.roka.core.utils.navigateToRecipeDetail
-import com.fabirt.roka.features.detail.presentation.viewmodel.RecipeDetailViewModel
 import com.fabirt.roka.features.search.presentation.adapters.PagingRecipeAdapter
 import com.fabirt.roka.features.search.presentation.viewmodel.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,7 +30,6 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class SearchFragment : Fragment() {
     private val viewModel: SearchViewModel by viewModels()
-    private val detailViewModel: RecipeDetailViewModel by activityViewModels()
     private lateinit var pagingAdapter: PagingRecipeAdapter
 
     companion object {
@@ -101,9 +98,8 @@ class SearchFragment : Fragment() {
     }
 
     private fun openRecipeDetail(recipe: Recipe) {
-        detailViewModel.requestRecipeInfo(recipe)
         dismissKeyboard(editTextSearch)
-        navigateToRecipeDetail()
+        navigateToRecipeDetail(recipe)
     }
 
     private fun dismissKeyboard(view: View) {

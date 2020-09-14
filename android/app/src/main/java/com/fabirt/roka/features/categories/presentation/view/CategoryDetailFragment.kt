@@ -17,7 +17,6 @@ import com.fabirt.roka.core.utils.configureStatusBar
 import com.fabirt.roka.core.utils.navigateToRecipeDetail
 import com.fabirt.roka.features.categories.presentation.viewmodel.CategoryDetailState
 import com.fabirt.roka.features.categories.presentation.viewmodel.CategoryDetailViewModel
-import com.fabirt.roka.features.detail.presentation.viewmodel.RecipeDetailViewModel
 import com.fabirt.roka.features.search.presentation.adapters.RecipeAdapter
 import kotlinx.android.synthetic.main.fragment_category_detail.*
 import kotlinx.android.synthetic.main.view_error.*
@@ -25,7 +24,6 @@ import kotlinx.android.synthetic.main.view_spin_indicator.*
 
 class CategoryDetailFragment : Fragment() {
     private val viewModel: CategoryDetailViewModel by activityViewModels()
-    private val recipeDetailViewModel: RecipeDetailViewModel by activityViewModels()
     private lateinit var adapter: RecipeAdapter
 
     override fun onCreateView(
@@ -42,7 +40,7 @@ class CategoryDetailFragment : Fragment() {
         btnBack.applyTopWindowInsets()
 
         adapter = RecipeAdapter(listOf()) { recipe, _ ->
-            openRecipeDetail(recipe)
+            navigateToRecipeDetail(recipe)
         }
         rvRecipes.layoutManager = LinearLayoutManager(requireContext())
         rvRecipes.adapter = adapter
@@ -98,10 +96,5 @@ class CategoryDetailFragment : Fragment() {
         rvRecipes.visibility = View.GONE
         errorView.visibility = View.VISIBLE
         tvErrorSubtitle.text = state.failure.toString()
-    }
-
-    private fun openRecipeDetail(recipe: Recipe) {
-        recipeDetailViewModel.requestRecipeInfo(recipe)
-        navigateToRecipeDetail()
     }
 }
