@@ -32,3 +32,4 @@ Design inspired by [Roka - Recipes and Food Plan App UI.](https://creativemarket
 - Hilt
 - Glide
 - DataStore
+- Paging 3

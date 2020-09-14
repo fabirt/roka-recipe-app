@@ -11,6 +11,7 @@ buildscript {
         version_hilt_jetpack = "1.0.0-alpha02"
         version_room = "2.2.5"
         version_datastore = "1.0.0-alpha01"
+        version_paging = "3.0.0-alpha06"
     }
 
     repositories {

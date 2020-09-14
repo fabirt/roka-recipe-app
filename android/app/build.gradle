@@ -97,4 +97,7 @@ dependencies {
 
     // Photo View
     implementation 'com.github.chrisbanes:PhotoView:2.0.0'
+
+    // Paging
+    implementation "androidx.paging:paging-runtime:$version_paging"
 }
