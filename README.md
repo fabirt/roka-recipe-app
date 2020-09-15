@@ -3,7 +3,6 @@ Personal project developed with the Android SDK.
 
 All recipe information is provided by [Spoonacular API.](https://spoonacular.com/food-api) 
 
-## Design
 Design inspired by [Roka - Recipes and Food Plan App UI.](https://creativemarket.com/betush/3703359-Roka-Recipes-and-Food-Plan-App-UI)
 
 ## Features
@@ -12,13 +11,6 @@ Design inspired by [Roka - Recipes and Food Plan App UI.](https://creativemarket
 - Save your favorite recipes
 - Share recipes
 - Visit original recipe website
-
-## Screenshots
-| ![Categories](assets/screenshot_1.jpg) | ![Recipes](assets/screenshot_2.jpg) |
-|----------|:-------------:|
-
-| ![Favorites](assets/screenshot_3.jpg) | ![Instructions](assets/screenshot_4.jpg) |
-|----------|:-------------:|
 
 ## Libraries Used
 - Android KTX
@@ -33,3 +25,10 @@ Design inspired by [Roka - Recipes and Food Plan App UI.](https://creativemarket
 - Glide
 - DataStore
 - Paging 3
+
+## Screenshots
+| ![Categories](assets/screenshot_1.jpg) | ![Recipes](assets/screenshot_2.jpg) |
+|----------|:-------------:|
+
+| ![Favorites](assets/screenshot_3.jpg) | ![Instructions](assets/screenshot_4.jpg) |
+|----------|:-------------:|
