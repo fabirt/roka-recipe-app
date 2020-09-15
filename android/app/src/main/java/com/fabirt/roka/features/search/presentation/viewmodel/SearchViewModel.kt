@@ -21,7 +21,7 @@ class SearchViewModel @ViewModelInject constructor(
 
     init {
         recipesFlow = Pager(
-            config = PagingConfig((K.RECIPES_PER_PAGE)),
+            config = PagingConfig(K.RECIPES_PER_PAGE),
             pagingSourceFactory = ::createPagingSource
         ).flow
             .cachedIn(viewModelScope)
