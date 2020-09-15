@@ -12,6 +12,7 @@ import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fabirt.roka.R
@@ -57,11 +58,7 @@ class SearchFragment : Fragment() {
 
     private fun setupListeners() {
         editTextSearch.addTextChangedListener { text ->
-            if (text.isNullOrEmpty()) {
-                btnCancelSearch.visibility = View.INVISIBLE
-            } else {
-                btnCancelSearch.visibility = View.VISIBLE
-            }
+            btnCancelSearch.isVisible = !text.isNullOrEmpty()
         }
 
         editTextSearch.setOnKeyListener { v, keyCode, event ->
@@ -85,20 +82,23 @@ class SearchFragment : Fragment() {
             requestSearch(shouldRetry = true)
         }
 
-        pagingAdapter.addLoadStateListener { loadStates ->
-            val loadState = loadStates.source.refresh
-            spinView.isVisible = loadState is LoadState.Loading
-            rvRecipes.isVisible = loadState is LoadState.NotLoading
-            errorView.isVisible = loadState is LoadState.Error
-            if (loadState is LoadState.Error) {
-                tvErrorSubtitle.text = loadState.error.toString()
-            }
-        }
+        pagingAdapter.addLoadStateListener(::listenLoadStateChanges)
 
         lifecycleScope.launch {
             viewModel.recipesFlow.collectLatest { pagingData ->
                 pagingAdapter.submitData(pagingData)
             }
+        }
+    }
+
+    private fun listenLoadStateChanges(loadStates: CombinedLoadStates) {
+        val loadState = loadStates.source.refresh
+        spinView.isVisible = loadState is LoadState.Loading
+        rvRecipes.isVisible = loadState is LoadState.NotLoading && pagingAdapter.itemCount > 0
+        emptyView.isVisible = loadState is LoadState.NotLoading && pagingAdapter.itemCount == 0
+        errorView.isVisible = loadState is LoadState.Error
+        if (loadState is LoadState.Error) {
+            tvErrorSubtitle.text = loadState.error.toString()
         }
     }
 

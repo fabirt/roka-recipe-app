@@ -9,13 +9,11 @@ import androidx.paging.cachedIn
 import com.fabirt.roka.core.constants.K
 import com.fabirt.roka.core.data.network.services.RecipeService
 import com.fabirt.roka.core.domain.model.Recipe
-import com.fabirt.roka.core.domain.repository.RecipeRepository
 import com.fabirt.roka.features.search.domain.repository.SearchPagingSource
 import kotlinx.coroutines.flow.Flow
 
 class SearchViewModel @ViewModelInject constructor(
-    private val service: RecipeService,
-    private val repository: RecipeRepository
+    private val service: RecipeService
 ) : ViewModel() {
 
     val recipesFlow: Flow<PagingData<Recipe>>
