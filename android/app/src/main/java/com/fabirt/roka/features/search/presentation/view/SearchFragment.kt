@@ -85,7 +85,7 @@ class SearchFragment : Fragment() {
 
         pagingAdapter.addLoadStateListener(::listenLoadStateChanges)
 
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.recipesFlow.collectLatest { pagingData ->
                 pagingAdapter.submitData(pagingData)
             }

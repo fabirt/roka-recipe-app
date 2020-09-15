@@ -2,24 +2,25 @@ package com.fabirt.roka.features.categories.presentation.viewmodel
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
+import androidx.paging.*
 import com.fabirt.roka.core.constants.K
-import com.fabirt.roka.core.domain.repository.RecipeRepository
+import com.fabirt.roka.core.data.network.services.RecipeService
+import com.fabirt.roka.core.domain.model.Recipe
 import com.fabirt.roka.features.categories.domain.model.CategoryItem
-import kotlinx.coroutines.launch
+import com.fabirt.roka.features.categories.domain.repository.FilteredRecipesPagingSource
+import kotlinx.coroutines.flow.Flow
 
 class CategoryDetailViewModel @ViewModelInject constructor(
-    private val repository: RecipeRepository
+    private val service: RecipeService
 ) : ViewModel() {
 
     private var parent: String? = null
 
+    var recipesFlow: Flow<PagingData<Recipe>>? = null
+
     private val _category = MutableLiveData<CategoryItem>()
     val category: LiveData<CategoryItem>
         get() = _category
-
-    private val _state = MutableLiveData<CategoryDetailState>()
-    val state: LiveData<CategoryDetailState>
-        get() = _state
 
     fun setCurrentCategory(parent: String, categoryItem: CategoryItem) {
         this.parent = parent
@@ -27,23 +28,11 @@ class CategoryDetailViewModel @ViewModelInject constructor(
         requestRecipesForCategory(categoryItem)
     }
 
-    fun requestRecipesForCategory(categoryItem: CategoryItem) {
-        viewModelScope.launch {
-            _state.value = CategoryDetailState.Loading
+    private fun requestRecipesForCategory(categoryItem: CategoryItem) {
+        recipesFlow = Pager(PagingConfig(K.RECIPES_PER_PAGE)) {
             val options = mapOf(parent!! to categoryItem.name)
-            val result = repository.searchRecipes(
-                addRecipeInformation = true,
-                number = K.RECIPES_PER_PAGE,
-                offset = 0,
-                options = options
-            )
-            result.fold(
-                { failure ->
-                    _state.value = CategoryDetailState.Error(failure)
-                }, { recipes ->
-                    _state.value = CategoryDetailState.Success(recipes)
-                }
-            )
-        }
+            FilteredRecipesPagingSource(service, options)
+        }.flow
+            .cachedIn(viewModelScope)
     }
 }

@@ -18,7 +18,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideRecipeService(): RecipeService = RecipesApiClient.createRecipeService()
+    fun provideRecipeService(): RecipeService = RecipeServiceFakeImpl()
 
     @Provides
     @Singleton

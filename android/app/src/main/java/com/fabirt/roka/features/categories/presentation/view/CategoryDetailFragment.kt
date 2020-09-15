@@ -5,26 +5,31 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fabirt.roka.R
-import com.fabirt.roka.core.domain.model.Recipe
+import com.fabirt.roka.core.error.toFailure
 import com.fabirt.roka.core.utils.applyTopWindowInsets
 import com.fabirt.roka.core.utils.bindNetworkImage
 import com.fabirt.roka.core.utils.configureStatusBar
 import com.fabirt.roka.core.utils.navigateToRecipeDetail
-import com.fabirt.roka.features.categories.presentation.viewmodel.CategoryDetailState
 import com.fabirt.roka.features.categories.presentation.viewmodel.CategoryDetailViewModel
-import com.fabirt.roka.features.search.presentation.adapters.RecipeAdapter
+import com.fabirt.roka.features.search.presentation.adapters.PagingRecipeAdapter
+import com.fabirt.roka.features.search.presentation.adapters.RecipeLoadStateAdapter
 import kotlinx.android.synthetic.main.fragment_category_detail.*
 import kotlinx.android.synthetic.main.view_error.*
 import kotlinx.android.synthetic.main.view_spin_indicator.*
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class CategoryDetailFragment : Fragment() {
     private val viewModel: CategoryDetailViewModel by activityViewModels()
-    private lateinit var adapter: RecipeAdapter
+    private lateinit var adapter: PagingRecipeAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,18 +44,16 @@ class CategoryDetailFragment : Fragment() {
 
         btnBack.applyTopWindowInsets()
 
-        adapter = RecipeAdapter(listOf()) { recipe, _ ->
-            navigateToRecipeDetail(recipe)
-        }
+        adapter = PagingRecipeAdapter { navigateToRecipeDetail(it) }
         rvRecipes.layoutManager = LinearLayoutManager(requireContext())
-        rvRecipes.adapter = adapter
+        rvRecipes.adapter = adapter.withLoadStateFooter(RecipeLoadStateAdapter())
 
         btnBack.setOnClickListener {
             findNavController().navigateUp()
         }
 
         btnRetry.setOnClickListener {
-            viewModel.requestRecipesForCategory(viewModel.category.value!!)
+            adapter.refresh()
         }
 
         setupObservers()
@@ -62,39 +65,21 @@ class CategoryDetailFragment : Fragment() {
             bindNetworkImage(ivCategoryItem, category.imageUrl)
         })
 
-        viewModel.state.observe(viewLifecycleOwner, Observer { state ->
-            when (state) {
-                CategoryDetailState.Loading -> {
-                    buildLoading()
-                }
-                is CategoryDetailState.Success -> {
-                    buildSuccess(state)
-                }
-                is CategoryDetailState.Error -> {
-                    buildFailure(state)
-                }
+        adapter.addLoadStateListener { loadStates ->
+            val loadState = loadStates.source.refresh
+            spinView.isVisible = loadState is LoadState.Loading
+            rvRecipes.isVisible = loadState is LoadState.NotLoading && adapter.itemCount > 0
+            errorView.isVisible = loadState is LoadState.Error
+            if (loadState is LoadState.Error) {
+                val failure = loadState.error.toFailure()
+                tvErrorSubtitle.text = failure.translate(requireContext())
             }
-        })
-    }
+        }
 
-    private fun buildLoading() {
-        spinView.visibility = View.VISIBLE
-        rvRecipes.visibility = View.GONE
-        errorView.visibility = View.GONE
-    }
-
-    private fun buildSuccess(state: CategoryDetailState.Success) {
-        spinView.visibility = View.GONE
-        rvRecipes.visibility = View.VISIBLE
-        errorView.visibility = View.GONE
-        rvRecipes.scheduleLayoutAnimation()
-        adapter.submitList(state.recipes)
-    }
-
-    private fun buildFailure(state: CategoryDetailState.Error) {
-        spinView.visibility = View.GONE
-        rvRecipes.visibility = View.GONE
-        errorView.visibility = View.VISIBLE
-        tvErrorSubtitle.text = state.failure.toString()
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.recipesFlow?.collectLatest { pagingData ->
+                adapter.submitData(pagingData)
+            }
+        }
     }
 }
