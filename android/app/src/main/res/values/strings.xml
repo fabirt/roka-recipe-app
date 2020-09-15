@@ -25,8 +25,8 @@
     <string name="ingredients_title">Ingredients</string>
     <string name="preparation_title">Preparation</string>
     <string name="no_favorites">Find your favorite recipes\nand save them</string>
-    <string name="network_error">Network error</string>
-    <string name="limit_exceeded_error">Limit error</string>
-    <string name="server_error">Server error</string>
-    <string name="unexpected_error">Unexpected error</string>
+    <string name="network_error">You have lost network connectivity. Please check your connection.</string>
+    <string name="limit_exceeded_error">Sorry, you have exceeded the number of daily searches. Please try again later.</string>
+    <string name="server_error">Sorry, a server error has occurred. Please try again</string>
+    <string name="unexpected_error">Sorry, an unexpected error has occurred. Please try again.</string>
 </resources>

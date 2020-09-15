@@ -7,6 +7,7 @@ import com.fabirt.roka.core.data.network.services.RecipeService
 import com.fabirt.roka.core.domain.model.Recipe
 import com.fabirt.roka.core.domain.model.toDatabaseModel
 import com.fabirt.roka.core.error.Failure
+import com.fabirt.roka.core.error.toFailure
 import com.fabirt.roka.core.utils.Either
 import com.fabirt.roka.core.utils.left
 import com.fabirt.roka.core.utils.right
@@ -55,8 +56,8 @@ class RecipeRepositoryImpl @Inject constructor(
         return try {
             val response = service.requestRecipeInformation(id)
             right(response.asDomainModel())
-        } catch (e: Exception) {
-            left(Failure.UnexpectedFailure)
+        } catch (e: Throwable) {
+            left(e.toFailure())
         }
     }
 
