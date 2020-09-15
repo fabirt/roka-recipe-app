@@ -12,19 +12,24 @@ class SearchPagingSource(
 ) : PagingSource<Int, Recipe>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Recipe> {
         try {
-            val nextPageNumber = params.key ?: 1
-            val number = K.RECIPES_PER_PAGE
-            val offset = (nextPageNumber - 1) * number
+            val pageNumber = params.key ?: 1
+            val pageSize = K.RECIPES_PER_PAGE
+            val offset = (pageNumber - 1) * pageSize
             val response = service.searchRecipes(
                 query = query,
                 addRecipeInformation = true,
-                number = number,
+                number = pageSize,
                 offset = offset
             )
+            val nextPageNumber = if (response.totalResults - pageSize > offset && offset < 900) {
+                pageNumber + 1
+            } else {
+                null
+            }
             return LoadResult.Page(
                 data = response.results.map { it.asDomainModel() },
                 prevKey = null,
-                nextKey = nextPageNumber + 1
+                nextKey = nextPageNumber
             )
         } catch (e: Exception) {
             return LoadResult.Error(e)
