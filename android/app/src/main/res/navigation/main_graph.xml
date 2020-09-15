@@ -19,8 +19,8 @@
         <action
             android:id="@+id/action_onboardingFragment_to_homeFragment"
             app:destination="@id/homeFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
             app:popUpTo="@id/onboardingFragment"
             app:popUpToInclusive="true" />
     </fragment>
@@ -69,8 +69,8 @@
         android:id="@+id/action_global_recipeDetailFragment"
         app:destination="@id/recipeDetailFragment"
         app:enterAnim="@anim/slide_in_right"
-        app:exitAnim="@anim/slide_out_left"
-        app:popEnterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_left_small"
+        app:popEnterAnim="@anim/slide_in_right_small"
         app:popExitAnim="@anim/slide_out_right" />
     <fragment
         android:id="@+id/splashFragment"

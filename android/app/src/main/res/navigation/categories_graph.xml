@@ -14,8 +14,8 @@
             android:id="@+id/action_categoriesFragment_to_categoryDetailFragment"
             app:destination="@id/categoryDetailFragment"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left_small"
+            app:popEnterAnim="@anim/slide_in_right_small"
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
