@@ -5,6 +5,8 @@ import com.fabirt.roka.core.constants.K
 import com.fabirt.roka.core.data.network.model.asDomainModel
 import com.fabirt.roka.core.data.network.services.RecipeService
 import com.fabirt.roka.core.domain.model.Recipe
+import com.fabirt.roka.core.error.HttpLimitExceededException
+import retrofit2.HttpException
 
 class SearchPagingSource(
     private val service: RecipeService,
@@ -31,6 +33,11 @@ class SearchPagingSource(
                 prevKey = null,
                 nextKey = nextPageNumber
             )
+        } catch (e: HttpException) {
+            if (e.code() == 402) {
+                return LoadResult.Error(HttpLimitExceededException())
+            }
+            return LoadResult.Error(e)
         } catch (e: Exception) {
             return LoadResult.Error(e)
         }

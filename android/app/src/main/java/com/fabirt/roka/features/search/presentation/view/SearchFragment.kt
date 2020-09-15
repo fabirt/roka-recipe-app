@@ -17,6 +17,7 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fabirt.roka.R
 import com.fabirt.roka.core.domain.model.Recipe
+import com.fabirt.roka.core.error.toFailure
 import com.fabirt.roka.core.utils.configureStatusBar
 import com.fabirt.roka.core.utils.navigateToRecipeDetail
 import com.fabirt.roka.features.search.presentation.adapters.PagingRecipeAdapter
@@ -98,7 +99,8 @@ class SearchFragment : Fragment() {
         emptyView.isVisible = loadState is LoadState.NotLoading && pagingAdapter.itemCount == 0
         errorView.isVisible = loadState is LoadState.Error
         if (loadState is LoadState.Error) {
-            tvErrorSubtitle.text = loadState.error.toString()
+            val failure = loadState.error.toFailure()
+            tvErrorSubtitle.text = failure.translate(requireContext())
         }
     }
 

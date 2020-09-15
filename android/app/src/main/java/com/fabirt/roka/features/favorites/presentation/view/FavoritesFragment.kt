@@ -29,7 +29,7 @@ class FavoritesFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        adapter = FavoritesAdapter(::navigateToRecipeDetail)
+        adapter = FavoritesAdapter { navigateToRecipeDetail(it, isFavorite = true) }
     }
 
     override fun onCreateView(

@@ -16,9 +16,13 @@ fun Fragment.findMainNavController(): NavController {
     )
 }
 
-fun Fragment.navigateToRecipeDetail(recipe: Recipe) {
+fun Fragment.navigateToRecipeDetail(recipe: Recipe, isFavorite: Boolean = false) {
     val viewModel by activityViewModels<RecipeDetailViewModel>()
-    viewModel.requestRecipeInfo(recipe)
+    if (isFavorite) {
+        viewModel.presentRecipeInfo(recipe)
+    } else {
+        viewModel.requestRecipeInfo(recipe)
+    }
     val action = MainGraphDirections.actionGlobalRecipeDetailFragment()
     findMainNavController().navigate(action)
 }

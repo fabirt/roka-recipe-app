@@ -119,7 +119,7 @@ class RecipeDetailFragment : Fragment() {
                 rvDetails.visibility = View.GONE
             }
             is RecipeDetailState.Error -> {
-                tvErrorSubtitle.text = state.failure.toString()
+                tvErrorSubtitle.text = state.failure.translate(requireContext())
                 spinView.visibility = View.GONE
                 errorView.visibility = View.VISIBLE
                 rvDetails.visibility = View.GONE

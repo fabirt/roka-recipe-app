@@ -7,5 +7,5 @@ object K {
     const val DATABASE_NAME = "roka_db"
     const val SETTINGS_DATA_STORE_NAME = "settings"
     const val ONBOARDING_DID_SHOW_KEY = "ONBOARDING_DID_SHOW_KEY"
-    const val RECIPES_PER_PAGE = 1
+    const val RECIPES_PER_PAGE = 10
 }
