@@ -33,7 +33,7 @@
         app:layout_constraintBottom_toBottomOf="@id/ivCategoryItem"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:text="@string/hello_blank_fragment" />
+        tools:text="Japanese" />
 
     <ImageView
         android:id="@+id/btnBack"
@@ -69,6 +69,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:visibility="gone"
+        android:layout_marginHorizontal="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
