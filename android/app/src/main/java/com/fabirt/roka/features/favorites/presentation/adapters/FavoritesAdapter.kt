@@ -5,55 +5,52 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.fabirt.roka.R
 import com.fabirt.roka.core.domain.model.Recipe
+import com.fabirt.roka.core.presentation.dispatchers.RecipeEventDispatcher
+import com.fabirt.roka.core.presentation.viewholders.RecipeViewHolder
 import com.fabirt.roka.core.utils.bindNetworkImage
 
 class FavoritesAdapter(
-    private val onRecipePressed: (Recipe) -> Unit
-) : ListAdapter<Recipe, FavoritesAdapter.FavoritesViewHolder>(FavoritesDiffCallback()) {
+    private val eventDispatcher: RecipeEventDispatcher
+) : ListAdapter<Recipe, FavoritesAdapter.FavoritesViewHolder>(RecipeViewHolder.RecipeComparator) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritesViewHolder {
-        return FavoritesViewHolder.from(parent)
+        return FavoritesViewHolder.from(parent, eventDispatcher)
     }
 
     override fun onBindViewHolder(holder: FavoritesViewHolder, position: Int) {
         val recipe = getItem(position)
-        holder.bind(recipe, onRecipePressed)
+        holder.bind(recipe)
     }
 
-    class FavoritesViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class FavoritesViewHolder(
+        view: View,
+        private val eventDispatcher: RecipeEventDispatcher
+    ) : RecyclerView.ViewHolder(view) {
         private val name: TextView = view.findViewById(R.id.tvName)
         private val image: ImageView = view.findViewById(R.id.ivRecipe)
         private val overlay: View = view.findViewById(R.id.overlayView)
 
         companion object {
-            fun from(parent: ViewGroup): FavoritesViewHolder {
+            fun from(
+                parent: ViewGroup,
+                eventDispatcher: RecipeEventDispatcher
+            ): FavoritesViewHolder {
                 val inflater = LayoutInflater.from(parent.context)
                 val view = inflater.inflate(R.layout.view_favorite_recipe, parent, false)
-                return FavoritesViewHolder(view)
+                return FavoritesViewHolder(view, eventDispatcher)
             }
         }
 
-        fun bind(recipe: Recipe, onRecipePressed: (Recipe) -> Unit) {
+        fun bind(recipe: Recipe) {
             name.text = recipe.title
             bindNetworkImage(image, recipe.imageUrl)
             overlay.setOnClickListener {
-                onRecipePressed(recipe)
+                eventDispatcher.onRecipePressed(recipe)
             }
-        }
-    }
-
-    private class FavoritesDiffCallback : DiffUtil.ItemCallback<Recipe>() {
-        override fun areItemsTheSame(oldItem: Recipe, newItem: Recipe): Boolean {
-            return oldItem.id == newItem.id
-        }
-
-        override fun areContentsTheSame(oldItem: Recipe, newItem: Recipe): Boolean {
-            return oldItem == newItem
         }
     }
 }

@@ -13,23 +13,25 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fabirt.roka.R
+import com.fabirt.roka.core.domain.model.Recipe
 import com.fabirt.roka.core.error.toFailure
+import com.fabirt.roka.core.presentation.adapters.PagingLoadStateAdapter
+import com.fabirt.roka.core.presentation.adapters.RecipePagingAdapter
+import com.fabirt.roka.core.presentation.dispatchers.RecipeEventDispatcher
 import com.fabirt.roka.core.utils.applyTopWindowInsets
 import com.fabirt.roka.core.utils.bindNetworkImage
 import com.fabirt.roka.core.utils.configureStatusBar
 import com.fabirt.roka.core.utils.navigateToRecipeDetail
 import com.fabirt.roka.features.categories.presentation.viewmodel.CategoryDetailViewModel
-import com.fabirt.roka.features.search.presentation.adapters.PagingRecipeAdapter
-import com.fabirt.roka.features.search.presentation.adapters.RecipeLoadStateAdapter
 import kotlinx.android.synthetic.main.fragment_category_detail.*
 import kotlinx.android.synthetic.main.view_error.*
 import kotlinx.android.synthetic.main.view_spin_indicator.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class CategoryDetailFragment : Fragment() {
+class CategoryDetailFragment : Fragment(), RecipeEventDispatcher {
     private val viewModel: CategoryDetailViewModel by activityViewModels()
-    private lateinit var adapter: PagingRecipeAdapter
+    private lateinit var adapter: RecipePagingAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,9 +46,9 @@ class CategoryDetailFragment : Fragment() {
 
         btnBack.applyTopWindowInsets()
 
-        adapter = PagingRecipeAdapter { navigateToRecipeDetail(it) }
+        adapter = RecipePagingAdapter(this)
         rvRecipes.layoutManager = LinearLayoutManager(requireContext())
-        rvRecipes.adapter = adapter.withLoadStateFooter(RecipeLoadStateAdapter())
+        rvRecipes.adapter = adapter.withLoadStateFooter(PagingLoadStateAdapter())
 
         btnBack.setOnClickListener {
             findNavController().navigateUp()
@@ -81,5 +83,9 @@ class CategoryDetailFragment : Fragment() {
                 adapter.submitData(pagingData)
             }
         }
+    }
+
+    override fun onRecipePressed(recipe: Recipe) {
+        navigateToRecipeDetail(recipe)
     }
 }

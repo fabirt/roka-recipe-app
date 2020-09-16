@@ -18,10 +18,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.fabirt.roka.R
 import com.fabirt.roka.core.domain.model.Recipe
 import com.fabirt.roka.core.error.toFailure
+import com.fabirt.roka.core.presentation.adapters.PagingLoadStateAdapter
+import com.fabirt.roka.core.presentation.adapters.RecipePagingAdapter
+import com.fabirt.roka.core.presentation.dispatchers.RecipeEventDispatcher
 import com.fabirt.roka.core.utils.configureStatusBar
 import com.fabirt.roka.core.utils.navigateToRecipeDetail
-import com.fabirt.roka.features.search.presentation.adapters.PagingRecipeAdapter
-import com.fabirt.roka.features.search.presentation.adapters.RecipeLoadStateAdapter
 import com.fabirt.roka.features.search.presentation.viewmodel.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_search.*
@@ -33,9 +34,9 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SearchFragment : Fragment() {
+class SearchFragment : Fragment(), RecipeEventDispatcher {
     private val viewModel: SearchViewModel by viewModels()
-    private lateinit var pagingAdapter: PagingRecipeAdapter
+    private lateinit var pagingAdapter: RecipePagingAdapter
 
     companion object {
         const val TAG = "SearchFragment"
@@ -51,10 +52,15 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        pagingAdapter = PagingRecipeAdapter(::openRecipeDetail)
+        pagingAdapter = RecipePagingAdapter(this)
         rvRecipes.layoutManager = LinearLayoutManager(requireContext())
-        rvRecipes.adapter = pagingAdapter.withLoadStateFooter(RecipeLoadStateAdapter())
+        rvRecipes.adapter = pagingAdapter.withLoadStateFooter(PagingLoadStateAdapter())
         setupListeners()
+    }
+
+    override fun onRecipePressed(recipe: Recipe) {
+        dismissKeyboard(editTextSearch)
+        navigateToRecipeDetail(recipe)
     }
 
     private fun setupListeners() {
@@ -110,11 +116,6 @@ class SearchFragment : Fragment() {
             viewModel.query = text
             pagingAdapter.refresh()
         }
-    }
-
-    private fun openRecipeDetail(recipe: Recipe) {
-        dismissKeyboard(editTextSearch)
-        navigateToRecipeDetail(recipe)
     }
 
     private fun dismissKeyboard(view: View) {
