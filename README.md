@@ -25,6 +25,7 @@ Design inspired by [Roka - Recipes and Food Plan App UI.](https://creativemarket
 - Glide
 - DataStore
 - Paging 3
+- Play Core
 
 ## Screenshots
 | ![Categories](assets/screenshot_1.jpg) | ![Recipes](assets/screenshot_2.jpg) |
