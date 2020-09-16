@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rootLayout"
+    android:id="@+id/motionLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
+    app:layoutDescription="@xml/fragment_recipe_detail_scene"
     tools:context=".features.detail.presentation.view.RecipeDetailFragment">
 
     <ImageView
         android:id="@+id/ivRecipe"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:contentDescription="@null"
         android:scaleType="centerCrop"
         android:transitionName="recipeImage"
         app:layout_constraintDimensionRatio="5:3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="ContentDescription"
         tools:src="@tools:sample/avatars" />
 
     <View
@@ -26,10 +27,10 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/recipe_image_overlay"
-        app:layout_constraintDimensionRatio="5:3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/ivRecipe"
+        app:layout_constraintEnd_toEndOf="@+id/ivRecipe"
+        app:layout_constraintStart_toStartOf="@+id/ivRecipe"
+        app:layout_constraintTop_toTopOf="@+id/ivRecipe" />
 
     <TextView
         android:id="@+id/tvName"
@@ -37,14 +38,15 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="10dp"
+        android:ellipsize="end"
         android:fontFamily="@font/sf_pro_text_medium"
+        android:gravity="center_vertical"
         android:textColor="@color/colorSurface"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/ivPeople"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        tools:text="Strawberry Smoothie" />
+        tools:text="Strawberry Smoothie dhiddhhidhdu" />
 
     <ImageView
         android:id="@+id/ivPeople"
@@ -63,6 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
+        android:ellipsize="end"
         android:fontFamily="@font/sf_pro_text_regular"
         android:textColor="@color/colorSurface"
         android:textSize="12sp"
@@ -132,7 +135,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/colorSurface"
         tools:ignore="ContentDescription" />
-
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvDetails"
@@ -208,4 +210,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ivRecipe" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.motion.widget.MotionLayout>

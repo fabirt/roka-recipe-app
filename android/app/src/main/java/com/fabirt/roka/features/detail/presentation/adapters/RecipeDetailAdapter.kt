@@ -68,32 +68,28 @@ class RecipeDetailAdapter :
     }
 
     fun submitRecipeInfo(context: Context, recipe: Recipe) {
-        adapterScope.launch {
-            val items = mutableListOf<RecipeDetailItem>()
+        val items = mutableListOf<RecipeDetailItem>()
 
-            if (recipe.ingredients?.isNotEmpty() == true) {
-                val ingredientsTitle = context.getString(R.string.ingredients_title)
-                val ingredients = recipe.ingredients.map { ingredient ->
-                    RecipeDetailItem.RecipeIngredient(ingredient)
-                }
-                items.add(RecipeDetailItem.SectionTitle(ingredientsTitle, -100))
-                items.addAll(ingredients)
+        if (recipe.ingredients?.isNotEmpty() == true) {
+            val ingredientsTitle = context.getString(R.string.ingredients_title)
+            val ingredients = recipe.ingredients.map { ingredient ->
+                RecipeDetailItem.RecipeIngredient(ingredient)
             }
-
-            if (recipe.instructions?.isNotEmpty() == true) {
-                val preparationTitle = context.getString(R.string.preparation_title)
-                val directions = recipe.instructions.map { instruction ->
-                    RecipeDetailItem.RecipeDirection(instruction)
-                }
-                items.add(RecipeDetailItem.SectionTitle(preparationTitle, -101))
-                items.addAll(directions)
-            }
-
-            withContext(Dispatchers.Main) {
-                Log.i(TAG, items.toString())
-                submitList(items)
-            }
+            items.add(RecipeDetailItem.SectionTitle(ingredientsTitle, -100))
+            items.addAll(ingredients)
         }
+
+        if (recipe.instructions?.isNotEmpty() == true) {
+            val preparationTitle = context.getString(R.string.preparation_title)
+            val directions = recipe.instructions.map { instruction ->
+                RecipeDetailItem.RecipeDirection(instruction)
+            }
+            items.add(RecipeDetailItem.SectionTitle(preparationTitle, -101))
+            items.addAll(directions)
+        }
+
+        submitList(items)
+
     }
 
     private class SectionTitleViewHolder(view: View) : RecyclerView.ViewHolder(view) {

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ConstraintSet android:id="@+id/start">
+        <Constraint
+            android:id="@+id/ivRecipe"
+            app:layout_constraintDimensionRatio="5:3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Constraint android:id="@+id/tvName">
+            <CustomAttribute
+                app:attributeName="maxLines"
+                app:customIntegerValue="3" />
+
+        </Constraint>
+
+        <!-- Control Visibility -->
+        <Constraint android:id="@+id/rvDetails">
+            <PropertySet app:visibilityMode="ignore" />
+        </Constraint>
+
+        <Constraint android:id="@+id/spinView">
+            <PropertySet app:visibilityMode="ignore" />
+        </Constraint>
+
+        <Constraint android:id="@+id/errorView">
+            <PropertySet app:visibilityMode="ignore" />
+        </Constraint>
+
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+        <Constraint
+            android:id="@id/ivRecipe"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Constraint
+            android:id="@+id/tvName"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            app:layout_constraintEnd_toStartOf="@+id/ivWeb"
+            app:layout_constraintStart_toEndOf="@+id/btnBack"
+            app:layout_constraintTop_toTopOf="@+id/btnBack">
+            <CustomAttribute
+                app:attributeName="maxLines"
+                app:customIntegerValue="1" />
+        </Constraint>
+
+        <!-- Control Visibility -->
+        <Constraint android:id="@+id/rvDetails">
+            <PropertySet app:visibilityMode="ignore" />
+        </Constraint>
+
+        <Constraint android:id="@+id/spinView">
+            <PropertySet app:visibilityMode="ignore" />
+        </Constraint>
+
+        <Constraint android:id="@+id/errorView">
+            <PropertySet app:visibilityMode="ignore" />
+        </Constraint>
+
+    </ConstraintSet>
+
+    <Transition
+        app:constraintSetEnd="@id/end"
+        app:constraintSetStart="@+id/start">
+        <OnSwipe
+            app:dragDirection="dragUp"
+            app:touchAnchorId="@+id/rvDetails"
+            app:touchAnchorSide="top" />
+
+        <KeyFrameSet>
+            <KeyAttribute
+                android:alpha="1"
+                app:framePosition="0"
+                app:motionTarget="@+id/ivPeople" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="100"
+                app:motionTarget="@+id/ivPeople" />
+        </KeyFrameSet>
+
+        <KeyFrameSet>
+            <KeyAttribute
+                android:alpha="1"
+                app:framePosition="0"
+                app:motionTarget="@+id/tvPeople" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="100"
+                app:motionTarget="@+id/tvPeople" />
+        </KeyFrameSet>
+
+        <KeyFrameSet>
+            <KeyAttribute
+                android:alpha="1"
+                app:framePosition="0"
+                app:motionTarget="@+id/ivScore" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="100"
+                app:motionTarget="@+id/ivScore" />
+        </KeyFrameSet>
+
+        <KeyFrameSet>
+            <KeyAttribute
+                android:alpha="1"
+                app:framePosition="0"
+                app:motionTarget="@+id/tvScore" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="100"
+                app:motionTarget="@+id/tvScore" />
+        </KeyFrameSet>
+
+        <KeyFrameSet>
+            <KeyAttribute
+                android:alpha="1"
+                app:framePosition="0"
+                app:motionTarget="@+id/ivTime" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="100"
+                app:motionTarget="@+id/ivTime" />
+        </KeyFrameSet>
+
+        <KeyFrameSet>
+            <KeyAttribute
+                android:alpha="1"
+                app:framePosition="0"
+                app:motionTarget="@+id/tvTime" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="100"
+                app:motionTarget="@+id/tvTime" />
+        </KeyFrameSet>
+
+    </Transition>
+</MotionScene>

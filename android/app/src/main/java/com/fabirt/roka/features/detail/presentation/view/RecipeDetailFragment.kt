@@ -7,18 +7,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowInsets
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.widget.ImageViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fabirt.roka.R
-import com.fabirt.roka.core.utils.applyTopWindowInsets
 import com.fabirt.roka.core.utils.bindNetworkImage
 import com.fabirt.roka.core.utils.configureStatusBar
 import com.fabirt.roka.features.detail.presentation.adapters.RecipeDetailAdapter
@@ -27,6 +27,7 @@ import com.fabirt.roka.features.detail.presentation.viewmodel.RecipeDetailViewMo
 import kotlinx.android.synthetic.main.fragment_recipe_detail.*
 import kotlinx.android.synthetic.main.view_error.*
 import kotlinx.android.synthetic.main.view_spin_indicator.*
+import kotlinx.coroutines.launch
 
 class RecipeDetailFragment : Fragment() {
 
@@ -57,15 +58,13 @@ class RecipeDetailFragment : Fragment() {
         val layoutManager = LinearLayoutManager(requireContext())
         rvDetails.adapter = adapter
         rvDetails.layoutManager = layoutManager
+        applyWindowInsets()
         setupListeners()
         buildStaticViews()
     }
 
     private fun setupListeners() {
         viewModel.state.observe(viewLifecycleOwner, Observer(::buildView))
-
-        btnBack.applyTopWindowInsets()
-        ivSave.applyTopWindowInsets()
 
         btnBack.setOnClickListener {
             findNavController().navigateUp()
@@ -129,7 +128,9 @@ class RecipeDetailFragment : Fragment() {
                 spinView.visibility = View.GONE
                 errorView.visibility = View.GONE
                 rvDetails.visibility = View.VISIBLE
-                adapter.submitRecipeInfo(requireContext(), state.recipe)
+                lifecycleScope.launch {
+                    adapter.submitRecipeInfo(requireContext(), state.recipe)
+                }
             }
         }
     }
@@ -183,5 +184,27 @@ class RecipeDetailFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun applyWindowInsets() {
+        btnBack.setOnApplyWindowInsetsListener { v, insets ->
+            motionLayout.getConstraintSet(R.id.start)?.apply {
+                setMargin(v.id, ConstraintSet.TOP, insets.systemWindowInsetTop)
+            }
+            motionLayout.getConstraintSet(R.id.end)?.apply {
+                setMargin(v.id, ConstraintSet.TOP, insets.systemWindowInsetTop)
+            }
+            insets
+        }
+        ivSave.setOnApplyWindowInsetsListener { v, insets ->
+            motionLayout.getConstraintSet(R.id.start)?.apply {
+                setMargin(v.id, ConstraintSet.TOP, insets.systemWindowInsetTop)
+            }
+            motionLayout.getConstraintSet(R.id.end)?.apply {
+                setMargin(v.id, ConstraintSet.TOP, insets.systemWindowInsetTop)
+            }
+            insets
+        }
+
     }
 }
