@@ -41,7 +41,14 @@ class RecipeDetailFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel.motionProgress = 0F
         pulseAnim = AnimationUtils.loadAnimation(requireContext(), R.anim.pulse_anim)
+    }
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.motionProgress = motionLayout.progress
     }
 
     override fun onCreateView(
@@ -54,6 +61,7 @@ class RecipeDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        motionLayout.progress = viewModel.motionProgress
         adapter = RecipeDetailAdapter()
         val layoutManager = LinearLayoutManager(requireContext())
         rvDetails.adapter = adapter

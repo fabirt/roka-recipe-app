@@ -17,6 +17,8 @@ class RecipeDetailViewModel @ViewModelInject constructor(
 
     private var isFavorite = false
 
+    var motionProgress = 0F
+
     fun requestRecipeInfo(recipe: Recipe) {
         viewModelScope.launch {
             _state.value = RecipeDetailState.Loading(recipe)
