@@ -1,13 +1,10 @@
 package com.fabirt.roka.features.categories.presentation.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.fabirt.roka.R
 import com.fabirt.roka.core.utils.bindNetworkImage
+import com.fabirt.roka.databinding.ViewHomeCategoryBinding
 import com.fabirt.roka.features.categories.domain.model.CategoryItem
 import com.fabirt.roka.features.categories.presentation.dispatchers.CategoryEventDispatcher
 
@@ -19,22 +16,24 @@ class CategoryItemsAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryItemsViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return CategoryItemsViewHolder(inflater.inflate(R.layout.view_home_category, parent, false))
+        val binding = ViewHomeCategoryBinding.inflate(inflater, parent, false)
+        return CategoryItemsViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: CategoryItemsViewHolder, position: Int) {
         holder.bind(items[position])
     }
 
-    inner class CategoryItemsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val tvCategoryName: TextView = itemView.findViewById(R.id.tvCategoryName)
-        private val imageView: ImageView = itemView.findViewById(R.id.ivCategoryItem)
+    inner class CategoryItemsViewHolder(
+        private val binding: ViewHomeCategoryBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: CategoryItem) {
-            tvCategoryName.text = item.name
-            bindNetworkImage(imageView, item.imageUrl)
-            tvCategoryName.setOnClickListener {
-                eventDispatcher.onCategoryPressed(item)
+            binding.cardView.transitionName = item.name
+            binding.tvCategoryName.text = item.name
+            bindNetworkImage(binding.ivCategoryItem, item.imageUrl)
+            binding.tvCategoryName.setOnClickListener {
+                eventDispatcher.onCategoryPressed(item, binding.cardView)
             }
         }
     }

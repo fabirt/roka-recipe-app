@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -24,6 +23,7 @@ import com.fabirt.roka.core.utils.bindNetworkImage
 import com.fabirt.roka.core.utils.configureStatusBar
 import com.fabirt.roka.core.utils.navigateToRecipeDetail
 import com.fabirt.roka.features.categories.presentation.viewmodel.CategoryDetailViewModel
+import com.google.android.material.transition.MaterialContainerTransform
 import kotlinx.android.synthetic.main.fragment_category_detail.*
 import kotlinx.android.synthetic.main.view_error.*
 import kotlinx.android.synthetic.main.view_spin_indicator.*
@@ -39,6 +39,7 @@ class CategoryDetailFragment : Fragment(), RecipeEventDispatcher {
         super.onCreate(savedInstanceState)
         adapter = RecipePagingAdapter(this)
         viewModel.requestRecipesForCategory(args.category)
+        configureTransitions()
     }
 
     override fun onCreateView(
@@ -51,6 +52,8 @@ class CategoryDetailFragment : Fragment(), RecipeEventDispatcher {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        rootView.transitionName = args.category.name
 
         btnBack.applyTopWindowInsets()
 
@@ -69,6 +72,10 @@ class CategoryDetailFragment : Fragment(), RecipeEventDispatcher {
         }
 
         setupObservers()
+    }
+
+    override fun onRecipePressed(recipe: Recipe) {
+        navigateToRecipeDetail(recipe)
     }
 
     private fun setupObservers() {
@@ -90,7 +97,14 @@ class CategoryDetailFragment : Fragment(), RecipeEventDispatcher {
         }
     }
 
-    override fun onRecipePressed(recipe: Recipe) {
-        navigateToRecipeDetail(recipe)
+    private fun configureTransitions() {
+        val color = requireContext().getColor(R.color.colorBackground)
+        val transition = MaterialContainerTransform().apply {
+            duration = 1000
+            containerColor = color
+            drawingViewId = R.id.homeNavHostContainer
+        }
+        sharedElementEnterTransition = transition
+        sharedElementReturnTransition = transition
     }
 }
