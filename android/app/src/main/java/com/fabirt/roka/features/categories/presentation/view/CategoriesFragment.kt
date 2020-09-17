@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -16,15 +15,18 @@ import com.fabirt.roka.features.categories.domain.model.CategoryItem
 import com.fabirt.roka.features.categories.presentation.adapters.CategoriesAdapter
 import com.fabirt.roka.features.categories.presentation.dispatchers.CategoryEventDispatcher
 import com.fabirt.roka.features.categories.presentation.viewmodel.CategoriesViewModel
-import com.fabirt.roka.features.categories.presentation.viewmodel.CategoryDetailViewModel
 import kotlinx.android.synthetic.main.fragment_categories.*
 import kotlinx.android.synthetic.main.view_spin_indicator.*
 
 class CategoriesFragment : Fragment(), CategoryEventDispatcher {
 
     private val viewModel: CategoriesViewModel by viewModels()
-    private val detailViewModel: CategoryDetailViewModel by activityViewModels()
     private lateinit var adapter: CategoriesAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        adapter = CategoriesAdapter(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,7 +38,6 @@ class CategoriesFragment : Fragment(), CategoryEventDispatcher {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = CategoriesAdapter(this)
         rvCategories.layoutManager = LinearLayoutManager(requireContext())
         rvCategories.adapter = adapter
 
@@ -48,8 +49,8 @@ class CategoriesFragment : Fragment(), CategoryEventDispatcher {
     }
 
     override fun onCategoryPressed(category: CategoryItem) {
-        detailViewModel.setCurrentCategory(category)
-        val action = CategoriesFragmentDirections.actionCategoriesFragmentToCategoryDetailFragment()
+        val action = CategoriesFragmentDirections
+            .actionCategoriesFragmentToCategoryDetailFragment(category)
         findNavController().navigate(action)
     }
 }

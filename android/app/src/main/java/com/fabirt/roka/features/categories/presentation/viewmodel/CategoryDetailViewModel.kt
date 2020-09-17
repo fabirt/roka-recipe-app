@@ -16,16 +16,7 @@ class CategoryDetailViewModel @ViewModelInject constructor(
 
     var recipesFlow: Flow<PagingData<Recipe>>? = null
 
-    private val _category = MutableLiveData<CategoryItem>()
-    val category: LiveData<CategoryItem>
-        get() = _category
-
-    fun setCurrentCategory(categoryItem: CategoryItem) {
-        _category.value = categoryItem
-        requestRecipesForCategory(categoryItem)
-    }
-
-    private fun requestRecipesForCategory(categoryItem: CategoryItem) {
+    fun requestRecipesForCategory(categoryItem: CategoryItem) {
         recipesFlow = Pager(PagingConfig(K.RECIPES_PER_PAGE)) {
             val options = mapOf(categoryItem.type to categoryItem.name)
             FilteredRecipesPagingSource(service, options)

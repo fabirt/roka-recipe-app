@@ -22,5 +22,9 @@
         android:id="@+id/categoryDetailFragment"
         android:name="com.fabirt.roka.features.categories.presentation.view.CategoryDetailFragment"
         android:label="fragment_category_detail"
-        tools:layout="@layout/fragment_category_detail" />
+        tools:layout="@layout/fragment_category_detail" >
+        <argument
+            android:name="category"
+            app:argType="com.fabirt.roka.features.categories.domain.model.CategoryItem" />
+    </fragment>
 </navigation>
