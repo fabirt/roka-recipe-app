@@ -55,6 +55,9 @@
             app:exitAnim="@anim/scale_move_out"
             app:popEnterAnim="@anim/scale_move_in"
             app:popExitAnim="@anim/slide_out_down" />
+        <argument
+            android:name="transitionName"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/photoRecipeFragment"
@@ -67,11 +70,7 @@
     </fragment>
     <action
         android:id="@+id/action_global_recipeDetailFragment"
-        app:destination="@id/recipeDetailFragment"
-        app:enterAnim="@anim/slide_in_right"
-        app:exitAnim="@anim/slide_out_left_small"
-        app:popEnterAnim="@anim/slide_in_right_small"
-        app:popExitAnim="@anim/slide_out_right" />
+        app:destination="@id/recipeDetailFragment" />
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.fabirt.roka.features.splash.presentation.SplashFragment"

@@ -58,9 +58,9 @@ class SearchFragment : Fragment(), RecipeEventDispatcher {
         setupListeners()
     }
 
-    override fun onRecipePressed(recipe: Recipe) {
+    override fun onRecipePressed(recipe: Recipe, view: View) {
         dismissKeyboard(editTextSearch)
-        navigateToRecipeDetail(recipe)
+        navigateToRecipeDetail(recipe, view)
     }
 
     private fun setupListeners() {

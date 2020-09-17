@@ -5,11 +5,21 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.doOnPreDraw
 import com.fabirt.roka.R
 import com.fabirt.roka.core.utils.setupWithNavController
+import com.google.android.material.transition.Hold
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : Fragment() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val transitionDuration = resources.getInteger(R.integer.page_transition_duration)
+        exitTransition = Hold().apply {
+            duration = transitionDuration.toLong()
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -21,6 +31,10 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // Prepare reenter transsition
+        postponeEnterTransition()
+        view.doOnPreDraw { startPostponedEnterTransition() }
+
         if (savedInstanceState == null) {
             setupBottomNavigation()
         }

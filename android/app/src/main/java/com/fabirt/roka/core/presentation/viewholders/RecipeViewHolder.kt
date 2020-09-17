@@ -26,6 +26,7 @@ class RecipeViewHolder(
 
     fun bind(recipe: Recipe) {
         val defaultAuthor = itemView.context.getString(R.string.unknown)
+        binding.recipeContainer.transitionName = recipe.id.toString()
         binding.textName.text = recipe.title
         binding.textAuthor.text = itemView.context.getString(
             R.string.by_source,
@@ -37,7 +38,7 @@ class RecipeViewHolder(
         )
         bindNetworkImage(binding.ivRecipe, recipe.imageUrl)
         binding.cardRecipe.setOnClickListener {
-            eventDispatcher.onRecipePressed(recipe)
+            eventDispatcher.onRecipePressed(recipe, binding.recipeContainer)
         }
     }
 

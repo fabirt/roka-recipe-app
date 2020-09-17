@@ -17,6 +17,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fabirt.roka.R
 import com.fabirt.roka.core.utils.bindNetworkImage
@@ -24,6 +25,7 @@ import com.fabirt.roka.core.utils.configureStatusBar
 import com.fabirt.roka.features.detail.presentation.adapters.RecipeDetailAdapter
 import com.fabirt.roka.features.detail.presentation.viewmodel.RecipeDetailState
 import com.fabirt.roka.features.detail.presentation.viewmodel.RecipeDetailViewModel
+import com.google.android.material.transition.MaterialContainerTransform
 import kotlinx.android.synthetic.main.fragment_recipe_detail.*
 import kotlinx.android.synthetic.main.view_error.*
 import kotlinx.android.synthetic.main.view_spin_indicator.*
@@ -32,6 +34,7 @@ import kotlinx.coroutines.launch
 class RecipeDetailFragment : Fragment() {
 
     private val viewModel: RecipeDetailViewModel by activityViewModels()
+    private val args: RecipeDetailFragmentArgs by navArgs()
     private lateinit var adapter: RecipeDetailAdapter
     private lateinit var pulseAnim: Animation
 
@@ -41,6 +44,7 @@ class RecipeDetailFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        configureTransitions()
         viewModel.motionProgress = 0F
         pulseAnim = AnimationUtils.loadAnimation(requireContext(), R.anim.pulse_anim)
     }
@@ -61,6 +65,9 @@ class RecipeDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        motionLayout.transitionName = args.transitionName
+
         motionLayout.progress = viewModel.motionProgress
         adapter = RecipeDetailAdapter()
         val layoutManager = LinearLayoutManager(requireContext())
@@ -213,6 +220,17 @@ class RecipeDetailFragment : Fragment() {
             }
             insets
         }
+    }
 
+    private fun configureTransitions() {
+        val duration = resources.getInteger(R.integer.page_transition_duration)
+        val color = requireContext().getColor(R.color.colorBackground)
+        val transition = MaterialContainerTransform().apply {
+            this.duration = duration.toLong()
+            containerColor = color
+            drawingViewId = R.id.mainNavHostFragment
+        }
+        sharedElementEnterTransition = transition
+        sharedElementReturnTransition = transition
     }
 }

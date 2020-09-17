@@ -74,8 +74,8 @@ class CategoryDetailFragment : Fragment(), RecipeEventDispatcher {
         setupObservers()
     }
 
-    override fun onRecipePressed(recipe: Recipe) {
-        navigateToRecipeDetail(recipe)
+    override fun onRecipePressed(recipe: Recipe, view: View) {
+        navigateToRecipeDetail(recipe, view)
     }
 
     private fun setupObservers() {
@@ -98,9 +98,10 @@ class CategoryDetailFragment : Fragment(), RecipeEventDispatcher {
     }
 
     private fun configureTransitions() {
+        val duration = resources.getInteger(R.integer.page_transition_duration)
         val color = requireContext().getColor(R.color.colorBackground)
         val transition = MaterialContainerTransform().apply {
-            duration = 300
+            this.duration = duration.toLong()
             containerColor = color
             drawingViewId = R.id.homeNavHostContainer
         }

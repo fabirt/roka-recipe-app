@@ -1,9 +1,11 @@
 package com.fabirt.roka.core.utils
 
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import com.fabirt.roka.MainGraphDirections
 import com.fabirt.roka.R
 import com.fabirt.roka.core.domain.model.Recipe
@@ -16,13 +18,18 @@ fun Fragment.findMainNavController(): NavController {
     )
 }
 
-fun Fragment.navigateToRecipeDetail(recipe: Recipe, isFavorite: Boolean = false) {
+fun Fragment.navigateToRecipeDetail(
+    recipe: Recipe,
+    view: View,
+    isFavorite: Boolean = false
+    ) {
     val viewModel by activityViewModels<RecipeDetailViewModel>()
+    val extras = FragmentNavigatorExtras(view to recipe.id.toString())
     if (isFavorite) {
         viewModel.presentRecipeInfo(recipe)
     } else {
         viewModel.requestRecipeInfo(recipe)
     }
-    val action = MainGraphDirections.actionGlobalRecipeDetailFragment()
-    findMainNavController().navigate(action)
+    val action = MainGraphDirections.actionGlobalRecipeDetailFragment(recipe.id.toString())
+    findMainNavController().navigate(action, extras)
 }

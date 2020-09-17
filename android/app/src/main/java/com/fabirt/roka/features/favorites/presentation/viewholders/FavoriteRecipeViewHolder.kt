@@ -1,24 +1,18 @@
 package com.fabirt.roka.features.favorites.presentation.viewholders
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.fabirt.roka.R
 import com.fabirt.roka.core.domain.model.Recipe
 import com.fabirt.roka.core.utils.bindNetworkImage
+import com.fabirt.roka.databinding.ViewFavoriteRecipeBinding
 import com.fabirt.roka.features.favorites.presentation.dispatchers.FavoriteRecipeEventDispatcher
 
 class FavoriteRecipeViewHolder(
-    view: View,
+    private val binding: ViewFavoriteRecipeBinding,
     private val eventDispatcher: FavoriteRecipeEventDispatcher
-) : RecyclerView.ViewHolder(view) {
-    private val name: TextView = view.findViewById(R.id.tvName)
-    private val image: ImageView = view.findViewById(R.id.ivRecipe)
-    private val overlay: View = view.findViewById(R.id.overlayView)
+) : RecyclerView.ViewHolder(binding.root) {
 
     companion object {
         fun from(
@@ -26,16 +20,17 @@ class FavoriteRecipeViewHolder(
             eventDispatcher: FavoriteRecipeEventDispatcher
         ): FavoriteRecipeViewHolder {
             val inflater = LayoutInflater.from(parent.context)
-            val view = inflater.inflate(R.layout.view_favorite_recipe, parent, false)
-            return FavoriteRecipeViewHolder(view, eventDispatcher)
+            val binding = ViewFavoriteRecipeBinding.inflate(inflater, parent, false)
+            return FavoriteRecipeViewHolder(binding, eventDispatcher)
         }
     }
 
     fun bind(recipe: Recipe) {
-        name.text = recipe.title
-        bindNetworkImage(image, recipe.imageUrl)
-        overlay.setOnClickListener {
-            eventDispatcher.onFavoriteRecipePressed(recipe)
+        binding.cardView.transitionName = recipe.id.toString()
+        binding.tvName.text = recipe.title
+        bindNetworkImage(binding.ivRecipe, recipe.imageUrl)
+        binding.overlayView.setOnClickListener {
+            eventDispatcher.onFavoriteRecipePressed(recipe, binding.cardView)
         }
     }
 

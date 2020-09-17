@@ -44,6 +44,7 @@ class FavoritesFragment : Fragment(), FavoriteRecipeEventDispatcher {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         val layoutManager = GridLayoutManager(requireContext(), 2)
         rvFavorites.layoutManager = layoutManager
         rvFavorites.adapter = adapter
@@ -61,7 +62,7 @@ class FavoritesFragment : Fragment(), FavoriteRecipeEventDispatcher {
         })
     }
 
-    override fun onFavoriteRecipePressed(recipe: Recipe) {
-        navigateToRecipeDetail(recipe, isFavorite = true)
+    override fun onFavoriteRecipePressed(recipe: Recipe, view: View) {
+        navigateToRecipeDetail(recipe, view, isFavorite = true)
     }
 }
