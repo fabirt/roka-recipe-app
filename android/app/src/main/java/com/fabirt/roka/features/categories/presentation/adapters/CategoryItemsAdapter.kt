@@ -9,11 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fabirt.roka.R
 import com.fabirt.roka.core.utils.bindNetworkImage
 import com.fabirt.roka.features.categories.domain.model.CategoryItem
+import com.fabirt.roka.features.categories.presentation.dispatchers.CategoryEventDispatcher
 
 class CategoryItemsAdapter(
-    private val parent: String,
     private val items: List<CategoryItem>,
-    private val onItemPressed: (String, CategoryItem) -> Unit
+    private val eventDispatcher: CategoryEventDispatcher
 ) : RecyclerView.Adapter<CategoryItemsAdapter.CategoryItemsViewHolder>() {
     override fun getItemCount(): Int = items.size
 
@@ -34,7 +34,7 @@ class CategoryItemsAdapter(
             tvCategoryName.text = item.name
             bindNetworkImage(imageView, item.imageUrl)
             tvCategoryName.setOnClickListener {
-                onItemPressed(parent, item)
+                eventDispatcher.onCategoryPressed(item)
             }
         }
     }

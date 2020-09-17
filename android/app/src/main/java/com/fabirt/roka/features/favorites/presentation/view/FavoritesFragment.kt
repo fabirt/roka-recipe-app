@@ -10,17 +10,17 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.fabirt.roka.R
 import com.fabirt.roka.core.domain.model.Recipe
-import com.fabirt.roka.core.presentation.dispatchers.RecipeEventDispatcher
 import com.fabirt.roka.core.utils.configureStatusBar
 import com.fabirt.roka.core.utils.navigateToRecipeDetail
 import com.fabirt.roka.features.favorites.presentation.adapters.FavoritesAdapter
+import com.fabirt.roka.features.favorites.presentation.dispatchers.FavoriteRecipeEventDispatcher
 import com.fabirt.roka.features.favorites.presentation.viewmodel.FavoritesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_favorites.*
 import kotlinx.android.synthetic.main.view_empty.*
 
 @AndroidEntryPoint
-class FavoritesFragment : Fragment(), RecipeEventDispatcher {
+class FavoritesFragment : Fragment(), FavoriteRecipeEventDispatcher {
 
     private val viewModel: FavoritesViewModel by viewModels()
     private lateinit var adapter: FavoritesAdapter
@@ -61,7 +61,7 @@ class FavoritesFragment : Fragment(), RecipeEventDispatcher {
         })
     }
 
-    override fun onRecipePressed(recipe: Recipe) {
+    override fun onFavoriteRecipePressed(recipe: Recipe) {
         navigateToRecipeDetail(recipe, isFavorite = true)
     }
 }

@@ -11,10 +11,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.fabirt.roka.R
 import com.fabirt.roka.features.categories.domain.model.Category
-import com.fabirt.roka.features.categories.domain.model.CategoryItem
+import com.fabirt.roka.features.categories.presentation.dispatchers.CategoryEventDispatcher
 
 class CategoriesAdapter(
-    private val onItemPressed: (String, CategoryItem) -> Unit
+    private val eventDispatcher: CategoryEventDispatcher
 ) : ListAdapter<Category, CategoriesAdapter.CategoriesViewHolder>(CategoryDiffCallback()) {
 
     private val scrollStates = hashMapOf<String, Parcelable?>()
@@ -56,7 +56,7 @@ class CategoriesAdapter(
             LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
 
         fun bind(category: Category) {
-            val adapter = CategoryItemsAdapter(category.type, category.items, onItemPressed)
+            val adapter = CategoryItemsAdapter(category.items, eventDispatcher)
             adapter.stateRestorationPolicy = StateRestorationPolicy.ALLOW
             tvCategoryTitle.text = category.name
             rvCategoryItems.apply {

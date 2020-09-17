@@ -14,12 +14,13 @@ import com.fabirt.roka.R
 import com.fabirt.roka.core.utils.configureStatusBar
 import com.fabirt.roka.features.categories.domain.model.CategoryItem
 import com.fabirt.roka.features.categories.presentation.adapters.CategoriesAdapter
+import com.fabirt.roka.features.categories.presentation.dispatchers.CategoryEventDispatcher
 import com.fabirt.roka.features.categories.presentation.viewmodel.CategoriesViewModel
 import com.fabirt.roka.features.categories.presentation.viewmodel.CategoryDetailViewModel
 import kotlinx.android.synthetic.main.fragment_categories.*
 import kotlinx.android.synthetic.main.view_spin_indicator.*
 
-class CategoriesFragment : Fragment() {
+class CategoriesFragment : Fragment(), CategoryEventDispatcher {
 
     private val viewModel: CategoriesViewModel by viewModels()
     private val detailViewModel: CategoryDetailViewModel by activityViewModels()
@@ -35,7 +36,7 @@ class CategoriesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = CategoriesAdapter(::navigateToCategoryDetail)
+        adapter = CategoriesAdapter(this)
         rvCategories.layoutManager = LinearLayoutManager(requireContext())
         rvCategories.adapter = adapter
 
@@ -46,8 +47,8 @@ class CategoriesFragment : Fragment() {
         })
     }
 
-    private fun navigateToCategoryDetail(parent: String, category: CategoryItem) {
-        detailViewModel.setCurrentCategory(parent, category)
+    override fun onCategoryPressed(category: CategoryItem) {
+        detailViewModel.setCurrentCategory(category)
         val action = CategoriesFragmentDirections.actionCategoriesFragmentToCategoryDetailFragment()
         findNavController().navigate(action)
     }
