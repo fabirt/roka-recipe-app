@@ -100,7 +100,7 @@ class CategoryDetailFragment : Fragment(), RecipeEventDispatcher {
     private fun configureTransitions() {
         val color = requireContext().getColor(R.color.colorBackground)
         val transition = MaterialContainerTransform().apply {
-            duration = 1000
+            duration = 300
             containerColor = color
             drawingViewId = R.id.homeNavHostContainer
         }
