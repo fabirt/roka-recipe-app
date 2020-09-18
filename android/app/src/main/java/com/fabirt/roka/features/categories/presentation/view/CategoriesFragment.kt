@@ -56,6 +56,11 @@ class CategoriesFragment : Fragment(), CategoryEventDispatcher {
         })
     }
 
+    override fun onDestroyView() {
+        rvCategories.adapter = null
+        super.onDestroyView()
+    }
+
     override fun onCategoryPressed(category: CategoryItem, view: View) {
         val extras = FragmentNavigatorExtras(view to category.name)
         val action = CategoriesFragmentDirections
