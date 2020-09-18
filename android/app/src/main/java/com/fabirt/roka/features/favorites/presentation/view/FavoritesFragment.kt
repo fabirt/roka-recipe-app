@@ -9,9 +9,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.fabirt.roka.R
-import com.fabirt.roka.core.domain.model.Recipe
 import com.fabirt.roka.core.utils.configureStatusBar
 import com.fabirt.roka.core.utils.navigateToRecipeDetail
+import com.fabirt.roka.features.favorites.domain.model.FavoriteRecipe
 import com.fabirt.roka.features.favorites.presentation.adapters.FavoritesAdapter
 import com.fabirt.roka.features.favorites.presentation.dispatchers.FavoriteRecipeEventDispatcher
 import com.fabirt.roka.features.favorites.presentation.viewmodel.FavoritesViewModel
@@ -24,6 +24,7 @@ class FavoritesFragment : Fragment(), FavoriteRecipeEventDispatcher {
 
     private val viewModel: FavoritesViewModel by viewModels()
     private lateinit var adapter: FavoritesAdapter
+    private var favoriteRecipes = mutableListOf<FavoriteRecipe>()
 
     companion object {
         private const val TAG = "FavoritesFragment"
@@ -57,12 +58,35 @@ class FavoritesFragment : Fragment(), FavoriteRecipeEventDispatcher {
             } else {
                 rvFavorites.visibility = View.VISIBLE
                 emptyView.visibility = View.GONE
-                adapter.submitList(recipes)
+                favoriteRecipes = recipes
+                    .map { FavoriteRecipe(it, false) }
+                    .toMutableList()
+                adapter.submitList(favoriteRecipes)
             }
         })
     }
 
-    override fun onFavoriteRecipePressed(recipe: Recipe, view: View) {
-        navigateToRecipeDetail(recipe, view, isFavorite = true)
+    override fun onDestroyView() {
+        super.onDestroyView()
+        adapter.isSelecting = false
+    }
+
+    override fun onFavoriteRecipePressed(recipe: FavoriteRecipe, view: View) {
+        if (adapter.isSelecting) {
+            val index = favoriteRecipes.indexOf(recipe)
+            favoriteRecipes[index] = recipe.copy(isSelected = !recipe.isSelected)
+            adapter.notifyItemChanged(index)
+        } else {
+            navigateToRecipeDetail(recipe.data, view, isFavorite = true)
+        }
+    }
+
+    override fun onFavoriteRecipeLongPressed(recipe: FavoriteRecipe) {
+        if (!adapter.isSelecting) {
+            adapter.isSelecting = true
+            val index = favoriteRecipes.indexOf(recipe)
+            favoriteRecipes[index] = recipe.copy(isSelected = !recipe.isSelected)
+            adapter.notifyItemChanged(index)
+        }
     }
 }

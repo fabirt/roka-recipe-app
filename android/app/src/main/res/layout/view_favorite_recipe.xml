@@ -60,17 +60,19 @@
         app:layout_constraintStart_toStartOf="@id/cardView"
         tools:text="Pasta With Tuna" />
 
-    <View
+    <androidx.cardview.widget.CardView
         android:id="@+id/selectingOverlay"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/opaqueOverlay"
         android:visibility="gone"
+        app:cardBackgroundColor="@color/opaqueOverlay"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="@id/cardView"
         app:layout_constraintEnd_toEndOf="@id/cardView"
         app:layout_constraintStart_toStartOf="@id/cardView"
         app:layout_constraintTop_toTopOf="@id/cardView"
-        tools:visibility="invisible" />
+        tools:visibility="visible" />
 
     <CheckBox
         android:id="@+id/checkbox"
