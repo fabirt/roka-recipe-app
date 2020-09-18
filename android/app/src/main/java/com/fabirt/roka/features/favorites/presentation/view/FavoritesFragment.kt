@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
@@ -25,6 +27,7 @@ class FavoritesFragment : Fragment(), FavoriteRecipeEventDispatcher {
     private val viewModel: FavoritesViewModel by viewModels()
     private lateinit var adapter: FavoritesAdapter
     private var favoriteRecipes = mutableListOf<FavoriteRecipe>()
+    private lateinit var onBackPressedCallback: OnBackPressedCallback
 
     companion object {
         private const val TAG = "FavoritesFragment"
@@ -32,7 +35,11 @@ class FavoritesFragment : Fragment(), FavoriteRecipeEventDispatcher {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        adapter = FavoritesAdapter(this)
+        adapter = FavoritesAdapter(this, false)
+        onBackPressedCallback = requireActivity().onBackPressedDispatcher.addCallback(this) {
+            viewModel.changeSelecting(false)
+            resetFavorites()
+        }
     }
 
     override fun onCreateView(
@@ -49,6 +56,7 @@ class FavoritesFragment : Fragment(), FavoriteRecipeEventDispatcher {
         val layoutManager = GridLayoutManager(requireContext(), 2)
         rvFavorites.layoutManager = layoutManager
         rvFavorites.adapter = adapter
+
         viewModel.recipes.observe(viewLifecycleOwner, Observer { recipes ->
             if (recipes.isEmpty()) {
                 rvFavorites.visibility = View.INVISIBLE
@@ -64,15 +72,22 @@ class FavoritesFragment : Fragment(), FavoriteRecipeEventDispatcher {
                 adapter.submitList(favoriteRecipes)
             }
         })
+
+        viewModel.isSelecting.observe(viewLifecycleOwner, Observer { isSelecting ->
+            adapter.isSelecting = isSelecting
+            onBackPressedCallback.isEnabled = isSelecting
+            adapter.notifyDataSetChanged()
+        })
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        adapter.isSelecting = false
+        resetFavorites()
+        viewModel.changeSelecting(false)
     }
 
     override fun onFavoriteRecipePressed(recipe: FavoriteRecipe, view: View) {
-        if (adapter.isSelecting) {
+        if (viewModel.isSelecting.value == true) {
             val index = favoriteRecipes.indexOf(recipe)
             favoriteRecipes[index] = recipe.copy(isSelected = !recipe.isSelected)
             adapter.notifyItemChanged(index)
@@ -82,11 +97,15 @@ class FavoritesFragment : Fragment(), FavoriteRecipeEventDispatcher {
     }
 
     override fun onFavoriteRecipeLongPressed(recipe: FavoriteRecipe) {
-        if (!adapter.isSelecting) {
-            adapter.isSelecting = true
+        if (viewModel.isSelecting.value == false) {
             val index = favoriteRecipes.indexOf(recipe)
-            favoriteRecipes[index] = recipe.copy(isSelected = !recipe.isSelected)
-            adapter.notifyItemChanged(index)
+            favoriteRecipes[index] = recipe.copy(isSelected = true)
+            viewModel.changeSelecting(true)
         }
+    }
+
+    private fun resetFavorites() {
+        favoriteRecipes = favoriteRecipes.map { it.copy(isSelected = false) }.toMutableList()
+        adapter.submitList(favoriteRecipes)
     }
 }
