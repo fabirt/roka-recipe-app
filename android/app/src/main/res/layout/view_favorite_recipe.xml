@@ -59,4 +59,34 @@
         app:layout_constraintEnd_toEndOf="@id/cardView"
         app:layout_constraintStart_toStartOf="@id/cardView"
         tools:text="Pasta With Tuna" />
+
+    <View
+        android:id="@+id/selectingOverlay"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/opaqueOverlay"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/cardView"
+        app:layout_constraintEnd_toEndOf="@id/cardView"
+        app:layout_constraintStart_toStartOf="@id/cardView"
+        app:layout_constraintTop_toTopOf="@id/cardView"
+        tools:visibility="invisible" />
+
+    <CheckBox
+        android:id="@+id/checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        android:button="@drawable/checkbox_selector"
+        android:checked="false"
+        android:enabled="false"
+        android:minWidth="28dp"
+        android:minHeight="28dp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@id/cardView"
+        app:layout_constraintTop_toTopOf="@id/cardView"
+        app:useMaterialThemeColors="false"
+        tools:visibility="visible" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

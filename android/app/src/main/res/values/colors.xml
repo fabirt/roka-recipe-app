@@ -8,4 +8,5 @@
     <color name="transparent">#00FFFFFF</color>
     <color name="rippleOnAccent">#3DFFFFFF</color>
     <color name="rippleOnSurface">#1A000000</color>
+    <color name="opaqueOverlay">#38000000</color>
 </resources>
