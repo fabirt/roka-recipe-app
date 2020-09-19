@@ -17,7 +17,6 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.i("HomeFragment", "ON_CREATE_CALLED")
         val transitionDuration = resources.getInteger(R.integer.page_transition_duration)
         exitTransition = Hold().apply {
             duration = transitionDuration.toLong()

@@ -15,7 +15,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.fabirt.roka.R
 import com.fabirt.roka.core.domain.model.Recipe
 import com.fabirt.roka.core.error.toFailure
 import com.fabirt.roka.core.presentation.adapters.PagingLoadStateAdapter
@@ -23,13 +22,9 @@ import com.fabirt.roka.core.presentation.adapters.RecipePagingAdapter
 import com.fabirt.roka.core.presentation.dispatchers.RecipeEventDispatcher
 import com.fabirt.roka.core.utils.configureStatusBar
 import com.fabirt.roka.core.utils.navigateToRecipeDetail
+import com.fabirt.roka.databinding.FragmentSearchBinding
 import com.fabirt.roka.features.search.presentation.viewmodel.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_search.*
-import kotlinx.android.synthetic.main.search_bar.*
-import kotlinx.android.synthetic.main.view_empty.*
-import kotlinx.android.synthetic.main.view_error.*
-import kotlinx.android.synthetic.main.view_spin_indicator.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -37,6 +32,9 @@ import kotlinx.coroutines.launch
 class SearchFragment : Fragment(), RecipeEventDispatcher {
     private val viewModel: SearchViewModel by viewModels()
     private lateinit var pagingAdapter: RecipePagingAdapter
+
+    private var _binding: FragmentSearchBinding? = null
+    private val binding get() = _binding!!
 
     companion object {
         const val TAG = "SearchFragment"
@@ -47,28 +45,34 @@ class SearchFragment : Fragment(), RecipeEventDispatcher {
         savedInstanceState: Bundle?
     ): View? {
         configureStatusBar()
-        return inflater.inflate(R.layout.fragment_search, container, false)
+        _binding = FragmentSearchBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         pagingAdapter = RecipePagingAdapter(this)
-        rvRecipes.layoutManager = LinearLayoutManager(requireContext())
-        rvRecipes.adapter = pagingAdapter.withLoadStateFooter(PagingLoadStateAdapter())
+        binding.rvRecipes.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvRecipes.adapter = pagingAdapter.withLoadStateFooter(PagingLoadStateAdapter())
         setupListeners()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     override fun onRecipePressed(recipe: Recipe, view: View) {
-        dismissKeyboard(editTextSearch)
+        dismissKeyboard(binding.includeSearchBar.editTextSearch)
         navigateToRecipeDetail(recipe, view)
     }
 
     private fun setupListeners() {
-        editTextSearch.addTextChangedListener { text ->
-            btnCancelSearch.isVisible = !text.isNullOrEmpty()
+        binding.includeSearchBar.editTextSearch.addTextChangedListener { text ->
+            binding.includeSearchBar.btnCancelSearch.isVisible = !text.isNullOrEmpty()
         }
 
-        editTextSearch.setOnKeyListener { v, keyCode, event ->
+        binding.includeSearchBar.editTextSearch.setOnKeyListener { v, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
                 dismissKeyboard(v)
                 requestSearch()
@@ -77,15 +81,15 @@ class SearchFragment : Fragment(), RecipeEventDispatcher {
             false
         }
 
-        btnCancelSearch.setOnClickListener {
-            editTextSearch.text.clear()
+        binding.includeSearchBar.btnCancelSearch.setOnClickListener {
+            binding.includeSearchBar.editTextSearch.text.clear()
         }
 
-        rvRecipes.setOnScrollChangeListener { v, _, _, _, _ ->
+        binding.rvRecipes.setOnScrollChangeListener { v, _, _, _, _ ->
             dismissKeyboard(v)
         }
 
-        btnRetry.setOnClickListener {
+        binding.errorLayout.btnRetry.setOnClickListener {
             requestSearch(shouldRetry = true)
         }
 
@@ -100,18 +104,18 @@ class SearchFragment : Fragment(), RecipeEventDispatcher {
 
     private fun listenLoadStateChanges(loadStates: CombinedLoadStates) {
         val loadState = loadStates.source.refresh
-        spinView.isVisible = loadState is LoadState.Loading
-        rvRecipes.isVisible = loadState is LoadState.NotLoading && pagingAdapter.itemCount > 0
-        emptyView.isVisible = loadState is LoadState.NotLoading && pagingAdapter.itemCount == 0
-        errorView.isVisible = loadState is LoadState.Error
+        binding.progressLayout.spinView.isVisible = loadState is LoadState.Loading
+        binding.rvRecipes.isVisible = loadState is LoadState.NotLoading && pagingAdapter.itemCount > 0
+        binding.emptyLayout.emptyView.isVisible = loadState is LoadState.NotLoading && pagingAdapter.itemCount == 0
+        binding.errorLayout.errorView.isVisible = loadState is LoadState.Error
         if (loadState is LoadState.Error) {
             val failure = loadState.error.toFailure()
-            tvErrorSubtitle.text = failure.translate(requireContext())
+            binding.errorLayout.tvErrorSubtitle.text = failure.translate(requireContext())
         }
     }
 
     private fun requestSearch(shouldRetry: Boolean = false) {
-        val text = editTextSearch.text.toString()
+        val text = binding.includeSearchBar.editTextSearch.text.toString()
         if (text.trim().isNotEmpty() || shouldRetry) {
             viewModel.query = text
             pagingAdapter.refresh()

@@ -22,11 +22,9 @@ import com.fabirt.roka.core.utils.applyTopWindowInsets
 import com.fabirt.roka.core.utils.bindNetworkImage
 import com.fabirt.roka.core.utils.configureStatusBar
 import com.fabirt.roka.core.utils.navigateToRecipeDetail
+import com.fabirt.roka.databinding.FragmentCategoryDetailBinding
 import com.fabirt.roka.features.categories.presentation.viewmodel.CategoryDetailViewModel
 import com.google.android.material.transition.MaterialContainerTransform
-import kotlinx.android.synthetic.main.fragment_category_detail.*
-import kotlinx.android.synthetic.main.view_error.*
-import kotlinx.android.synthetic.main.view_spin_indicator.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -34,6 +32,9 @@ class CategoryDetailFragment : Fragment(), RecipeEventDispatcher {
     private val viewModel: CategoryDetailViewModel by activityViewModels()
     private val args: CategoryDetailFragmentArgs by navArgs()
     private lateinit var adapter: RecipePagingAdapter
+
+    private var _binding: FragmentCategoryDetailBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,31 +48,37 @@ class CategoryDetailFragment : Fragment(), RecipeEventDispatcher {
         savedInstanceState: Bundle?
     ): View? {
         configureStatusBar(false)
-        return inflater.inflate(R.layout.fragment_category_detail, container, false)
+        _binding = FragmentCategoryDetailBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        rootView.transitionName = args.category.name
+        binding.rootView.transitionName = args.category.name
 
-        btnBack.applyTopWindowInsets()
+        binding.btnBack.applyTopWindowInsets()
 
-        rvRecipes.layoutManager = LinearLayoutManager(requireContext())
-        rvRecipes.adapter = adapter.withLoadStateFooter(PagingLoadStateAdapter())
+        binding.rvRecipes.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvRecipes.adapter = adapter.withLoadStateFooter(PagingLoadStateAdapter())
 
-        tvTitle.text = args.category.name
-        bindNetworkImage(ivCategoryItem, args.category.imageUrl)
+        binding.tvTitle.text = args.category.name
+        bindNetworkImage(binding.ivCategoryItem, args.category.imageUrl)
 
-        btnBack.setOnClickListener {
+        binding.btnBack.setOnClickListener {
             findNavController().navigateUp()
         }
 
-        btnRetry.setOnClickListener {
+        binding.errorLayout.btnRetry.setOnClickListener {
             adapter.refresh()
         }
 
         setupObservers()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onRecipePressed(recipe: Recipe, view: View) {
@@ -81,12 +88,12 @@ class CategoryDetailFragment : Fragment(), RecipeEventDispatcher {
     private fun setupObservers() {
         adapter.addLoadStateListener { loadStates ->
             val loadState = loadStates.source.refresh
-            spinView.isVisible = loadState is LoadState.Loading
-            rvRecipes.isVisible = loadState is LoadState.NotLoading && adapter.itemCount > 0
-            errorView.isVisible = loadState is LoadState.Error
+            binding.progressLayout.spinView.isVisible = loadState is LoadState.Loading
+            binding.rvRecipes.isVisible = loadState is LoadState.NotLoading && adapter.itemCount > 0
+            binding.errorLayout.errorView.isVisible = loadState is LoadState.Error
             if (loadState is LoadState.Error) {
                 val failure = loadState.error.toFailure()
-                tvErrorSubtitle.text = failure.translate(requireContext())
+                binding.errorLayout.tvErrorSubtitle.text = failure.translate(requireContext())
             }
         }
 

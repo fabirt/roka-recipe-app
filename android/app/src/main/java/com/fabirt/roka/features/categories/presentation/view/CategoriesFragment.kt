@@ -11,20 +11,21 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.fabirt.roka.R
 import com.fabirt.roka.core.utils.configureStatusBar
+import com.fabirt.roka.databinding.FragmentCategoriesBinding
 import com.fabirt.roka.features.categories.domain.model.CategoryItem
 import com.fabirt.roka.features.categories.presentation.adapters.CategoriesAdapter
 import com.fabirt.roka.features.categories.presentation.dispatchers.CategoryEventDispatcher
 import com.fabirt.roka.features.categories.presentation.viewmodel.CategoriesViewModel
 import com.google.android.material.transition.Hold
-import kotlinx.android.synthetic.main.fragment_categories.*
-import kotlinx.android.synthetic.main.view_spin_indicator.*
 
 class CategoriesFragment : Fragment(), CategoryEventDispatcher {
 
     private val viewModel: CategoriesViewModel by viewModels()
     private lateinit var adapter: CategoriesAdapter
+
+    private var _binding: FragmentCategoriesBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +38,8 @@ class CategoriesFragment : Fragment(), CategoryEventDispatcher {
         savedInstanceState: Bundle?
     ): View? {
         configureStatusBar()
-        return inflater.inflate(R.layout.fragment_categories, container, false)
+        _binding = FragmentCategoriesBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -46,19 +48,19 @@ class CategoriesFragment : Fragment(), CategoryEventDispatcher {
         postponeEnterTransition()
         view.doOnPreDraw { startPostponedEnterTransition() }
 
-        rvCategories.layoutManager = LinearLayoutManager(requireContext())
-        rvCategories.adapter = adapter
+        binding.rvCategories.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvCategories.adapter = adapter
 
         viewModel.categories.observe(viewLifecycleOwner, Observer { categories ->
-            spinView.visibility = View.GONE
-            rvCategories.scheduleLayoutAnimation()
+            binding.rvCategories.scheduleLayoutAnimation()
             adapter.submitList(categories)
         })
     }
 
     override fun onDestroyView() {
-        rvCategories.adapter = null
         super.onDestroyView()
+        binding.rvCategories.adapter = null
+        _binding = null
     }
 
     override fun onCategoryPressed(category: CategoryItem, view: View) {

@@ -8,7 +8,7 @@
     tools:context=".features.search.presentation.view.SearchFragment">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tvTitle"
         style="@style/HeadlineTextStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
         android:layout_marginEnd="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvRecipes"
@@ -50,6 +50,7 @@
         tools:listitem="@layout/view_recipe" />
 
     <include
+        android:id="@+id/errorLayout"
         layout="@layout/view_error"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -61,6 +62,7 @@
         app:layout_constraintTop_toTopOf="@+id/includeSearchBar" />
 
     <include
+        android:id="@+id/emptyLayout"
         layout="@layout/view_empty"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -71,6 +73,7 @@
         app:layout_constraintTop_toTopOf="@+id/includeSearchBar" />
 
     <include
+        android:id="@+id/progressLayout"
         layout="@layout/view_spin_indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

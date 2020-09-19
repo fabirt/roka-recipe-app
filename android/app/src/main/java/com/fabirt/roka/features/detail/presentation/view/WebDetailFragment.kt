@@ -11,59 +11,69 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.fabirt.roka.R
 import com.fabirt.roka.core.utils.configureStatusBar
-import kotlinx.android.synthetic.main.fragment_web_detail.*
+import com.fabirt.roka.databinding.FragmentWebDetailBinding
 
 class WebDetailFragment : Fragment(), WebViewDelegate {
     private val args: WebDetailFragmentArgs by navArgs()
+
+    private var _binding: FragmentWebDetailBinding? = null
+    private val binding get() = _binding!!
+
+    private lateinit var client: RecipeWebViewClient
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         configureStatusBar()
-        return inflater.inflate(R.layout.fragment_web_detail, container, false)
+        _binding = FragmentWebDetailBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        btnBack.setOnClickListener {
+        binding.btnBack.setOnClickListener {
             findNavController().navigateUp()
         }
         setupWebView()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        client.delegate = null
+        _binding = null
+    }
+
+    override fun pageStarted(url: String?) {
+        binding.progressBar.visibility = View.VISIBLE
+    }
+
+    override fun pageFinished(title: String, url: String) {
+        binding.tvUrl.text = url
+        binding.tvTitle.text = title
+        binding.progressBar.visibility = View.GONE
+    }
+
     private fun setupWebView() {
-        tvUrl.text = args.url
-        tvTitle.text = args.title
-        val client = RecipeWebViewClient().apply {
+        binding.tvUrl.text = args.url
+        binding.tvTitle.text = args.title
+        client = RecipeWebViewClient().apply {
             delegate = this@WebDetailFragment
         }
-        webView.webViewClient = client
-        webView.loadUrl(args.url)
-        webView.setOnKeyListener { _, keyCode, event ->
+        binding.webView.webViewClient = client
+        binding.webView.loadUrl(args.url)
+        binding.webView.setOnKeyListener { _, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_BACK
                 && event.action == KeyEvent.ACTION_UP
-                && webView.canGoBack()
+                && binding.webView.canGoBack()
             ) {
-                webView.goBack()
+                binding.webView.goBack()
                 return@setOnKeyListener true
             }
             return@setOnKeyListener false
         }
     }
-
-    override fun pageStarted(url: String?) {
-        progressBar?.visibility = View.VISIBLE
-    }
-
-    override fun pageFinished(title: String, url: String) {
-        tvUrl?.text = url
-        tvTitle?.text = title
-        progressBar?.visibility = View.GONE
-    }
-
 }
 
 class RecipeWebViewClient : WebViewClient() {
