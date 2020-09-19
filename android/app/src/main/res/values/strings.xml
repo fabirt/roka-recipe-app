@@ -29,4 +29,7 @@
     <string name="limit_exceeded_error">Sorry, you have exceeded the number of daily searches. Please try again later.</string>
     <string name="server_error">Sorry, a server error has occurred. Please try again</string>
     <string name="unexpected_error">Sorry, an unexpected error has occurred. Please try again.</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="delete_favorites_message">Are you sure you want to delete (%1$d) recipes from your favorites list.</string>
 </resources>

@@ -7,12 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.fabirt.roka.R
 import com.fabirt.roka.core.utils.configureStatusBar
 import com.fabirt.roka.core.utils.navigateToRecipeDetail
+import com.fabirt.roka.core.utils.showDialog
 import com.fabirt.roka.features.favorites.domain.model.FavoriteRecipe
 import com.fabirt.roka.features.favorites.presentation.adapters.FavoritesAdapter
 import com.fabirt.roka.features.favorites.presentation.dispatchers.FavoriteRecipeEventDispatcher
@@ -43,7 +45,8 @@ class FavoritesFragment : Fragment(), FavoriteRecipeEventDispatcher {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         configureStatusBar()
@@ -56,6 +59,10 @@ class FavoritesFragment : Fragment(), FavoriteRecipeEventDispatcher {
         val layoutManager = GridLayoutManager(requireContext(), 2)
         rvFavorites.layoutManager = layoutManager
         rvFavorites.adapter = adapter
+
+        btnTrash.setOnClickListener {
+            showDeleteDialog()
+        }
 
         viewModel.recipes.observe(viewLifecycleOwner, Observer { recipes ->
             if (recipes.isEmpty()) {
@@ -74,6 +81,7 @@ class FavoritesFragment : Fragment(), FavoriteRecipeEventDispatcher {
         })
 
         viewModel.isSelecting.observe(viewLifecycleOwner, Observer { isSelecting ->
+            btnTrash.isVisible = isSelecting
             adapter.isSelecting = isSelecting
             onBackPressedCallback.isEnabled = isSelecting
             adapter.notifyDataSetChanged()
@@ -107,5 +115,25 @@ class FavoritesFragment : Fragment(), FavoriteRecipeEventDispatcher {
     private fun resetFavorites() {
         favoriteRecipes = favoriteRecipes.map { it.copy(isSelected = false) }.toMutableList()
         adapter.submitList(favoriteRecipes)
+    }
+
+    private fun showDeleteDialog() {
+        val recipesToDelete = favoriteRecipes.filter { it.isSelected }
+        if (recipesToDelete.isEmpty()) return
+        val message = getString(R.string.delete_favorites_message, recipesToDelete.size)
+        showDialog(
+            titleId = R.string.delete,
+            message = message,
+            positiveTextId = R.string.delete,
+            negativeTextId = R.string.cancel,
+            onCancel = null,
+            onConfirm = {
+                deleteFavorites(recipesToDelete)
+            }
+        )
+    }
+
+    private fun deleteFavorites(favorites: List<FavoriteRecipe>) {
+        //
     }
 }
