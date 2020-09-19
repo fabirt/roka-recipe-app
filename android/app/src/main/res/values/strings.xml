@@ -31,5 +31,5 @@
     <string name="unexpected_error">Sorry, an unexpected error has occurred. Please try again.</string>
     <string name="cancel">Cancel</string>
     <string name="delete">Delete</string>
-    <string name="delete_favorites_message">Are you sure you want to delete (%1$d) recipes from your favorites list.</string>
+    <string name="delete_favorites_message">Are you sure you want to delete (%1$d) recipes from your favorites list?</string>
 </resources>
