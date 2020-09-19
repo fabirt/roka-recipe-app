@@ -134,6 +134,7 @@ class FavoritesFragment : Fragment(), FavoriteRecipeEventDispatcher {
     }
 
     private fun deleteFavorites(favorites: List<FavoriteRecipe>) {
-        //
+        viewModel.changeSelecting(false)
+        viewModel.deleteFavorites(favorites)
     }
 }
