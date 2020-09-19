@@ -1,6 +1,9 @@
 package com.fabirt.roka.core.domain.repository
 
 import com.fabirt.roka.core.data.database.dao.RecipeDao
+import com.fabirt.roka.core.data.database.entities.DatabaseIngredient
+import com.fabirt.roka.core.data.database.entities.DatabaseInstruction
+import com.fabirt.roka.core.data.database.entities.DatabaseRecipe
 import com.fabirt.roka.core.data.database.entities.asDomainModel
 import com.fabirt.roka.core.data.network.model.*
 import com.fabirt.roka.core.data.network.services.RecipeService
@@ -87,5 +90,20 @@ class RecipeRepositoryImpl @Inject constructor(
             ingredients = model.ingredients,
             instructions = model.instructions
         )
+    }
+
+    override suspend fun deleteMultipleFavorites(recipes: List<Recipe>) {
+        val dbRecipes = mutableListOf<DatabaseRecipe>()
+        val dbIngredients = mutableListOf<DatabaseIngredient>()
+        val dbInstructions = mutableListOf<DatabaseInstruction>()
+
+        for (recipe in recipes) {
+            val model = recipe.toDatabaseModel()
+            dbRecipes.add(model.recipe)
+            dbIngredients.addAll(model.ingredients)
+            dbInstructions.addAll(model.instructions)
+        }
+
+        recipeDao.deleteMultipleRecipes(dbRecipes, dbIngredients, dbInstructions)
     }
 }

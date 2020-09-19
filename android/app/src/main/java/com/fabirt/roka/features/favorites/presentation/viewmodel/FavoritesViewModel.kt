@@ -21,9 +21,8 @@ class FavoritesViewModel @ViewModelInject constructor(
 
     fun deleteFavorites(favorites: List<FavoriteRecipe>) {
         viewModelScope.launch {
-            for (fav in favorites) {
-                repository.deleteFavoriteRecipe(fav.data)
-            }
+            val recipes = favorites.map { it.data }
+            repository.deleteMultipleFavorites(recipes)
         }
     }
 }

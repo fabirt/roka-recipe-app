@@ -50,4 +50,9 @@ interface RecipeRepository {
      * Delete [recipe] from the database.
      */
     suspend fun deleteFavoriteRecipe(recipe: Recipe)
+
+    /**
+     * Delete all [recipes] from the database.
+     */
+    suspend fun deleteMultipleFavorites(recipes: List<Recipe>)
 }
