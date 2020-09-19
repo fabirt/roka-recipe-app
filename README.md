@@ -11,6 +11,7 @@ Design inspired by [Roka - Recipes and Food Plan App UI.](https://creativemarket
 - Save your favorite recipes
 - Share recipes
 - Visit original recipe website
+- Dark theme support
 
 ## Libraries Used
 - Android KTX
