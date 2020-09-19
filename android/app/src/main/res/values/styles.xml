@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:colorBackground">@color/colorBackground</item>
@@ -27,4 +27,15 @@
         <item name="android:textColor">@color/colorOnSurface</item>
         <item name="android:textSize">18sp</item>
     </style>
+
+    <style name="SearchBarStyle">
+        <item name="android:elevation">24dp</item>
+    </style>
+
+    <style name="RecipeCardStyle">
+        <item name="cardBackgroundColor">@color/colorSurface</item>
+        <item name="cardCornerRadius">24dp</item>
+        <item name="cardElevation">16dp</item>
+    </style>
+
 </resources>

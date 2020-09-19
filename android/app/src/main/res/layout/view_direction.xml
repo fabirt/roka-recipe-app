@@ -15,7 +15,7 @@
         android:background="@drawable/recipe_element_dot"
         android:fontFamily="@font/sf_pro_text_medium"
         android:gravity="center"
-        android:textColor="@color/colorSurface"
+        android:textColor="@color/colorOnOverlay"
         android:textSize="12sp"
         tools:text="1" />
 

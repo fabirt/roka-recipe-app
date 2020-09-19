@@ -43,7 +43,7 @@
         android:fontFamily="@font/sf_pro_text_medium"
         android:paddingHorizontal="24dp"
         android:text="@string/get_started"
-        android:textColor="@color/colorSurface"
+        android:textColor="@color/colorOnOverlay"
         android:textSize="18sp"
         app:rippleColor="@color/colorSurface" />
 

@@ -29,7 +29,7 @@
         android:layout_marginBottom="8dp"
         android:fontFamily="@font/sf_pro_text_medium"
         android:gravity="center"
-        android:textColor="@color/colorSurface"
+        android:textColor="@color/colorOnOverlay"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@id/ivCategoryItem"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,7 +45,7 @@
         android:src="@drawable/ic_back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/colorSurface"
+        app:tint="@color/colorOnOverlay"
         tools:ignore="ContentDescription" />
 
     <androidx.recyclerview.widget.RecyclerView

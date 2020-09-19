@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#E4373E</color>
+    <color name="colorAccent">#E4373E</color>
+    <color name="colorBackground">#212121</color>
+    <color name="colorSurface">#131313</color>
+    <color name="colorOnSurface">#FAFAFA</color>
+    <color name="rippleOnAccent">#3DFFFFFF</color>
+    <color name="rippleOnSurface">#3AFFFFFF</color>
+</resources>

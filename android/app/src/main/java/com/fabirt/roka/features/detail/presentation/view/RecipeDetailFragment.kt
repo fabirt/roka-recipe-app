@@ -116,7 +116,7 @@ class RecipeDetailFragment : Fragment() {
             tvScore.text = recipe.score?.toString()
 
             viewModel.isFavorite(recipe.id).observe(viewLifecycleOwner, Observer { isFavorite ->
-                var tint = requireContext().getColor(R.color.colorSurface)
+                var tint = requireContext().getColor(R.color.colorOnOverlay)
                 if (isFavorite) {
                     tint = requireContext().getColor(R.color.colorAccent)
                 }

@@ -41,7 +41,7 @@
         android:ellipsize="end"
         android:fontFamily="@font/sf_pro_text_medium"
         android:gravity="center_vertical"
-        android:textColor="@color/colorSurface"
+        android:textColor="@color/colorOnOverlay"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/ivPeople"
         app:layout_constraintEnd_toEndOf="parent"
@@ -67,7 +67,7 @@
         android:layout_marginStart="6dp"
         android:ellipsize="end"
         android:fontFamily="@font/sf_pro_text_regular"
-        android:textColor="@color/colorSurface"
+        android:textColor="@color/colorOnOverlay"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/ivPeople"
         app:layout_constraintStart_toEndOf="@+id/ivPeople"
@@ -92,7 +92,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
         android:fontFamily="@font/sf_pro_text_regular"
-        android:textColor="@color/colorSurface"
+        android:textColor="@color/colorOnOverlay"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/ivScore"
         app:layout_constraintStart_toEndOf="@+id/ivScore"
@@ -117,7 +117,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
         android:fontFamily="@font/sf_pro_text_regular"
-        android:textColor="@color/colorSurface"
+        android:textColor="@color/colorOnOverlay"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/ivTime"
         app:layout_constraintStart_toEndOf="@+id/ivTime"
@@ -133,7 +133,7 @@
         android:src="@drawable/ic_back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/colorSurface"
+        app:tint="@color/colorOnOverlay"
         tools:ignore="ContentDescription" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -162,7 +162,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/ivSave"
         app:layout_constraintEnd_toStartOf="@id/ivShare"
         app:layout_constraintTop_toTopOf="@+id/ivSave"
-        app:tint="@color/colorSurface"
+        app:tint="@color/colorOnOverlay"
         tools:ignore="ContentDescription" />
 
     <ImageView
@@ -175,7 +175,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/ivSave"
         app:layout_constraintEnd_toStartOf="@id/ivSave"
         app:layout_constraintTop_toTopOf="@+id/ivSave"
-        app:tint="@color/colorSurface"
+        app:tint="@color/colorOnOverlay"
         tools:ignore="ContentDescription" />
 
     <ImageView
@@ -187,7 +187,7 @@
         android:src="@drawable/ic_heart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/colorSurface"
+        app:tint="@color/colorOnOverlay"
         tools:ignore="ContentDescription" />
 
     <include

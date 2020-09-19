@@ -29,7 +29,7 @@
             android:background="@drawable/category_background_gradient"
             android:fontFamily="@font/sf_pro_text_medium"
             android:gravity="center"
-            android:textColor="@color/colorSurface"
+            android:textColor="@color/colorOnOverlay"
             android:textSize="16sp"
             tools:text="Japanese" />
 

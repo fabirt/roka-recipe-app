@@ -53,7 +53,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/sf_pro_text_medium"
         android:padding="10dp"
-        android:textColor="@color/colorSurface"
+        android:textColor="@color/colorOnOverlay"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@id/cardView"
         app:layout_constraintEnd_toEndOf="@id/cardView"
