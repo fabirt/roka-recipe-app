@@ -15,21 +15,25 @@ import com.fabirt.roka.R
 import com.fabirt.roka.core.utils.configureStatusBar
 import com.fabirt.roka.core.utils.navigateToRecipeDetail
 import com.fabirt.roka.core.utils.showDialog
+import com.fabirt.roka.databinding.FragmentFavoritesBinding
 import com.fabirt.roka.features.favorites.domain.model.FavoriteRecipe
 import com.fabirt.roka.features.favorites.presentation.adapters.FavoritesAdapter
 import com.fabirt.roka.features.favorites.presentation.dispatchers.FavoriteRecipeEventDispatcher
 import com.fabirt.roka.features.favorites.presentation.viewmodel.FavoritesViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_favorites.*
-import kotlinx.android.synthetic.main.view_empty.*
 
 @AndroidEntryPoint
 class FavoritesFragment : Fragment(), FavoriteRecipeEventDispatcher {
 
     private val viewModel: FavoritesViewModel by viewModels()
-    private lateinit var adapter: FavoritesAdapter
     private var favoriteRecipes = mutableListOf<FavoriteRecipe>()
+    private lateinit var adapter: FavoritesAdapter
     private lateinit var onBackPressedCallback: OnBackPressedCallback
+
+    private var _binding: FragmentFavoritesBinding? = null
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
 
     companion object {
         private const val TAG = "FavoritesFragment"
@@ -39,8 +43,8 @@ class FavoritesFragment : Fragment(), FavoriteRecipeEventDispatcher {
         super.onCreate(savedInstanceState)
         adapter = FavoritesAdapter(this, false)
         onBackPressedCallback = requireActivity().onBackPressedDispatcher.addCallback(this) {
-            viewModel.changeSelecting(false)
             resetFavorites()
+            viewModel.changeSelecting(false)
         }
     }
 
@@ -50,29 +54,30 @@ class FavoritesFragment : Fragment(), FavoriteRecipeEventDispatcher {
         savedInstanceState: Bundle?
     ): View? {
         configureStatusBar()
-        return inflater.inflate(R.layout.fragment_favorites, container, false)
+        _binding = FragmentFavoritesBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val layoutManager = GridLayoutManager(requireContext(), 2)
-        rvFavorites.layoutManager = layoutManager
-        rvFavorites.adapter = adapter
+        binding.rvFavorites.layoutManager = layoutManager
+        binding.rvFavorites.adapter = adapter
 
-        btnTrash.setOnClickListener {
+        binding.btnTrash.setOnClickListener {
             showDeleteDialog()
         }
 
         viewModel.recipes.observe(viewLifecycleOwner, Observer { recipes ->
             if (recipes.isEmpty()) {
-                rvFavorites.visibility = View.INVISIBLE
-                emptyTextView.text = getString(R.string.no_favorites)
-                emptyImageView.setImageResource(R.drawable.ic_favorites)
-                emptyView.visibility = View.VISIBLE
+                binding.rvFavorites.visibility = View.INVISIBLE
+                binding.emptyLayout.emptyTextView.text = getString(R.string.no_favorites)
+                binding.emptyLayout.emptyImageView.setImageResource(R.drawable.ic_favorites)
+                binding.emptyLayout.emptyView.visibility = View.VISIBLE
             } else {
-                rvFavorites.visibility = View.VISIBLE
-                emptyView.visibility = View.GONE
+                binding.rvFavorites.visibility = View.VISIBLE
+                binding.emptyLayout.emptyView.visibility = View.GONE
                 favoriteRecipes = recipes
                     .map { FavoriteRecipe(it, false) }
                     .toMutableList()
@@ -81,7 +86,7 @@ class FavoritesFragment : Fragment(), FavoriteRecipeEventDispatcher {
         })
 
         viewModel.isSelecting.observe(viewLifecycleOwner, Observer { isSelecting ->
-            btnTrash.isVisible = isSelecting
+            binding.btnTrash.isVisible = isSelecting
             adapter.isSelecting = isSelecting
             onBackPressedCallback.isEnabled = isSelecting
             adapter.notifyDataSetChanged()
@@ -92,6 +97,7 @@ class FavoritesFragment : Fragment(), FavoriteRecipeEventDispatcher {
         super.onDestroyView()
         resetFavorites()
         viewModel.changeSelecting(false)
+        _binding = null
     }
 
     override fun onFavoriteRecipePressed(recipe: FavoriteRecipe, view: View) {
