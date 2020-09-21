@@ -47,6 +47,10 @@ class RecipeDetailFragment : Fragment() {
         configureTransitions()
         viewModel.motionProgress = 0F
         pulseAnim = AnimationUtils.loadAnimation(requireContext(), R.anim.pulse_anim)
+
+        args.id?.let {
+            viewModel.requestRecipeInfo(it.toInt())
+        }
     }
 
 
@@ -75,7 +79,7 @@ class RecipeDetailFragment : Fragment() {
         rvDetails.layoutManager = layoutManager
         applyWindowInsets()
         setupListeners()
-        buildStaticViews()
+        buildHeader()
     }
 
     private fun setupListeners() {
@@ -90,7 +94,7 @@ class RecipeDetailFragment : Fragment() {
         }
 
         btnRetry.setOnClickListener {
-            viewModel.retryRecipeRequest()
+            viewModel.retryRecipeRequest(args.id)
         }
 
         ivSave.setOnClickListener {
@@ -107,15 +111,34 @@ class RecipeDetailFragment : Fragment() {
         }
     }
 
-    private fun buildStaticViews() {
-        viewModel.state.value?.recipe?.let { recipe ->
-            bindNetworkImage(ivRecipe, recipe.imageUrl)
-            tvName.text = recipe.title
-            tvPeople.text = recipe.servings?.toString()
-            tvTime.text = getString(R.string.minutes_label, recipe.readyInMinutes)
-            tvScore.text = recipe.score?.toString()
+    private fun buildHeader() {
+        if (args.id == null) {
+            viewModel.state.value?.recipe?.let { recipe ->
+                bindNetworkImage(ivRecipe, recipe.imageUrl)
+                tvName.text = recipe.title
+                tvPeople.text = recipe.servings?.toString()
+                tvTime.text = getString(R.string.minutes_label, recipe.readyInMinutes)
+                tvScore.text = recipe.score?.toString()
 
-            viewModel.isFavorite(recipe.id).observe(viewLifecycleOwner, Observer { isFavorite ->
+                viewModel.isFavorite(recipe.id).observe(viewLifecycleOwner, Observer { isFavorite ->
+                    var tint = requireContext().getColor(R.color.colorOnOverlay)
+                    if (isFavorite) {
+                        tint = requireContext().getColor(R.color.colorAccent)
+                    }
+                    ImageViewCompat.setImageTintList(ivSave, ColorStateList.valueOf(tint))
+                })
+            }
+        } else {
+            viewModel.state.observe(viewLifecycleOwner, Observer {state ->
+                state.recipe?.let {recipe ->
+                    bindNetworkImage(ivRecipe, recipe.imageUrl)
+                    tvName.text = recipe.title
+                    tvPeople.text = recipe.servings?.toString()
+                    tvTime.text = getString(R.string.minutes_label, recipe.readyInMinutes)
+                    tvScore.text = recipe.score?.toString()
+                }
+            })
+            viewModel.isFavorite(args.id!!.toInt()).observe(viewLifecycleOwner, Observer { isFavorite ->
                 var tint = requireContext().getColor(R.color.colorOnOverlay)
                 if (isFavorite) {
                     tint = requireContext().getColor(R.color.colorAccent)
@@ -144,7 +167,7 @@ class RecipeDetailFragment : Fragment() {
                 errorView.visibility = View.GONE
                 rvDetails.visibility = View.VISIBLE
                 lifecycleScope.launch {
-                    adapter.submitRecipeInfo(requireContext(), state.recipe)
+                    adapter.submitRecipeInfo(requireContext(), state.recipe!!)
                 }
             }
         }
@@ -166,7 +189,8 @@ class RecipeDetailFragment : Fragment() {
             val url = recipe.sourceUrl
             if (url != null && url.isNotEmpty()) {
                 val title = recipe.title
-                val content = getString(R.string.share_content, recipe.title, url)
+                val id = recipe.id.toString()
+                val content = getString(R.string.share_content, recipe.title, url, id)
                 val sendIntent = Intent().apply {
                     action = Intent.ACTION_SEND
                     type = "text/plain"

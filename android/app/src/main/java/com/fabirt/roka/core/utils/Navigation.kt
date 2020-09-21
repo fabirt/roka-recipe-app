@@ -30,6 +30,6 @@ fun Fragment.navigateToRecipeDetail(
     } else {
         viewModel.requestRecipeInfo(recipe)
     }
-    val action = MainGraphDirections.actionGlobalRecipeDetailFragment(recipe.id.toString())
+    val action = MainGraphDirections.actionGlobalRecipeDetailFragment(recipe.id.toString(), null)
     findMainNavController().navigate(action, extras)
 }

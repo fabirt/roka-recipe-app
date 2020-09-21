@@ -40,7 +40,7 @@
         android:id="@+id/recipeDetailFragment"
         android:name="com.fabirt.roka.features.detail.presentation.view.RecipeDetailFragment"
         android:label="fragment_recipe_detail"
-        tools:layout="@layout/fragment_recipe_detail" >
+        tools:layout="@layout/fragment_recipe_detail">
         <action
             android:id="@+id/action_recipeDetailFragment_to_photoRecipeFragment"
             app:destination="@id/photoRecipeFragment"
@@ -57,7 +57,15 @@
             app:popExitAnim="@anim/slide_out_down" />
         <argument
             android:name="transitionName"
-            app:argType="string" />
+            app:argType="string"
+            app:nullable="true" />
+        <deepLink
+            android:id="@+id/deepLink"
+            app:uri="https://roka.recipes/{id}?transitionName={transitionName}" />
+        <argument
+            android:name="id"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/photoRecipeFragment"

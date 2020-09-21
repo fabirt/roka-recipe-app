@@ -35,13 +35,33 @@ class RecipeDetailViewModel @ViewModelInject constructor(
         }
     }
 
+    fun requestRecipeInfo(id: Int) {
+        viewModelScope.launch {
+            _state.value = RecipeDetailState.Loading(null)
+            val result = repository.requestRecipeInformation(id)
+            val newState = result.fold(
+                { failure ->
+                    RecipeDetailState.Error(null, failure)
+                },
+                { recipe ->
+                    RecipeDetailState.Success(recipe)
+                }
+            )
+            _state.value = newState
+        }
+    }
+
     fun presentRecipeInfo(recipe: Recipe) {
         _state.value = RecipeDetailState.Success(recipe)
     }
 
-    fun retryRecipeRequest() {
-        _state.value?.recipe?.let {
-            requestRecipeInfo(it)
+    fun retryRecipeRequest(id: String?) {
+        if (id != null) {
+            requestRecipeInfo(id.toInt())
+        } else {
+            _state.value?.recipe?.let {
+                requestRecipeInfo(it)
+            }
         }
     }
 
@@ -65,7 +85,7 @@ class RecipeDetailViewModel @ViewModelInject constructor(
         viewModelScope.launch {
             _state.value?.let { state ->
                 if (state is RecipeDetailState.Success) {
-                    repository.saveFavoriteRecipe(state.recipe)
+                    repository.saveFavoriteRecipe(state.recipe!!)
                 }
             }
         }

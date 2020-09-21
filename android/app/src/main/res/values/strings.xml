@@ -21,7 +21,7 @@
     <string name="retry">Try again</string>
     <string name="no_results_found">No results found</string>
     <string name="share_title">Share recipe</string>
-    <string name="share_content">Hi! look at this delicious %1$s here %2$s</string>
+    <string name="share_content">Hi! look at this delicious %1$s here %2$s or https://roka.recipes/%3$s</string>
     <string name="ingredients_title">Ingredients</string>
     <string name="preparation_title">Preparation</string>
     <string name="no_favorites">Find your favorite recipes\nand save them</string>

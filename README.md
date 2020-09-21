@@ -11,6 +11,7 @@ Design inspired by [Roka - Recipes and Food Plan App UI.](https://creativemarket
 - Infinite scroll with pagination
 - Save your favorite recipes in a local database
 - Share recipes
+- Navigation with deep linking
 - Visit original recipe website within a webview
 - Transitions with Material Motion and MotionLayout
 - Dark theme support
