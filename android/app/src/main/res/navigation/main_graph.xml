@@ -61,7 +61,7 @@
             app:nullable="true" />
         <deepLink
             android:id="@+id/deepLink"
-            app:uri="https://roka.recipes/{id}?transitionName={transitionName}" />
+            app:uri="roka.recipes/{id}?arg1={transitionName}" />
         <argument
             android:name="id"
             app:argType="string"
