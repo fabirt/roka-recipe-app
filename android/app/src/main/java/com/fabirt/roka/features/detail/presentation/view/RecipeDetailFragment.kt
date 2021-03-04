@@ -190,7 +190,7 @@ class RecipeDetailFragment : Fragment() {
             if (url != null && url.isNotEmpty()) {
                 val title = recipe.title
                 val id = recipe.id.toString()
-                val content = getString(R.string.share_content, recipe.title, url, id)
+                val content = getString(R.string.share_content, recipe.title, id, url)
                 val sendIntent = Intent().apply {
                     action = Intent.ACTION_SEND
                     type = "text/plain"
